@@ -12,7 +12,15 @@ import {
 import ButtonUI from '../../components/Button';
 import { IParamsAuth } from '../../types/auth';
 import { isValidEmail, isValidPassword } from '../../utils/validation';
-import { BG_PRIMARYCOLOR, BG_SUB_COLOR, EXPLAIN_ERROR_TEXT, TEXT_COLOR_PRIMARY } from './../../utils/common';
+import {
+    BG_PRIMARYCOLOR,
+    BG_SUB_COLOR,
+    EXPLAIN_ERROR_TEXT,
+    FONT_FAMILY,
+    TEXT_COLOR_PRIMARY,
+} from './../../utils/common';
+import { loginAPI } from '../../services/api/auth.api';
+import axios from 'axios';
 
 const LoginPage = () => {
     const [valueForm, setValueForm] = useState<IParamsAuth>({
@@ -60,12 +68,30 @@ const LoginPage = () => {
     };
 
     /*Handle submit form */
-    const handleOnSubmit = () => {
+    const handleOnSubmit = async () => {
         const { email, password } = valueForm;
         handleValidatePrevSubmit();
         if (!validationErrors.password && !validationErrors.email && valueForm.email && valueForm.password) {
             // No errors, proceed with submission
-            Alert.alert(`${email}, ${password}`);
+            const param = {
+                email: email,
+                password: password,
+            };
+            // Alert.alert(`${param.email}, ${param.password}`);
+            try {
+                // const res = await loginAPI(param);
+                // Alert.alert(`${res}`); api/v1/user/get-list-user
+                // testting
+                const response = await axios.post('http://192.168.56.1:8000/api/v1/auth/login/', {
+                    email: param.email,
+                    password: param.password,
+                });
+                Alert.alert(`${response?.data?.data?.token}`);
+                console.log('Status:', response.status);
+                console.log('Data:', response.data);
+            } catch (error) {
+                Alert.alert(`${error}`);
+            }
         }
     };
 
@@ -85,7 +111,7 @@ const LoginPage = () => {
                     <Text style={styles.text_form}>Email</Text>
                     <TextInput
                         onChange={(e) => handleOnChangeValue(e, 'email')}
-                        style={styles.TextInput}
+                        style={validationErrors.email !== '' ? styles.TextInputError : styles.TextInput}
                         placeholder="Enter your email address"
                     ></TextInput>
                     {validationErrors.email !== '' && (
@@ -96,7 +122,7 @@ const LoginPage = () => {
                     <Text style={styles.text_form}>Password</Text>
                     <TextInput
                         onChange={(e) => handleOnChangeValue(e, 'password')}
-                        style={styles.TextInput}
+                        style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
                         placeholder="Enter your password"
                         secureTextEntry={true}
                     ></TextInput>
@@ -159,29 +185,34 @@ const styles = StyleSheet.create({
         marginTop: 22,
         color: BG_PRIMARYCOLOR,
         fontSize: 30,
-        fontWeight: '600',
+        fontWeight: '700',
+        fontFamily: FONT_FAMILY,
     },
     text_app: {
         marginTop: 10,
         color: TEXT_COLOR_PRIMARY,
         fontSize: 16,
         fontWeight: '600',
+        fontFamily: FONT_FAMILY,
     },
     text_form: {
         color: BG_PRIMARYCOLOR,
-        fontWeight: '500',
+        fontWeight: '600',
         fontSize: 14,
+        fontFamily: FONT_FAMILY,
     },
     text_forgot: {
         color: BG_SUB_COLOR,
         fontWeight: '500',
         fontSize: 14,
         textDecorationLine: 'underline',
+        fontFamily: FONT_FAMILY,
     },
     text_validate: {
         fontSize: 13.5,
         color: EXPLAIN_ERROR_TEXT,
         marginTop: 2,
+        fontFamily: FONT_FAMILY,
     },
     text_footer: {
         paddingEnd: 60,
@@ -190,6 +221,7 @@ const styles = StyleSheet.create({
         color: TEXT_COLOR_PRIMARY,
         marginTop: 30,
         fontSize: 14,
+        fontFamily: FONT_FAMILY,
     },
 
     /* Style TextInput */
@@ -203,6 +235,19 @@ const styles = StyleSheet.create({
         marginTop: 8,
         paddingHorizontal: 12,
         position: 'relative',
+        fontFamily: FONT_FAMILY,
+    },
+    TextInputError: {
+        fontSize: 14,
+        height: 42,
+        color: TEXT_COLOR_PRIMARY,
+        borderWidth: 1,
+        borderColor: EXPLAIN_ERROR_TEXT,
+        borderRadius: 10,
+        marginTop: 8,
+        paddingHorizontal: 12,
+        position: 'relative',
+        fontFamily: FONT_FAMILY,
     },
     button: {
         backgroundColor: BG_PRIMARYCOLOR,
@@ -210,6 +255,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
+        fontFamily: FONT_FAMILY,
     },
     // icon: {
     //     position: 'absolute',

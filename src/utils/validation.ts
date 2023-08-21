@@ -10,7 +10,7 @@ export const isValidEmail = (email: string) => {
 export const isValidPassword = (password: string) => {
     if (password.length === 0) {
         return 'Please enter password';
-    } else if (password.length <= 8) {
+    } else if (password.length <= 5) {
         return 'Password must have at least 8 characters';
     }
     return '';
