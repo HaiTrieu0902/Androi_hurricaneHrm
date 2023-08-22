@@ -9,9 +9,11 @@ import {
     TextInput,
     TextInputChangeEventData,
     View,
+    TouchableOpacity,
 } from 'react-native';
 import { asyncStorageService } from '../../../src/utils/storage';
 import ButtonUI from '../../components/Button';
+import { SCREENS } from '../../constants';
 import { loginAPI } from '../../services/api/auth.api';
 import { IParamsAuth } from '../../types/auth';
 import { isValidEmail, isValidPassword } from '../../utils/validation';
@@ -22,11 +24,9 @@ import {
     FONT_FAMILY,
     TEXT_COLOR_PRIMARY,
 } from './../../utils/common';
-import { SCREENS } from '../../constants';
 
 const LoginPage = () => {
-    // const navigation = useNavigation();
-    // const homeScreen: string = SCREENS.HOME;
+    const navigation = useNavigation();
     const [valueForm, setValueForm] = useState<IParamsAuth>({
         email: '',
         password: '',
@@ -35,6 +35,7 @@ const LoginPage = () => {
         email: '',
         password: '',
     });
+    const [isShowIcon, setIsShowIcon] = useState<boolean>(false);
 
     /*Handle onChange value input */
     const handleOnChangeValue = (e: NativeSyntheticEvent<TextInputChangeEventData>, field: any) => {
@@ -84,13 +85,18 @@ const LoginPage = () => {
                 const res = await loginAPI(param);
                 if (res) {
                     asyncStorageService.setValue('access_token', res?.data?.token);
-                    asyncStorageService.setValue('User', res?.data);
-                    // navigation.navigate('Home');
+                    asyncStorageService.setValue('user', res?.data);
+                    navigation.navigate(SCREENS.BOTTOM as never);
                 }
             } catch (error) {
                 Alert.alert(`${error}`);
             }
         }
+    };
+
+    /*Handle show and hide password */
+    const handleShowOrHidePassword = () => {
+        setIsShowIcon((prev) => !prev);
     };
 
     return (
@@ -122,9 +128,18 @@ const LoginPage = () => {
                         onChange={(e) => handleOnChangeValue(e, 'password')}
                         style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
                         placeholder="Enter your password"
-                        secureTextEntry={true}
+                        secureTextEntry={!isShowIcon}
                     ></TextInput>
-                    {/* <Image style={styles.icon} source={require('../../assets/img/outlineEye.png')}></Image> */}
+                    <TouchableOpacity style={styles.touchableOpacity} onPress={handleShowOrHidePassword}>
+                        <Image
+                            style={styles.icon}
+                            source={
+                                isShowIcon
+                                    ? require('../../assets/img/outlineEye.png')
+                                    : require('../../assets/img/inlineEye.png')
+                            }
+                        />
+                    </TouchableOpacity>
                     {validationErrors.password !== '' && (
                         <Text style={styles.text_validate}>{validationErrors.password}</Text>
                     )}
@@ -133,11 +148,18 @@ const LoginPage = () => {
                 {/* View forgot password */}
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ flex: 1 }}></Text>
-                    <Text style={styles.text_forgot}>Forgot Password?</Text>
+                    <Text
+                        onPress={() => {
+                            navigation.navigate(SCREENS.FORGOT_PASSWORD as never);
+                        }}
+                        style={styles.text_forgot}
+                    >
+                        Forgot Password?
+                    </Text>
                 </View>
 
                 <View style={{ marginTop: 5 }}>
-                    <ButtonUI onPress={handleOnSubmit} />
+                    <ButtonUI text="Login" onPress={handleOnSubmit} />
                 </View>
             </View>
 
@@ -164,7 +186,9 @@ const styles = StyleSheet.create({
         paddingStart: 60,
         gap: 12,
     },
-    view_form: {},
+    view_form: {
+        position: 'relative',
+    },
 
     /* Style Image */
     image: {
@@ -232,7 +256,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 8,
         paddingHorizontal: 12,
-        position: 'relative',
         fontFamily: FONT_FAMILY,
     },
     TextInputError: {
@@ -244,7 +267,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 8,
         paddingHorizontal: 12,
-        position: 'relative',
         fontFamily: FONT_FAMILY,
     },
     button: {
@@ -255,13 +277,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontFamily: FONT_FAMILY,
     },
-    // icon: {
-    //     position: 'absolute',
-    //     height: 20,
-    //     width: 20,
-    //     right: 10,
-    //     top: '55%',
-    // },
+    touchableOpacity: {
+        right: 0,
+        top: 41,
+        position: 'absolute',
+    },
+    icon: {
+        height: 16,
+        width: 16,
+        right: 10,
+    },
 });
 
 export default LoginPage;

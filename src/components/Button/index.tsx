@@ -4,12 +4,13 @@ import { BG_PRIMARYCOLOR } from '../../utils/common';
 
 interface ButtonUIProps {
     onPress: () => void;
+    text: string;
 }
 
-const ButtonUI = ({ onPress }: ButtonUIProps) => {
+const ButtonUI = ({ onPress, text }: ButtonUIProps) => {
     return (
         <TouchableOpacity onPress={onPress} style={styles.button}>
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Login</Text>
+            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>{text}</Text>
         </TouchableOpacity>
     );
 };
