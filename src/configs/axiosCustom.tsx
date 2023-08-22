@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { asyncStorageService } from '../utils/storage';
 import { ACCESS_TOKEN_KEY } from '../constants';
-
+import { HOST_API_APP } from '@env';
 const axiosCustomer = axios.create({
-    baseURL: 'http://localhost:9090',
+    baseURL: HOST_API_APP,
     timeout: 100000,
 });
 
 axiosCustomer.interceptors.request.use(
     async (config) => {
-        const access_token = await asyncStorageService.getValue(ACCESS_TOKEN_KEY);
+        const access_token = await asyncStorageService.getValue('access_token');
         if (config.method === 'get') {
             const currentTime = new Date().getTime();
             const oldUrl: any = config.url;

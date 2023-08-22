@@ -11,7 +11,7 @@ export const isValidPassword = (password: string) => {
     if (password.length === 0) {
         return 'Please enter password';
     } else if (password.length <= 5) {
-        return 'Password must have at least 8 characters';
+        return 'Password must have at least 6 characters';
     }
     return '';
 };

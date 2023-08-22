@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {
     Alert,
@@ -9,7 +10,9 @@ import {
     TextInputChangeEventData,
     View,
 } from 'react-native';
+import { asyncStorageService } from '../../../src/utils/storage';
 import ButtonUI from '../../components/Button';
+import { loginAPI } from '../../services/api/auth.api';
 import { IParamsAuth } from '../../types/auth';
 import { isValidEmail, isValidPassword } from '../../utils/validation';
 import {
@@ -19,10 +22,11 @@ import {
     FONT_FAMILY,
     TEXT_COLOR_PRIMARY,
 } from './../../utils/common';
-import { loginAPI } from '../../services/api/auth.api';
-import axios from 'axios';
+import { SCREENS } from '../../constants';
 
 const LoginPage = () => {
+    // const navigation = useNavigation();
+    // const homeScreen: string = SCREENS.HOME;
     const [valueForm, setValueForm] = useState<IParamsAuth>({
         email: '',
         password: '',
@@ -72,23 +76,17 @@ const LoginPage = () => {
         const { email, password } = valueForm;
         handleValidatePrevSubmit();
         if (!validationErrors.password && !validationErrors.email && valueForm.email && valueForm.password) {
-            // No errors, proceed with submission
             const param = {
                 email: email,
                 password: password,
             };
-            // Alert.alert(`${param.email}, ${param.password}`);
             try {
-                // const res = await loginAPI(param);
-                // Alert.alert(`${res}`); api/v1/user/get-list-user
-                // testting
-                const response = await axios.post('http://192.168.56.1:8000/api/v1/auth/login/', {
-                    email: param.email,
-                    password: param.password,
-                });
-                Alert.alert(`${response?.data?.data?.token}`);
-                console.log('Status:', response.status);
-                console.log('Data:', response.data);
+                const res = await loginAPI(param);
+                if (res) {
+                    asyncStorageService.setValue('access_token', res?.data?.token);
+                    asyncStorageService.setValue('User', res?.data);
+                    // navigation.navigate('Home');
+                }
             } catch (error) {
                 Alert.alert(`${error}`);
             }
@@ -135,7 +133,7 @@ const LoginPage = () => {
                 {/* View forgot password */}
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ flex: 1 }}></Text>
-                    <Text style={styles.text_forgot}>Forgot Password</Text>
+                    <Text style={styles.text_forgot}>Forgot Password?</Text>
                 </View>
 
                 <View style={{ marginTop: 5 }}>

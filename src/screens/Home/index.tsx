@@ -6,7 +6,7 @@ interface HomeScreensProps {}
 const HomeScreens = () => {
     return (
         <>
-            <LoginPage />
+            <Text>Home Page</Text>
         </>
     );
 };
