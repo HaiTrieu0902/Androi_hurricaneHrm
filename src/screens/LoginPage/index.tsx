@@ -8,12 +8,13 @@ import {
     Text,
     TextInput,
     TextInputChangeEventData,
-    View,
     TouchableOpacity,
+    View,
 } from 'react-native';
-import { asyncStorageService } from '../../../src/utils/storage';
 import ButtonUI from '../../components/Button';
 import { SCREENS } from '../../constants';
+import { setAuthToken, setAuthUser } from '../../redux/auth.slice';
+import { useAppDispatch } from '../../redux/store';
 import { loginAPI } from '../../services/api/auth.api';
 import { IParamsAuth } from '../../types/auth';
 import { isValidEmail, isValidPassword } from '../../utils/validation';
@@ -26,6 +27,7 @@ import {
 } from './../../utils/common';
 
 const LoginPage = () => {
+    const dispatch = useAppDispatch();
     const navigation = useNavigation();
     const [valueForm, setValueForm] = useState<IParamsAuth>({
         email: '',
@@ -84,8 +86,8 @@ const LoginPage = () => {
             try {
                 const res = await loginAPI(param);
                 if (res) {
-                    asyncStorageService.setValue('access_token', res?.data?.token);
-                    asyncStorageService.setValue('user', res?.data);
+                    dispatch(setAuthToken(res?.data?.token));
+                    dispatch(setAuthUser(res?.data));
                     navigation.navigate(SCREENS.BOTTOM as never);
                 }
             } catch (error) {
@@ -240,7 +242,7 @@ const styles = StyleSheet.create({
         paddingEnd: 60,
         paddingStart: 60,
         textAlign: 'center',
-        color: TEXT_COLOR_PRIMARY,
+        color: BG_SUB_COLOR,
         marginTop: 30,
         fontSize: 14,
         fontFamily: FONT_FAMILY,

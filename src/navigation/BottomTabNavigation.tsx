@@ -7,12 +7,13 @@ import FilterScreen from '../screens/FilterScreen';
 import HomeScreens from '../screens/Home';
 import PersonalScreen from '../screens/PersonalScreen';
 import UserHrScreen from '../screens/UserHrScreen';
-import { ACTIVE_NAV_BOTTOM, BG_PRIMARYCOLOR, BG_SUB_COLOR, FONT_FAMILY, SIZE_ICON_DEFAULT } from '../utils/common';
+import { BG_PRIMARYCOLOR, FONT_FAMILY, SIZE_ICON_DEFAULT } from '../utils/common';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigation = () => {
     return (
         <Tab.Navigator
+            initialRouteName={SCREENS.HOME}
             screenOptions={{
                 headerShown: false,
                 tabBarActiveTintColor: BG_PRIMARYCOLOR,
@@ -50,6 +51,7 @@ const BottomTabNavigation = () => {
                     tabBarIcon: ({ color, size }) => <Icon name="users-gear" size={SIZE_ICON_DEFAULT} color={color} />,
                 }}
             />
+
             <Tab.Screen
                 name={SCREENS.EMPLOYEE}
                 component={EmployeeScreen}

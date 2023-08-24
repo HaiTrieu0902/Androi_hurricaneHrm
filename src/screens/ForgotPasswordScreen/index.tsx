@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
         paddingEnd: 60,
         paddingStart: 60,
         textAlign: 'center',
-        color: TEXT_COLOR_PRIMARY,
+        color: BG_SUB_COLOR,
         marginTop: 30,
         fontSize: 14,
         fontFamily: FONT_FAMILY,
@@ -280,13 +280,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontFamily: FONT_FAMILY,
     },
-    // icon: {
-    //     position: 'absolute',
-    //     height: 20,
-    //     width: 20,
-    //     right: 10,
-    //     top: '55%',
-    // },
 });
 
 export default ForgotPasswordScreen;

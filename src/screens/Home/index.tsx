@@ -1,30 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, Alert } from 'react-native';
-import LoginPage from '../LoginPage';
-import { asyncStorageService } from '../../../src/utils/storage';
+import React from 'react';
+import { Text, View } from 'react-native';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 interface HomeScreensProps {}
 const HomeScreens = () => {
-    // Alert.alert('Error', 'Network error.', [{ text: 'OK' }], {
-    //     cancelable: false,
-    // });
+    const dispatch = useAppDispatch();
+    const { token, user } = useAppSelector((state) => state.auth);
 
-    const [user, setUser] = useState<any>();
-
-    useEffect(() => {
-        const handleGetValue = async () => {
-            const retrievedUser = await asyncStorageService.getValue('user');
-            setUser(retrievedUser);
-        };
-
-        handleGetValue();
-    }, []);
-
-    console.log(user);
     return (
         <View>
             <Text>{user?.email}</Text>
             <Text>{user?.username}</Text>
             <Text>{user?.token}</Text>
+            <Text>This is Token nghen {user?.token}</Text>
         </View>
     );
 };
