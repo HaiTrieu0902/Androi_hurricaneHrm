@@ -10,12 +10,12 @@ import {
     TextInputChangeEventData,
     View,
 } from 'react-native';
-import { asyncStorageService } from '../../../src/utils/storage';
 import ButtonUI from '../../components/Button';
 import { SCREENS } from '../../constants';
-import { loginAPI } from '../../services/api/auth.api';
+import useToastNotifications from '../../hook/useToastNotifications';
+import { forgotPasswordAPI } from '../../services/api/auth.api';
 import { IParamsAuth } from '../../types/auth';
-import { isValidConfirmPassword, isValidEmail, isValidPassword } from '../../utils/validation';
+import { isValidConfirmPassword, isValidPassword, isValidUsername } from '../../utils/validation';
 import {
     BG_PRIMARYCOLOR,
     BG_SUB_COLOR,
@@ -25,13 +25,14 @@ import {
 } from './../../utils/common';
 const ForgotPasswordScreen = () => {
     const navigation = useNavigation();
+    const showToast = useToastNotifications();
     const [valueForm, setValueForm] = useState<IParamsAuth>({
-        email: '',
+        username: '',
         password: '',
         confirmPassword: '',
     });
     const [validationErrors, setValidationErrors] = useState<IParamsAuth>({
-        email: '',
+        username: '',
         password: '',
         confirmPassword: '',
     });
@@ -44,10 +45,10 @@ const ForgotPasswordScreen = () => {
             [field]: newValue,
         }));
         /* When value change and then update value Error if has error */
-        if (field === 'email') {
+        if (field === 'username') {
             setValidationErrors((prev) => ({
                 ...prev,
-                email: isValidEmail(newValue),
+                username: isValidUsername(newValue),
             }));
         } else if (field === 'password') {
             setValidationErrors((prev) => ({
@@ -63,13 +64,13 @@ const ForgotPasswordScreen = () => {
     };
 
     const handleValidatePrevSubmit = () => {
-        const { email, password, confirmPassword } = valueForm;
-        const valueErrorEmail = isValidEmail(email);
+        const { username, password, confirmPassword } = valueForm;
+        const valueErrorUsername = isValidUsername(String(username));
         const valueErrorPassword = isValidPassword(password);
         const valueConfirmPassword = isValidConfirmPassword(String(password), String(confirmPassword));
         setValidationErrors((prev) => ({
             ...prev,
-            email: valueErrorEmail,
+            username: valueErrorUsername,
             password: valueErrorPassword,
             confirmPassword: valueConfirmPassword,
         }));
@@ -77,23 +78,31 @@ const ForgotPasswordScreen = () => {
 
     /*Handle submit form */
     const handleOnSubmit = async () => {
-        const { email, password, confirmPassword } = valueForm;
+        const { username, password, confirmPassword } = valueForm;
         handleValidatePrevSubmit();
         if (
             !validationErrors.password &&
-            !validationErrors.email &&
+            !validationErrors.username &&
             !validationErrors.confirmPassword &&
-            valueForm.email &&
+            valueForm.username &&
             valueForm.password &&
             valueForm.confirmPassword &&
             valueForm.password === valueForm.confirmPassword
         ) {
             const param = {
-                email: email,
+                username: username,
                 password: password,
                 confirmPassword: confirmPassword,
             };
-            Alert.alert(`Chức năng đang bảo trì`);
+            try {
+                const res = await forgotPasswordAPI(param);
+                if (res) {
+                    showToast(`${res?.message}`, 'success', 'top');
+                    navigation.navigate(SCREENS.LOGIN as never);
+                }
+            } catch (error: any) {
+                showToast(`${error?.error}`, 'danger', 'top');
+            }
         }
     };
 
@@ -104,24 +113,24 @@ const ForgotPasswordScreen = () => {
                     <Image style={styles.image} source={require('../../assets/img/ryder.png')}></Image>
                 </View>
                 <Text style={styles.text_header}>Forgot Password</Text>
-                <Text style={styles.text_app}>Please enter your email details to get password.</Text>
+                <Text style={styles.text_app}>Please enter your username details to get password.</Text>
             </View>
 
             {/* View Form container */}
             <View style={styles.view_form_container}>
                 <View style={styles.view_form}>
-                    <Text style={styles.text_form}>Email</Text>
+                    <Text style={styles.text_form}>Username:</Text>
                     <TextInput
-                        onChange={(e) => handleOnChangeValue(e, 'email')}
-                        style={validationErrors.email !== '' ? styles.TextInputError : styles.TextInput}
-                        placeholder="Enter your email address"
+                        onChange={(e) => handleOnChangeValue(e, 'username')}
+                        style={validationErrors.username !== '' ? styles.TextInputError : styles.TextInput}
+                        placeholder="Enter your username"
                     ></TextInput>
-                    {validationErrors.email !== '' && (
-                        <Text style={styles.text_validate}>{validationErrors.email}</Text>
+                    {validationErrors.username !== '' && (
+                        <Text style={styles.text_validate}>{validationErrors.username}</Text>
                     )}
                 </View>
                 <View style={styles.view_form}>
-                    <Text style={styles.text_form}>New Password</Text>
+                    <Text style={styles.text_form}>New Password:</Text>
                     <TextInput
                         onChange={(e) => handleOnChangeValue(e, 'password')}
                         style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
@@ -135,7 +144,7 @@ const ForgotPasswordScreen = () => {
                 </View>
 
                 <View style={styles.view_form}>
-                    <Text style={styles.text_form}>Confirm Password</Text>
+                    <Text style={styles.text_form}>Confirm Password:</Text>
                     <TextInput
                         onChange={(e) => handleOnChangeValue(e, 'confirmPassword')}
                         style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
@@ -214,7 +223,7 @@ const styles = StyleSheet.create({
     text_app: {
         marginTop: 10,
         color: TEXT_COLOR_PRIMARY,
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: '600',
         fontFamily: FONT_FAMILY,
     },

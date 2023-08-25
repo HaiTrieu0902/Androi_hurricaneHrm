@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {
-    Alert,
     Image,
     NativeSyntheticEvent,
     StyleSheet,
@@ -13,11 +12,12 @@ import {
 } from 'react-native';
 import ButtonUI from '../../components/Button';
 import { SCREENS } from '../../constants';
+import useToastNotifications from '../../hook/useToastNotifications';
 import { setAuthToken, setAuthUser } from '../../redux/auth.slice';
 import { useAppDispatch } from '../../redux/store';
 import { loginAPI } from '../../services/api/auth.api';
 import { IParamsAuth } from '../../types/auth';
-import { isValidEmail, isValidPassword } from '../../utils/validation';
+import { isValidPassword, isValidUsername } from '../../utils/validation';
 import {
     BG_PRIMARYCOLOR,
     BG_SUB_COLOR,
@@ -29,12 +29,13 @@ import {
 const LoginPage = () => {
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
+    const showToast = useToastNotifications();
     const [valueForm, setValueForm] = useState<IParamsAuth>({
-        email: '',
+        username: '',
         password: '',
     });
     const [validationErrors, setValidationErrors] = useState<IParamsAuth>({
-        email: '',
+        username: '',
         password: '',
     });
     const [isShowIcon, setIsShowIcon] = useState<boolean>(false);
@@ -47,10 +48,10 @@ const LoginPage = () => {
             [field]: newValue,
         }));
         /* When value change and then update value Error if has error */
-        if (field === 'email') {
+        if (field === 'username') {
             setValidationErrors((prev) => ({
                 ...prev,
-                email: isValidEmail(newValue),
+                username: isValidUsername(newValue),
             }));
         } else if (field === 'password') {
             setValidationErrors((prev) => ({
@@ -64,34 +65,36 @@ const LoginPage = () => {
         Thấy phèn thì thay thư viện xịn x1000 lần
     */
     const handleValidatePrevSubmit = () => {
-        const { email, password } = valueForm;
-        const valueErrorEmail = isValidEmail(email);
+        const { username, password } = valueForm;
+        const valueErrorUsername = isValidUsername(String(username));
         const valueErrorPassword = isValidPassword(password);
         setValidationErrors((prev) => ({
             ...prev,
-            email: valueErrorEmail,
+            username: valueErrorUsername,
             password: valueErrorPassword,
         }));
     };
 
     /*Handle submit form */
     const handleOnSubmit = async () => {
-        const { email, password } = valueForm;
+        const { username, password } = valueForm;
         handleValidatePrevSubmit();
-        if (!validationErrors.password && !validationErrors.email && valueForm.email && valueForm.password) {
+        if (!validationErrors.password && !validationErrors.username && valueForm.username && valueForm.password) {
             const param = {
-                email: email,
+                username: username,
                 password: password,
             };
             try {
                 const res = await loginAPI(param);
                 if (res) {
-                    dispatch(setAuthToken(res?.data?.token));
-                    dispatch(setAuthUser(res?.data));
+                    await dispatch(setAuthToken(res?.data?.token));
+                    await dispatch(setAuthUser(res?.data));
+                    showToast(`${res?.message}`, 'success', 'top');
                     navigation.navigate(SCREENS.BOTTOM as never);
                 }
             } catch (error) {
-                Alert.alert(`${error}`);
+                showToast(`${error}`, 'danger', 'top');
+                // Alert.alert(`${error}`);
             }
         }
     };
@@ -114,18 +117,18 @@ const LoginPage = () => {
             {/* View Form container */}
             <View style={styles.view_form_container}>
                 <View style={styles.view_form}>
-                    <Text style={styles.text_form}>Email</Text>
+                    <Text style={styles.text_form}>Username:</Text>
                     <TextInput
-                        onChange={(e) => handleOnChangeValue(e, 'email')}
-                        style={validationErrors.email !== '' ? styles.TextInputError : styles.TextInput}
-                        placeholder="Enter your email address"
+                        onChange={(e) => handleOnChangeValue(e, 'username')}
+                        style={validationErrors.username !== '' ? styles.TextInputError : styles.TextInput}
+                        placeholder="Enter your username"
                     ></TextInput>
-                    {validationErrors.email !== '' && (
-                        <Text style={styles.text_validate}>{validationErrors.email}</Text>
+                    {validationErrors.username !== '' && (
+                        <Text style={styles.text_validate}>{validationErrors.username}</Text>
                     )}
                 </View>
                 <View style={styles.view_form}>
-                    <Text style={styles.text_form}>Password</Text>
+                    <Text style={styles.text_form}>Password: </Text>
                     <TextInput
                         onChange={(e) => handleOnChangeValue(e, 'password')}
                         style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
