@@ -8,6 +8,7 @@ import HomeScreens from '../screens/Home';
 import PersonalScreen from '../screens/PersonalScreen';
 import UserHrScreen from '../screens/UserHrScreen';
 import { BG_PRIMARYCOLOR, FONT_FAMILY, SIZE_ICON_DEFAULT } from '../utils/common';
+import PersonalNavigation from './PersonalNavigation';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigation = () => {

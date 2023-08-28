@@ -11,4 +11,9 @@ export const SCREENS: { [key: string]: string } = {
     FILLTER: 'Fillter',
     USER: 'User',
     EMPLOYEE: 'Employee',
+
+    /* Personal Screen */
+    HOME_PERSONAL: 'personal_home',
+    SETTINGS: 'personal_settings',
+    SETTING_THEME: 'personal_theme',
 };

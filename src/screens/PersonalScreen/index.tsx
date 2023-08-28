@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ButtonUI from '../../components/Button';
 import Container from '../../components/Container';
 import HeaderText from '../../components/HeaderText';
@@ -12,7 +13,6 @@ import { SCREENS } from '../../constants';
 import { remoteAuthToken, remoteAuthUser } from '../../redux/auth.slice';
 import { useAppDispatch } from '../../redux/store';
 import {
-    BG_PRIMARYCOLOR,
     BG_SCREEN,
     EXPLAIN_ERROR_TEXT,
     FONT_FAMILY,
@@ -20,6 +20,7 @@ import {
     SIZE_ICON_DEFAULT,
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
+
 const PersonalScreen = () => {
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
@@ -28,6 +29,10 @@ const PersonalScreen = () => {
         await dispatch(remoteAuthToken());
         await dispatch(remoteAuthUser());
         navigation.navigate(SCREENS.LOGIN as never);
+    };
+
+    const handleChangeNavigationPersonal = async (type: string) => {
+        navigation.navigate(SCREENS[type] as never);
     };
 
     return (
@@ -48,14 +53,21 @@ const PersonalScreen = () => {
                     <Text style={styles.text_title}>Manager</Text>
                     <Container>
                         <View style={styles.view_manage_list}>
-                            <View style={[styles.view_manage_item, styles.view_manage_border]}>
+                            <TouchableOpacity
+                                style={[styles.view_manage_item, styles.view_manage_border]}
+                                onPress={() => handleChangeNavigationPersonal('SETTINGS')}
+                            >
                                 <View style={styles.view_sub_item}>
                                     <FeatherIcon name="settings" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
                                     <Text style={styles.text_sub_item}>Settings</Text>
                                 </View>
                                 <Icon name="angle-right" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_DEFAULT} />
-                            </View>
-                            <View style={[styles.view_manage_item, styles.view_manage_border]}>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                onPress={() => handleChangeNavigationPersonal('SETTING_THEME')}
+                                style={[styles.view_manage_item, styles.view_manage_border]}
+                            >
                                 <View style={styles.view_sub_item}>
                                     <MaterialCommunityIcons
                                         name="theme-light-dark"
@@ -65,7 +77,7 @@ const PersonalScreen = () => {
                                     <Text style={styles.text_sub_item}>Setting Theme</Text>
                                 </View>
                                 <Icon name="angle-right" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_DEFAULT} />
-                            </View>
+                            </TouchableOpacity>
 
                             <View style={[styles.view_manage_item, styles.view_manage_border]}>
                                 <View style={styles.view_sub_item}>
@@ -147,7 +159,7 @@ const styles = StyleSheet.create({
     },
     view_manage_item: {
         display: 'flex',
-        gap: 12,
+        gap: 14,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignContent: 'center',
@@ -166,6 +178,7 @@ const styles = StyleSheet.create({
         borderBottomColor: TEXT_COLOR_PRIMARY,
     },
     text_title: {
+        fontFamily: FONT_FAMILY,
         marginBottom: 10,
         fontSize: 14,
         color: TEXT_COLOR_PRIMARY,
@@ -177,8 +190,10 @@ const styles = StyleSheet.create({
         color: 'black',
     },
     text_sub_item: {
+        fontFamily: FONT_FAMILY,
         marginTop: -3,
         color: TEXT_COLOR_PRIMARY,
+        fontSize: 14,
     },
 });
 
