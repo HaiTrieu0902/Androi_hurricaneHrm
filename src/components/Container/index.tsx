@@ -3,16 +3,16 @@ import { StyleSheet, View } from 'react-native';
 
 interface ContainerProps {
     children: any;
+    padding?: boolean;
 }
 
-const Container = ({ children }: ContainerProps) => {
-    return <View style={styles.bg_container}>{children}</View>;
+const Container = ({ children, padding }: ContainerProps) => {
+    return <View style={[styles.bg_container, { padding: padding ? 14 : 0 }]}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
     bg_container: {
         backgroundColor: 'white',
-        padding: 14,
         borderRadius: 10,
         shadowColor: 'rgba(0, 0, 0, 0.08)',
         shadowOffset: {

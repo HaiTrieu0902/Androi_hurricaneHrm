@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import ButtonUI from '../../components/Button';
 import { SCREENS } from '../../constants';
 import useToastNotifications from '../../hook/useToastNotifications';
@@ -136,14 +137,11 @@ const LoginPage = () => {
                         secureTextEntry={!isShowIcon}
                     ></TextInput>
                     <TouchableOpacity style={styles.touchableOpacity} onPress={handleShowOrHidePassword}>
-                        <Image
-                            style={styles.icon}
-                            source={
-                                isShowIcon
-                                    ? require('../../assets/img/outlineEye.png')
-                                    : require('../../assets/img/inlineEye.png')
-                            }
-                        />
+                        {isShowIcon ? (
+                            <Icon name="eye" color={TEXT_COLOR_PRIMARY} size={12} />
+                        ) : (
+                            <Icon name="eye-slash" color={TEXT_COLOR_PRIMARY} size={12} />
+                        )}
                     </TouchableOpacity>
                     {validationErrors.password !== '' && (
                         <Text style={styles.text_validate}>{validationErrors.password}</Text>
@@ -186,7 +184,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     view_form_container: {
-        marginTop: 80,
+        marginTop: 60,
         paddingEnd: 60,
         paddingStart: 60,
         gap: 12,
@@ -283,8 +281,8 @@ const styles = StyleSheet.create({
         fontFamily: FONT_FAMILY,
     },
     touchableOpacity: {
-        right: 0,
-        top: 41,
+        right: 8,
+        top: 42,
         position: 'absolute',
     },
     icon: {

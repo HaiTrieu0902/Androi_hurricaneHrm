@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { ACTIVE_NAV_BOTTOM, BG_PRIMARYCOLOR, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../utils/common';
+import { ACTIVE_NAV_BOTTOM, FONT_FAMILY } from '../../utils/common';
 
 interface HeaderTextProps {
     title: string;

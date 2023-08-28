@@ -5,8 +5,8 @@ import { SCREENS } from '../constants';
 import EmployeeScreen from '../screens/EmployeeScreen';
 import FilterScreen from '../screens/FilterScreen';
 import HomeScreens from '../screens/Home';
+import LeaveManagementScreen from '../screens/LeaveManagementScreen';
 import PersonalScreen from '../screens/PersonalScreen';
-import UserHrScreen from '../screens/UserHrScreen';
 import { BG_PRIMARYCOLOR, FONT_FAMILY, SIZE_ICON_DEFAULT } from '../utils/common';
 const Tab = createBottomTabNavigator();
 
@@ -44,11 +44,13 @@ const BottomTabNavigation = () => {
                 }}
             />
             <Tab.Screen
-                name={SCREENS.USER}
-                component={UserHrScreen}
+                name={SCREENS.LEAVE}
+                component={LeaveManagementScreen}
                 options={{
-                    tabBarLabel: 'User',
-                    tabBarIcon: ({ color, size }) => <Icon name="users-gear" size={SIZE_ICON_DEFAULT} color={color} />,
+                    tabBarLabel: 'Leave',
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon name="calendar-minus" size={SIZE_ICON_DEFAULT} color={color} />
+                    ),
                 }}
             />
 
