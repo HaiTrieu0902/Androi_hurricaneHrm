@@ -20,5 +20,8 @@ export const SCREENS: { [key: string]: string } = {
     SETTING_THEME: 'personal_theme',
 
     /* User Screen Sub */
-    ADD_OR_UPDATE_USER: 'user_add_update',
+    ADD_OR_UPDATE_USER: 'user_add_update_user',
+
+    /*  User Screen Sub */
+    ADD_OR_UPDATE_EMPLOYEE: 'user_add_update_employee',
 };

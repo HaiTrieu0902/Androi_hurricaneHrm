@@ -15,15 +15,17 @@ interface NavigationGoBackProps {
 const NavigationGoBack = ({ title, paddingTop, paddingBottom, paddingStart, paddingEnd }: NavigationGoBackProps) => {
     const navigation = useNavigation();
     return (
-        <TouchableOpacity
-            style={{ paddingTop: paddingTop, paddingBottom: paddingBottom, paddingStart: paddingStart, paddingEnd }}
-            onPress={() => navigation.goBack()}
-        >
+        <View style={{ paddingTop: paddingTop, paddingBottom: paddingBottom, paddingStart: paddingStart, paddingEnd }}>
             <View style={styles.view_navigation}>
-                <Icon name="angle-left" color={ACTIVE_NAV_BOTTOM} size={SIZE_ICON_DEFAULT} />
+                <Icon
+                    onPress={() => navigation.goBack()}
+                    name="angle-left"
+                    color={ACTIVE_NAV_BOTTOM}
+                    size={SIZE_ICON_DEFAULT}
+                />
                 <Text style={styles.text}>{title}</Text>
             </View>
-        </TouchableOpacity>
+        </View>
     );
 };
 export default NavigationGoBack;
