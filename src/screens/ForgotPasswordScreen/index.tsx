@@ -1,15 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import {
-    Alert,
-    Image,
-    NativeSyntheticEvent,
-    StyleSheet,
-    Text,
-    TextInput,
-    TextInputChangeEventData,
-    View,
-} from 'react-native';
+import { Image, NativeSyntheticEvent, StyleSheet, Text, TextInput, TextInputChangeEventData, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import ButtonUI from '../../components/Button';
 import { SCREENS } from '../../constants';
 import useToastNotifications from '../../hook/useToastNotifications';
@@ -35,6 +28,10 @@ const ForgotPasswordScreen = () => {
         username: '',
         password: '',
         confirmPassword: '',
+    });
+    const [isShowIcon, setIsShowIcon] = useState({
+        showPassword: false,
+        showConfirmPassword: false,
     });
 
     /*Handle onChange value input */
@@ -106,6 +103,20 @@ const ForgotPasswordScreen = () => {
         }
     };
 
+    const handleShowOrHidePassword = () => {
+        setIsShowIcon((prev) => ({
+            ...prev,
+            showPassword: !prev.showPassword,
+        }));
+    };
+
+    const handleShowOrHideConfirmPassword = () => {
+        setIsShowIcon((prev) => ({
+            ...prev,
+            showConfirmPassword: !prev.showConfirmPassword,
+        }));
+    };
+
     return (
         <View style={styles.view}>
             <View style={styles.view_Header}>
@@ -135,9 +146,18 @@ const ForgotPasswordScreen = () => {
                         onChange={(e) => handleOnChangeValue(e, 'password')}
                         style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
                         placeholder="Enter your password"
-                        secureTextEntry={true}
+                        secureTextEntry={!isShowIcon.showPassword}
                     ></TextInput>
-                    {/* <Image style={styles.icon} source={require('../../assets/img/outlineEye.png')}></Image> */}
+                    <View style={styles.touchableOpacity}>
+                        <TouchableOpacity onPress={handleShowOrHidePassword}>
+                            {isShowIcon.showPassword ? (
+                                <Icon name="eye" color={TEXT_COLOR_PRIMARY} size={12} />
+                            ) : (
+                                <Icon name="eye-slash" color={TEXT_COLOR_PRIMARY} size={12} />
+                            )}
+                        </TouchableOpacity>
+                    </View>
+
                     {validationErrors.password !== '' && (
                         <Text style={styles.text_validate}>{validationErrors.password}</Text>
                     )}
@@ -149,9 +169,18 @@ const ForgotPasswordScreen = () => {
                         onChange={(e) => handleOnChangeValue(e, 'confirmPassword')}
                         style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
                         placeholder="Enter your confirm password"
-                        secureTextEntry={true}
+                        secureTextEntry={!isShowIcon.showConfirmPassword}
                     ></TextInput>
-                    {/* <Image style={styles.icon} source={require('../../assets/img/outlineEye.png')}></Image> */}
+                    <View style={styles.touchableOpacity}>
+                        <TouchableOpacity onPress={handleShowOrHideConfirmPassword}>
+                            {isShowIcon.showConfirmPassword ? (
+                                <Icon name="eye" color={TEXT_COLOR_PRIMARY} size={12} />
+                            ) : (
+                                <Icon name="eye-slash" color={TEXT_COLOR_PRIMARY} size={12} />
+                            )}
+                        </TouchableOpacity>
+                    </View>
+
                     {validationErrors.confirmPassword !== '' && (
                         <Text style={styles.text_validate}>{validationErrors.confirmPassword}</Text>
                     )}
@@ -193,13 +222,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     view_form_container: {
-        marginTop: 80,
+        marginTop: 60,
         paddingEnd: 60,
         paddingStart: 60,
         gap: 12,
     },
-    view_form: {},
-
+    view_form: {
+        position: 'relative',
+    },
+    touchableOpacity: {
+        position: 'absolute',
+        top: 41,
+        right: 10,
+    },
     /* Style Image */
     image: {
         width: 260,
@@ -266,7 +301,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 8,
         paddingHorizontal: 12,
-        position: 'relative',
         fontFamily: FONT_FAMILY,
     },
     TextInputError: {
@@ -278,7 +312,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 8,
         paddingHorizontal: 12,
-        position: 'relative',
         fontFamily: FONT_FAMILY,
     },
     button: {

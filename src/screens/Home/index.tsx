@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 interface HomeScreensProps {}
 const HomeScreens = () => {
     const dispatch = useAppDispatch();
-    const { token, user } = useAppSelector((state) => state.auth);
+    const { user } = useAppSelector((state) => state.auth);
 
     return (
         <View>

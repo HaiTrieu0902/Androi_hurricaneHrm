@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { SCREENS } from '../constants';
 import { useAppSelector } from '../redux/store';
@@ -7,7 +7,7 @@ import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import LoginPage from '../screens/LoginPage';
 import BottomTabNavigation from './BottomTabNavigation';
 import { PersonalNavigation } from './PersonalNavigation';
-import { SettingScreen, ThemeScreen } from '../screens/PersonalScreen/Vm';
+import { UserNavigation } from './UserNavigation';
 const Stack = createStackNavigator();
 
 const NavigationMain = () => {
@@ -32,8 +32,10 @@ const NavigationMain = () => {
                             {PersonalNavigation.map((screen) => (
                                 <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
                             ))}
-
-                            {/* employee */}
+                            {/* User */}
+                            {UserNavigation.map((screen) => (
+                                <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
+                            ))}
                         </Stack.Group>
                     </>
                 )}
