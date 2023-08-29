@@ -5,11 +5,22 @@ import { BG_PRIMARYCOLOR } from '../../utils/common';
 interface ButtonUIProps {
     onPress: () => void;
     text: string;
+    bgColor?: string;
+    borderRadius?: number;
 }
 
-const ButtonUI = ({ onPress, text }: ButtonUIProps) => {
+const ButtonUI = ({ onPress, text, bgColor, borderRadius }: ButtonUIProps) => {
     return (
-        <TouchableOpacity onPress={onPress} style={styles.button}>
+        <TouchableOpacity
+            onPress={onPress}
+            style={[
+                {
+                    backgroundColor: bgColor ? bgColor : BG_PRIMARYCOLOR,
+                    borderRadius: borderRadius ? borderRadius : 10,
+                },
+                styles.button,
+            ]}
+        >
             <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>{text}</Text>
         </TouchableOpacity>
     );
@@ -17,9 +28,7 @@ const ButtonUI = ({ onPress, text }: ButtonUIProps) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: BG_PRIMARYCOLOR,
         height: 42,
-        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },

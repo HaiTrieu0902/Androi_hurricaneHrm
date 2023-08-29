@@ -4,10 +4,22 @@ import { StyleSheet, View } from 'react-native';
 interface ContainerProps {
     children: any;
     padding?: boolean;
+    marginTop?: number;
+    borderColor?: string;
+    borderWidth?: number;
 }
 
-const Container = ({ children, padding }: ContainerProps) => {
-    return <View style={[styles.bg_container, { padding: padding ? 14 : 0 }]}>{children}</View>;
+const Container = ({ children, padding, marginTop, borderColor, borderWidth }: ContainerProps) => {
+    return (
+        <View
+            style={[
+                styles.bg_container,
+                { padding: padding ? 14 : 0, marginTop: marginTop, borderColor: borderColor, borderWidth: borderWidth },
+            ]}
+        >
+            {children}
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
