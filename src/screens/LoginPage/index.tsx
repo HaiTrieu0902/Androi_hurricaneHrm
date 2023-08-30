@@ -22,6 +22,8 @@ import { isValidPassword, isValidUsername } from '../../utils/validation';
 import {
     BG_PRIMARYCOLOR,
     BG_SUB_COLOR,
+    COLOR_BORDER,
+    COLOR_BORDER_SOLID,
     EXPLAIN_ERROR_TEXT,
     FONT_FAMILY,
     TEXT_COLOR_PRIMARY,
@@ -94,7 +96,7 @@ const LoginPage = () => {
                     navigation.navigate(SCREENS.BOTTOM as never);
                 }
             } catch (error) {
-                showToast(`${error}`, 'danger', 'top');
+                showToast(`${error ? error : 'Please check it again!'}`, 'danger', 'top');
                 // Alert.alert(`${error}`);
             }
         }
@@ -112,7 +114,7 @@ const LoginPage = () => {
                     <Image style={styles.image} source={require('../../assets/img/ryder.png')}></Image>
                 </View>
                 <Text style={styles.text_header}>Welcome</Text>
-                <Text style={styles.text_app}>Time attendance application</Text>
+                <Text style={styles.text_app}>Expense Management App</Text>
             </View>
 
             {/* View Form container */}
@@ -162,7 +164,20 @@ const LoginPage = () => {
                 </View>
 
                 <View style={{ marginTop: 5 }}>
-                    <ButtonUI text="Login" onPress={handleOnSubmit} />
+                    <ButtonUI bgColor={BG_SUB_COLOR} text="Login" onPress={handleOnSubmit} />
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                    <ButtonUI
+                        bgColor="transparent"
+                        color={COLOR_BORDER_SOLID}
+                        borderWidth={1}
+                        borderColor={COLOR_BORDER_SOLID}
+                        text="Register"
+                        onPress={() => {
+                            navigation.navigate(SCREENS.REGISTER as never);
+                        }}
+                    />
                 </View>
             </View>
 

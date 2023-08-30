@@ -9,6 +9,7 @@ import BottomTabNavigation from './BottomTabNavigation';
 import { PersonalNavigation } from './PersonalNavigation';
 import { UserNavigation } from './UserNavigation';
 import { EmployeeNavigation } from './EmployeeNavigation';
+import RegisterScreen from '../screens/RegisterScreen';
 const Stack = createStackNavigator();
 
 const NavigationMain = () => {
@@ -23,6 +24,7 @@ const NavigationMain = () => {
                         <Stack.Group screenOptions={{ headerShown: false }}>
                             <Stack.Screen name={SCREENS.LOGIN} component={LoginPage} />
                             <Stack.Screen name={SCREENS.FORGOT_PASSWORD} component={ForgotPasswordScreen} />
+                            <Stack.Screen name={SCREENS.REGISTER} component={RegisterScreen} />
                         </Stack.Group>
                     </>
                 ) : (

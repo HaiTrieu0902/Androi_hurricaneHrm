@@ -7,21 +7,26 @@ interface ButtonUIProps {
     text: string;
     bgColor?: string;
     borderRadius?: number;
+    borderWidth?: number;
+    borderColor?: string;
+    color?: string;
 }
 
-const ButtonUI = ({ onPress, text, bgColor, borderRadius }: ButtonUIProps) => {
+const ButtonUI = ({ onPress, text, bgColor, borderRadius, color, borderWidth, borderColor }: ButtonUIProps) => {
     return (
         <TouchableOpacity
             onPress={onPress}
             style={[
                 {
+                    borderWidth: borderWidth ? borderWidth : 0,
+                    borderColor: borderColor ? borderColor : '',
                     backgroundColor: bgColor ? bgColor : BG_PRIMARYCOLOR,
                     borderRadius: borderRadius ? borderRadius : 10,
                 },
                 styles.button,
             ]}
         >
-            <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>{text}</Text>
+            <Text style={{ color: color ? color : 'white', fontSize: 16, fontWeight: 'bold' }}>{text}</Text>
         </TouchableOpacity>
     );
 };
