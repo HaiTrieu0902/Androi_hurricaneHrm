@@ -25,3 +25,17 @@ export const SCREENS: { [key: string]: string } = {
     /*  User Screen Sub */
     ADD_OR_UPDATE_EMPLOYEE: 'user_add_update_employee',
 };
+
+/* USer Infomation list  */
+export const dataInfoUser = [
+    { name: 'Username', key: 'username' },
+    { name: 'Email', key: 'email' },
+    { name: 'Department', key: 'department' },
+    { name: 'Role', key: 'role' },
+];
+export const dataInfoEmployee = [
+    { name: 'Name', key: 'employee_name' },
+    { name: 'Position', key: 'position' },
+    { name: 'Number Phone', key: 'mobile_no' },
+    { name: 'Code', key: 'employee_code' },
+];

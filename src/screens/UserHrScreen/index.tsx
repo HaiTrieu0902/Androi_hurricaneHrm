@@ -1,258 +1,129 @@
-import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import FeatherIcon from 'react-native-vector-icons/Feather';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
-import ButtonUI from '../../components/Button';
-import Container from '../../components/Container';
-import HeaderText from '../../components/HeaderText';
-import { SCREENS } from '../../constants';
-import {
-    BG_PRIMARYCOLOR,
-    BG_SCREEN,
-    FONT_FAMILY,
-    SIZE_ICON_16,
-    SIZE_ICON_20,
-    SIZE_ICON_DEFAULT,
-    TEXT_COLOR_PRIMARY,
-} from '../../utils/common';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useAppDispatch } from '../../redux/store';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import ButtonUI from '../../components/Button';
+import ContainerInfomation from '../../components/ContainerInfomation';
 import NavigationGoBack from '../../components/NavigationGoBack';
+import SearchInput from '../../components/SearchInput';
+import { SCREENS, dataInfoUser } from '../../constants';
+import { useAppDispatch } from '../../redux/store';
+import { BG_SCREEN, BG_SUB_COLOR, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../utils/common';
 const UserHrScreen = () => {
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
 
-    const handleAddUser = () => {};
-
-    const handleChangeNavigationPersonal = async (type: string) => {
+    const handleChangeNavigationUser = async (type: string) => {
         navigation.navigate(SCREENS[type] as never);
     };
+
+    /* Data test */
+    const data = [
+        {
+            _id: '64defb2c98cad31e56da3581',
+            username: 'admin1',
+            email: 'admin@gmail.com',
+            role: 'admin',
+            department: '123456',
+            user_id: 1,
+        },
+        {
+            _id: '64df2f93926879a02092634a',
+            username: 'haitrieu',
+            email: 'haitrieu@gmail.com',
+            role: 'admin',
+            department: '123456',
+            user_id: 2,
+        },
+        {
+            _id: '64df2fc1926879a020926350',
+            username: 'dangdat',
+            email: 'dangdat@gmail.com',
+            role: 'user',
+            department: '123456',
+            user_id: 3,
+        },
+        {
+            _id: '64df2fd1926879a020926353',
+            username: 'haibui',
+            email: 'haibui@gmail.com',
+            role: 'user',
+            department: '123456',
+            user_id: 4,
+        },
+        {
+            _id: '64df2fdc926879a020926356',
+            username: 'duydat',
+            email: 'duydat@gmail.com',
+            role: 'user',
+            department: '123456',
+            user_id: 5,
+        },
+        {
+            _id: '64df2fe6926879a020926359',
+            username: 'danghuy',
+            email: 'danghuy@gmail.com',
+            role: 'user',
+            department: '123456',
+            user_id: 6,
+        },
+        {
+            _id: '64df2ff6926879a02092635c',
+            username: 'phuongtra',
+            email: 'phuongtra@gmail.com',
+            role: 'user',
+            department: '123456',
+            user_id: 7,
+        },
+        {
+            _id: '64df300c926879a02092635f',
+            username: 'yummii',
+            email: 'yummi@gmail.com',
+            role: 'user',
+            department: '123456',
+            user_id: 8,
+        },
+        {
+            _id: '64df309c926879a020926362',
+            username: 'thuydung',
+            email: 'thuydung@gmail.com',
+            role: 'user',
+            department: '123456',
+            user_id: 9,
+        },
+        {
+            _id: '64df30c5926879a020926365',
+            username: 'thanhloc',
+            email: 'thanhloc@gmail.com',
+            role: 'user',
+            department: '123456',
+            user_id: 10,
+        },
+    ];
 
     return (
         <SafeAreaView style={styles.bg_scrren}>
             <View style={styles.bg_container}>
                 <NavigationGoBack paddingBottom={12} paddingTop={12} title="User management" />
             </View>
-
-            <View style={styles.search}>
-                <View style={styles.icon_search}>
-                    <AntDesign name="search1" color={'white'} size={20}></AntDesign>
-                </View>
-                <TextInput
-                    style={styles.input_search}
-                    placeholder="Search name user"
-                    placeholderTextColor={'white'}
-                ></TextInput>
-                <View style={styles.filter}>
-                    <AntDesign color={'white'} name="filter" size={24}></AntDesign>
-                </View>
+            <View>
+                <SearchInput />
             </View>
-
-            <HeaderText title="Manage User"></HeaderText>
             <ScrollView>
                 <View style={styles.bg_container}>
-                    {/* Infomation User */}
-                    <TouchableOpacity
-                        onPress={() => handleChangeNavigationPersonal('ADD_OR_UPDATE_USER')}
-                        style={styles.view_item}
-                    >
-                        <Container>
-                            <View style={styles.view_item_container}>
-                                <View style={styles.view_manage_list}>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Username: </Text>
-                                            <Text style={styles.text_sub_item_value}>Admin1 </Text>
-                                        </View>
-                                    </View>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Email: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin@gmail.com </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>department: </Text>
-                                            <Text style={styles.text_sub_item_value}>123456 </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Role: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <Icon name="angle-right" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_20} />
-                            </View>
-                        </Container>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleChangeNavigationPersonal('SET_USER')}
-                        style={styles.view_item}
-                    >
-                        <Container>
-                            <View style={styles.view_item_container}>
-                                <View style={styles.view_manage_list}>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Username: </Text>
-                                            <Text style={styles.text_sub_item_value}>Admin1 </Text>
-                                        </View>
-                                    </View>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Email: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin@gmail.com </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>department: </Text>
-                                            <Text style={styles.text_sub_item_value}>123456 </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Role: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <Icon name="angle-right" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_20} />
-                            </View>
-                        </Container>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleChangeNavigationPersonal('SET_USER')}
-                        style={styles.view_item}
-                    >
-                        <Container>
-                            <View style={styles.view_item_container}>
-                                <View style={styles.view_manage_list}>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Username: </Text>
-                                            <Text style={styles.text_sub_item_value}>Admin1 </Text>
-                                        </View>
-                                    </View>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Email: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin@gmail.com </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>department: </Text>
-                                            <Text style={styles.text_sub_item_value}>123456 </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Role: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <Icon name="angle-right" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_20} />
-                            </View>
-                        </Container>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleChangeNavigationPersonal('SET_USER')}
-                        style={styles.view_item}
-                    >
-                        <Container>
-                            <View style={styles.view_item_container}>
-                                <View style={styles.view_manage_list}>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Username: </Text>
-                                            <Text style={styles.text_sub_item_value}>Admin1 </Text>
-                                        </View>
-                                    </View>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Email: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin@gmail.com </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>department: </Text>
-                                            <Text style={styles.text_sub_item_value}>123456 </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Role: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <Icon name="angle-right" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_20} />
-                            </View>
-                        </Container>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => handleChangeNavigationPersonal('SET_USER')}
-                        style={styles.view_item}
-                    >
-                        <Container>
-                            <View style={styles.view_item_container}>
-                                <View style={styles.view_manage_list}>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Username: </Text>
-                                            <Text style={styles.text_sub_item_value}>Admin1 </Text>
-                                        </View>
-                                    </View>
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Email: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin@gmail.com </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>department: </Text>
-                                            <Text style={styles.text_sub_item_value}>123456 </Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={[styles.view_manage_item, styles.view_manage_border]}>
-                                        <View style={styles.view_sub_item}>
-                                            <Text style={styles.text_sub_item}>Role: </Text>
-                                            <Text style={styles.text_sub_item_value}>admin </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                <Icon name="angle-right" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_20} />
-                            </View>
-                        </Container>
-                    </TouchableOpacity>
+                    {data.map((item, index) => {
+                        return <ContainerInfomation key={index} columns={dataInfoUser} dataSource={item} />;
+                    })}
                 </View>
             </ScrollView>
             {/* Button */}
             <View style={styles.view_btn}>
-                <ButtonUI text="Add New User" onPress={handleAddUser}></ButtonUI>
+                <ButtonUI
+                    bgColor={BG_SUB_COLOR}
+                    text="Create new user"
+                    onPress={() => handleChangeNavigationUser('ADD_OR_UPDATE_USER')}
+                ></ButtonUI>
             </View>
         </SafeAreaView>
     );
@@ -266,27 +137,6 @@ const styles = StyleSheet.create({
     bg_container: {
         paddingStart: 16,
         paddingEnd: 16,
-    },
-    search: {
-        backgroundColor: BG_PRIMARYCOLOR,
-        flexDirection: 'row',
-        paddingTop: 10,
-        alignContent: 'center',
-        justifyContent: 'space-between',
-        paddingStart: 20,
-        paddingEnd: 20,
-    },
-    icon_search: {
-        paddingTop: 8,
-        color: 'white',
-    },
-    input_search: {
-        paddingTop: 4,
-        width: '80%',
-        color: 'white',
-    },
-    filter: {
-        paddingTop: 8,
     },
 
     view_item: {
@@ -347,7 +197,7 @@ const styles = StyleSheet.create({
         paddingStart: 16,
         paddingEnd: 16,
         paddingTop: 60,
-        paddingBottom: 10,
+        paddingBottom: 16,
         flex: 1,
         justifyContent: 'flex-end',
         backgroundColor: BG_SCREEN,

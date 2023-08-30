@@ -1,12 +1,22 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { Image, NativeSyntheticEvent, StyleSheet, Text, TextInput, TextInputChangeEventData, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {
+    Image,
+    NativeSyntheticEvent,
+    StyleSheet,
+    Text,
+    TextInput,
+    TextInputChangeEventData,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import ButtonUI from '../../components/Button';
 import { SCREENS } from '../../constants';
 import useToastNotifications from '../../hook/useToastNotifications';
-import { forgotPasswordAPI } from '../../services/api/auth.api';
+import { setAuthToken, setAuthUser } from '../../redux/auth.slice';
+import { useAppDispatch } from '../../redux/store';
+import { loginAPI } from '../../services/api/auth.api';
 import { IParamsAuth } from '../../types/auth';
 import { isValidConfirmPassword, isValidPassword, isValidUsername } from '../../utils/validation';
 import {
@@ -16,7 +26,7 @@ import {
     FONT_FAMILY,
     TEXT_COLOR_PRIMARY,
 } from './../../utils/common';
-const ForgotPasswordScreen = () => {
+const RegisterScreen = () => {
     const navigation = useNavigation();
     const showToast = useToastNotifications();
     const [valueForm, setValueForm] = useState<IParamsAuth>({
@@ -91,15 +101,15 @@ const ForgotPasswordScreen = () => {
                 password: password,
                 confirmPassword: confirmPassword,
             };
-            try {
-                const res = await forgotPasswordAPI(param);
-                if (res) {
-                    showToast(`${res?.message}`, 'success', 'top');
-                    navigation.navigate(SCREENS.LOGIN as never);
-                }
-            } catch (error: any) {
-                showToast(`${error?.error}`, 'danger', 'top');
-            }
+            // try {
+            //     const res = await forgotPasswordAPI(param);
+            //     if (res) {
+            //         showToast(`${res?.message}`, 'success', 'top');
+            //         navigation.navigate(SCREENS.LOGIN as never);
+            //     }
+            // } catch (error: any) {
+            //     showToast(`${error?.error}`, 'danger', 'top');
+            // }
         }
     };
 
@@ -116,15 +126,14 @@ const ForgotPasswordScreen = () => {
             showConfirmPassword: !prev.showConfirmPassword,
         }));
     };
-
     return (
         <View style={styles.view}>
             <View style={styles.view_Header}>
                 <View>
                     <Image style={styles.image} source={require('../../assets/img/ryder.png')}></Image>
                 </View>
-                <Text style={styles.text_header}>Forgot Password</Text>
-                <Text style={styles.text_app}>Please enter your username details to get password.</Text>
+                <Text style={styles.text_header}>Register Account</Text>
+                <Text style={styles.text_app}>Create new account</Text>
             </View>
 
             {/* View Form container */}
@@ -141,7 +150,19 @@ const ForgotPasswordScreen = () => {
                     )}
                 </View>
                 <View style={styles.view_form}>
-                    <Text style={styles.text_form}>New Password:</Text>
+                    <Text style={styles.text_form}>Email:</Text>
+                    <TextInput
+                        onChange={(e) => handleOnChangeValue(e, 'email')}
+                        style={validationErrors.username !== '' ? styles.TextInputError : styles.TextInput}
+                        placeholder="Enter your email"
+                    ></TextInput>
+                    {validationErrors.username !== '' && (
+                        <Text style={styles.text_validate}>{validationErrors.username}</Text>
+                    )}
+                </View>
+
+                <View style={styles.view_form}>
+                    <Text style={styles.text_form}>Password:</Text>
                     <TextInput
                         onChange={(e) => handleOnChangeValue(e, 'password')}
                         style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
@@ -213,16 +234,18 @@ const ForgotPasswordScreen = () => {
     );
 };
 
+export default RegisterScreen;
+
 const styles = StyleSheet.create({
     /* Style View */
     view: { backgroundColor: '#f2f7f8', flex: 1 },
     view_Header: {
-        marginTop: 80,
+        marginTop: 40,
         flexDirection: 'column',
         alignItems: 'center',
     },
     view_form_container: {
-        marginTop: 60,
+        marginTop: 40,
         paddingEnd: 60,
         paddingStart: 60,
         gap: 12,
@@ -323,5 +346,3 @@ const styles = StyleSheet.create({
         fontFamily: FONT_FAMILY,
     },
 });
-
-export default ForgotPasswordScreen;
