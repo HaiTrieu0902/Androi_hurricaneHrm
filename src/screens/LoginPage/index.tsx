@@ -22,7 +22,6 @@ import { isValidPassword, isValidUsername } from '../../utils/validation';
 import {
     BG_PRIMARYCOLOR,
     BG_SUB_COLOR,
-    COLOR_BORDER,
     COLOR_BORDER_SOLID,
     EXPLAIN_ERROR_TEXT,
     FONT_FAMILY,
@@ -199,7 +198,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     view_form_container: {
-        marginTop: 60,
+        marginTop: 50,
         paddingEnd: 60,
         paddingStart: 60,
         gap: 12,

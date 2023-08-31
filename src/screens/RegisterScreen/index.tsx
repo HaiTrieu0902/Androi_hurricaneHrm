@@ -221,7 +221,7 @@ const RegisterScreen = () => {
                 </View>
 
                 <View style={{ marginTop: 12 }}>
-                    <ButtonUI bgColor={BG_SUB_COLOR} text="Confirm" onPress={handleOnSubmit} />
+                    <ButtonUI bgColor={BG_SUB_COLOR} text="Register" onPress={handleOnSubmit} />
                 </View>
             </View>
 

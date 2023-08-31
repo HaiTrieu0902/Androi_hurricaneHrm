@@ -1,6 +1,7 @@
 export const development: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 export const APIHost = development ? '/api' : 'https://google.com';
 export const ACCESS_TOKEN_KEY = 'token';
+
 export const SCREENS: { [key: string]: string } = {
     /* Main */
     HOME: 'Home',
@@ -9,10 +10,10 @@ export const SCREENS: { [key: string]: string } = {
     FORGOT_PASSWORD: 'ForgotPassword',
     BOTTOM: 'Bottom',
     PERSONAL: 'Personal',
-    FILLTER: 'Fillter',
+    LIMITATION: 'Limitation',
     USER: 'User',
-    EMPLOYEE: 'Employee',
-    LEAVE: 'Leave',
+    REPORT: 'Report',
+    CALENDER: 'calender',
 
     /* Personal Screen Sub */
     HOME_PERSONAL: 'personal_home',
@@ -21,6 +22,7 @@ export const SCREENS: { [key: string]: string } = {
 
     /* User Screen Sub */
     ADD_OR_UPDATE_USER: 'user_add_update_user',
+    CHANGE_PASSORD: 'ChangePassword',
 
     /*  User Screen Sub */
     ADD_OR_UPDATE_EMPLOYEE: 'user_add_update_employee',

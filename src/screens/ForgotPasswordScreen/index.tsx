@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     view_form_container: {
-        marginTop: 60,
+        marginTop: 50,
         paddingEnd: 60,
         paddingStart: 60,
         gap: 12,
