@@ -13,7 +13,7 @@ const ExpenseHome = () => {
     };
 
     const formatDateCustom = (date: Date) => {
-        return format(date, 'EEE, M.d.yyyy');
+        return format(date, 'M.d.yyyy, EEE');
     };
 
     return (
