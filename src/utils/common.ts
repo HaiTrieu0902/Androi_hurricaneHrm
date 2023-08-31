@@ -10,3 +10,6 @@ export const FONT_FAMILY = 'Poppins';
 export const SIZE_ICON_DEFAULT = 14;
 export const SIZE_ICON_16 = 16;
 export const SIZE_ICON_20 = 20;
+
+/* HOME */
+export const BUTTON_COLOR__HOME = '#b8def3';
