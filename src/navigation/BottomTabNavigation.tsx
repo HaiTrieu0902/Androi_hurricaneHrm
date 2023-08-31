@@ -2,10 +2,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { SCREENS } from '../constants';
-import EmployeeScreen from '../screens/EmployeeScreen';
-import FilterScreen from '../screens/FilterScreen';
+import CalenderScreen from '../screens/CalenderScreen';
+import ReportScreen from '../screens/ReportScreen';
 import HomeScreens from '../screens/Home';
-import LeaveManagementScreen from '../screens/LeaveManagementScreen';
+import LimitationScreen from '../screens/LimitationScreen';
 import PersonalScreen from '../screens/PersonalScreen';
 import { BG_PRIMARYCOLOR, FONT_FAMILY, SIZE_ICON_DEFAULT } from '../utils/common';
 const Tab = createBottomTabNavigator();
@@ -34,20 +34,20 @@ const BottomTabNavigation = () => {
                 }}
             />
             <Tab.Screen
-                name={SCREENS.FILLTER}
-                component={FilterScreen}
+                name={SCREENS.LIMITATION}
+                component={LimitationScreen}
                 options={{
-                    tabBarLabel: 'Statistics',
+                    tabBarLabel: 'Limitation',
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="chart-simple" size={SIZE_ICON_DEFAULT} color={color} />
                     ),
                 }}
             />
             <Tab.Screen
-                name={SCREENS.LEAVE}
-                component={LeaveManagementScreen}
+                name={SCREENS.CALENDER}
+                component={CalenderScreen}
                 options={{
-                    tabBarLabel: 'Leave',
+                    tabBarLabel: 'Calender',
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="calendar-minus" size={SIZE_ICON_DEFAULT} color={color} />
                     ),
@@ -55,11 +55,11 @@ const BottomTabNavigation = () => {
             />
 
             <Tab.Screen
-                name={SCREENS.EMPLOYEE}
-                component={EmployeeScreen}
+                name={SCREENS.REPORT}
+                component={ReportScreen}
                 options={{
-                    tabBarLabel: 'Employee',
-                    tabBarIcon: ({ color, size }) => <Icon name="users" size={SIZE_ICON_DEFAULT} color={color} />,
+                    tabBarLabel: 'Report',
+                    tabBarIcon: ({ color, size }) => <Icon name="chart-pie" size={SIZE_ICON_DEFAULT} color={color} />,
                 }}
             />
             <Tab.Screen

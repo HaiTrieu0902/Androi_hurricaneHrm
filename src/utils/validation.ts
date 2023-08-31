@@ -16,6 +16,13 @@ export const isValidUsername = (username: string) => {
     return '';
 };
 
+export const isValidFullname = (fullname: string) => {
+    if (fullname.length === 0) {
+        return 'Please enter fullname';
+    }
+    return '';
+};
+
 export const isValidPassword = (password: string) => {
     if (password.length === 0) {
         return 'Please enter password';

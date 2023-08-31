@@ -10,8 +10,9 @@ const HomeScreens = () => {
         <View>
             <Text>{user?.email}</Text>
             <Text>{user?.username}</Text>
+            <Text>{user?.user_code}</Text>
             <Text>{user?.token}</Text>
-            <Text>This is Token nghen {user?.token}</Text>
+            <Text>This is Name user nghen {user?.fullName}</Text>
         </View>
     );
 };

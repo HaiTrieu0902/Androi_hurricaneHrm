@@ -5,11 +5,10 @@ import { SCREENS } from '../constants';
 import { useAppSelector } from '../redux/store';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import LoginPage from '../screens/LoginPage';
+import RegisterScreen from '../screens/RegisterScreen';
 import BottomTabNavigation from './BottomTabNavigation';
 import { PersonalNavigation } from './PersonalNavigation';
 import { UserNavigation } from './UserNavigation';
-import { EmployeeNavigation } from './EmployeeNavigation';
-import RegisterScreen from '../screens/RegisterScreen';
 const Stack = createStackNavigator();
 
 const NavigationMain = () => {
@@ -37,11 +36,6 @@ const NavigationMain = () => {
                             ))}
                             {/* User */}
                             {UserNavigation.map((screen) => (
-                                <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
-                            ))}
-
-                            {/* employee */}
-                            {EmployeeNavigation.map((screen) => (
                                 <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
                             ))}
                         </Stack.Group>
