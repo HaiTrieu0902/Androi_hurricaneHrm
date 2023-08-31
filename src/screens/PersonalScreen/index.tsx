@@ -47,8 +47,12 @@ const PersonalScreen = () => {
                 <View style={styles.view_item}>
                     <Text style={styles.text_title}>Infomation</Text>
                     <Container padding={true}>
-                        <Text style={styles.text_name}>{user?.username || 'Admin'}</Text>
+                        <Text style={styles.text_name}>{user?.fullName || 'Admin'}</Text>
                         <Text style={{ marginTop: 5 }}>{user?.email || 'admin@gmail.com'}</Text>
+
+                        <Text style={{ marginTop: 5 }}>
+                            <Text style={{ fontWeight: '700' }}>Code:</Text> {user?.user_code || 'admin@gmail.com'}
+                        </Text>
                     </Container>
                 </View>
 
@@ -110,7 +114,10 @@ const PersonalScreen = () => {
                                 <Icon name="angle-right" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_DEFAULT} />
                             </TouchableOpacity>
 
-                            <TouchableOpacity  onPress={() => handleChangeNavigationPersonal('CHANGE_PASSORD')} style={[styles.view_application_item, styles.view_application_border]}>
+                            <TouchableOpacity
+                                onPress={() => handleChangeNavigationPersonal('CHANGE_PASSORD')}
+                                style={[styles.view_application_item, styles.view_application_border]}
+                            >
                                 <View style={styles.view_sub_item}>
                                     <Icon name="circle-user" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
                                     <Text style={styles.text_sub_item}>Change Password</Text>
