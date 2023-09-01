@@ -41,3 +41,43 @@ export const dataInfoEmployee = [
     { name: 'Number Phone', key: 'mobile_no' },
     { name: 'Code', key: 'employee_code' },
 ];
+
+/* List category  */
+export const listDataCategory = [
+    {
+        key: 'food',
+        name: 'Food',
+    },
+    {
+        key: 'shopping',
+        name: 'Shopping',
+    },
+    {
+        key: 'gift',
+        name: 'Gift',
+    },
+    {
+        key: 'homeware',
+        name: 'Homeware',
+    },
+    {
+        key: 'medical',
+        name: 'Medical',
+    },
+    {
+        key: 'education',
+        name: 'Education',
+    },
+    {
+        key: 'exchange',
+        name: 'Exchange',
+    },
+    {
+        key: 'invest',
+        name: 'Invest',
+    },
+    {
+        key: 'phone',
+        name: 'Phone',
+    },
+];
