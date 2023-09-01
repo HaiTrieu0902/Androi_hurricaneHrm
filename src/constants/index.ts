@@ -1,7 +1,6 @@
 export const development: boolean = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 export const APIHost = development ? '/api' : 'https://google.com';
 export const ACCESS_TOKEN_KEY = 'token';
-
 export const SCREENS: { [key: string]: string } = {
     /* Main */
     HOME: 'Home',
@@ -42,42 +41,4 @@ export const dataInfoEmployee = [
     { name: 'Code', key: 'employee_code' },
 ];
 
-/* List category  */
-export const listDataCategory = [
-    {
-        key: 'food',
-        name: 'Food',
-    },
-    {
-        key: 'shopping',
-        name: 'Shopping',
-    },
-    {
-        key: 'gift',
-        name: 'Gift',
-    },
-    {
-        key: 'homeware',
-        name: 'Homeware',
-    },
-    {
-        key: 'medical',
-        name: 'Medical',
-    },
-    {
-        key: 'education',
-        name: 'Education',
-    },
-    {
-        key: 'exchange',
-        name: 'Exchange',
-    },
-    {
-        key: 'invest',
-        name: 'Invest',
-    },
-    {
-        key: 'phone',
-        name: 'Phone',
-    },
-];
+export { listDataCategory } from './listDataCategory';

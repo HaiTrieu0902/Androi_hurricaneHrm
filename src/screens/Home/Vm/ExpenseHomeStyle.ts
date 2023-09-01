@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 
 export const styles = StyleSheet.create({
     view_contain: {
@@ -37,6 +37,12 @@ export const styles = StyleSheet.create({
         width: '32%',
         borderWidth: 1,
         borderColor: TEXT_COLOR_PRIMARY,
+        borderRadius: 5,
+    },
+    view_category_item_active: {
+        borderColor: BG_SUB_COLOR,
+        width: '32%',
+        borderWidth: 1,
         borderRadius: 5,
     },
 
@@ -90,6 +96,16 @@ export const styles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 5,
         borderRadius: 6,
+    },
+    text_category: {
+        fontFamily: FONT_FAMILY,
+        color: TEXT_COLOR_PRIMARY,
+        marginTop: 4,
+    },
+    text_category_active: {
+        fontFamily: FONT_FAMILY,
+        color: BG_SUB_COLOR,
+        marginTop: 4,
     },
     text_expense: {
         backgroundColor: BUTTON_COLOR__HOME,

@@ -5,8 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderText from '../../components/HeaderText';
 import { styles } from './HomeStyle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import ExpenseHome from './Vm/ExpenseHome';
-import LimitationScreen from '../LimitationScreen';
+import { ExpenseHome, LimitedSpending } from './Vm';
+
 interface HomeScreensProps {}
 const HomeScreens = () => {
     const dispatch = useAppDispatch();
@@ -46,7 +46,7 @@ const HomeScreens = () => {
             </View>
 
             <View style={styles.view_contain_screen}>
-                {!isActiveButton ? <ExpenseHome></ExpenseHome> : <LimitationScreen></LimitationScreen>}
+                {!isActiveButton ? <ExpenseHome></ExpenseHome> : <LimitedSpending></LimitedSpending>}
             </View>
         </SafeAreaView>
     );

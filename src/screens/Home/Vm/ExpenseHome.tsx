@@ -3,15 +3,14 @@ import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ButtonUI from '../../../components/Button';
 import ContainLimited from '../../../components/ContainLimited';
+import { listDataCategory } from '../../../constants';
 import { BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ExpenseHomeStyle';
+
 const ExpenseHome = () => {
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -39,7 +38,9 @@ const ExpenseHome = () => {
         }
     };
 
-    const handleActiveCategory = (type: string) => {};
+    const handleActiveCategory = (type: string) => {
+        setselectCategory(type);
+    };
 
     return (
         <View style={{ marginTop: 6 }}>
@@ -138,64 +139,33 @@ const ExpenseHome = () => {
                 <View style={styles.view_contain_category}>
                     <ScrollView style={{ maxHeight: 200 }}>
                         <View style={styles.view_category_list}>
-                            <View style={styles.view_category_item}>
-                                <TouchableOpacity style={styles.category_item_contain}>
-                                    <MaterialCommunityIcons
-                                        name="food"
-                                        color={TEXT_COLOR_PRIMARY}
-                                        size={SIZE_ICON_16}
-                                    />
-                                    <Text>Food</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.view_category_item}>
-                                <TouchableOpacity style={styles.category_item_contain}>
-                                    <AntDesign name="shoppingcart" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
-                                    <Text>Shopping</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.view_category_item}>
-                                <TouchableOpacity style={styles.category_item_contain}>
-                                    <AntDesign name="gift" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
-                                    <Text>Gift</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.view_category_item}>
-                                <TouchableOpacity style={styles.category_item_contain}>
-                                    <AntDesign name="home" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
-                                    <Text>Houseware</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.view_category_item}>
-                                <TouchableOpacity style={styles.category_item_contain}>
-                                    <Ionicons name="medical-outline" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
-                                    <Text>Medical</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.view_category_item}>
-                                <TouchableOpacity style={styles.category_item_contain}>
-                                    <AntDesign name="book" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
-                                    <Text>Education</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.view_category_item}>
-                                <TouchableOpacity style={styles.category_item_contain}>
-                                    <Ionicons name="wine-outline" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
-                                    <Text>Exchange</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.view_category_item}>
-                                <TouchableOpacity style={styles.category_item_contain}>
-                                    <AntDesign name="linechart" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
-                                    <Text>Invest</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.view_category_item}>
-                                <TouchableOpacity style={styles.category_item_contain}>
-                                    <AntDesign name="mobile1" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />
-                                    <Text>Phone</Text>
-                                </TouchableOpacity>
-                            </View>
+                            {listDataCategory.map((item) => {
+                                return (
+                                    <View
+                                        key={item.key}
+                                        style={[
+                                            styles.view_category_item,
+                                            selectCategory === item.key && styles.view_category_item_active,
+                                        ]}
+                                    >
+                                        <TouchableOpacity
+                                            onPress={() => handleActiveCategory(item.key)}
+                                            style={styles.category_item_contain}
+                                        >
+                                            {selectCategory === item.key ? item.iconActive : item.icon}
+                                            <Text
+                                                style={
+                                                    selectCategory === item.key
+                                                        ? styles.text_category_active
+                                                        : styles.text_category
+                                                }
+                                            >
+                                                {item.name}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                );
+                            })}
                         </View>
                     </ScrollView>
                 </View>
