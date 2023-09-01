@@ -26,6 +26,9 @@ export const SCREENS: { [key: string]: string } = {
 
     /*  User Screen Sub */
     ADD_OR_UPDATE_EMPLOYEE: 'user_add_update_employee',
+
+    // Limitation Screen sub
+    INFOR_LIMITATION : 'infor_limitation'
 };
 
 /* USer Infomation list  */
