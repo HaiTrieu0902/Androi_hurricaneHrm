@@ -152,6 +152,9 @@ const ExpenseHome = () => {
                 <View style={styles.view_btn_submit}>
                     <ButtonUI bgColor={BG_SUB_COLOR} text="Submit Change" onPress={() => {}} />
                 </View>
+                <View style={styles.view_btn_submit}>
+                    <ButtonUI bgColor={BG_SUB_COLOR} text="Delete this history" onPress={() => {}} />
+                </View>
             </View>
         </View>
     );
@@ -203,7 +206,7 @@ const styles = StyleSheet.create({
     },
 
     view_btn_submit: {
-        marginTop: 96,
+        marginTop: 50,
         marginBottom: 16,
         flex: 1,
         justifyContent: 'flex-end',
