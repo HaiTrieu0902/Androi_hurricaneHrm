@@ -7,6 +7,7 @@ import { styles } from './HomeStyle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ExpenseHome from './Vm/ExpenseHome';
 import LimitationScreen from '../LimitationScreen';
+import LimitedSpending from './Vm/LimitedSpending';
 interface HomeScreensProps {}
 const HomeScreens = () => {
     const dispatch = useAppDispatch();
@@ -46,7 +47,7 @@ const HomeScreens = () => {
             </View>
 
             <View style={styles.view_contain_screen}>
-                {!isActiveButton ? <ExpenseHome></ExpenseHome> : <LimitationScreen></LimitationScreen>}
+                {!isActiveButton ? <ExpenseHome></ExpenseHome> : <LimitedSpending></LimitedSpending>}
             </View>
         </SafeAreaView>
     );

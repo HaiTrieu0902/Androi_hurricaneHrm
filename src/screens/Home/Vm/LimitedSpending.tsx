@@ -4,7 +4,7 @@ import React from 'react';
 const LimitedSpending = () => {
     return (
         <View>
-            <Text>LimitedSpending</Text>
+            <Text>LimitedSpendg</Text>
         </View>
     );
 };

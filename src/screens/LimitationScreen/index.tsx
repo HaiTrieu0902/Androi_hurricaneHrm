@@ -18,94 +18,97 @@ const LimitationScreen = () => {
     
     return (
         <SafeAreaView>
-            <View style={{ alignItems:'center', justifyContent: 'center', paddingTop: 10}}>
-                <Text style={{fontSize: 20}}>Limitation Screen</Text>
+            <View style={{ alignItems:'center', justifyContent: 'center', paddingTop: 10, paddingBottom: 10}}>
+                <Text style={{fontSize: 20, fontFamily: FONT_FAMILY, color: '#0d6ea2'}}>Limitation Screen</Text>
             </View>
-            <View style={styles.view_total_limit}> 
-                <View >
-                    <Icon name='eye' size={23}></Icon>
-                    <Text>12.11.2002</Text>
-                </View>
-                <View >
-                    <Text style={styles.txt_money_total}>/6.000.00 VND</Text>
-                    <Text style={styles.txt_money_remain}>5.000.000 VND</Text>
-                </View>
-            </View>
-
-            <View>
-                <Text style={{paddingStart: 20, paddingTop: 10, fontFamily: FONT_FAMILY, color: 'black'}}>List all Limitation</Text>
-            </View>
-
-            <View style={{height: 500, backgroundColor: '#b8def3',borderRadius: 20, margin: 20, marginTop: 10}}>
-                <ScrollView> 
-                    <View style={styles.view_list_item_limit}> 
-                        <TouchableOpacity style={[styles.view_item, {backgroundColor: '#f18ca8'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
-                            <View style={[styles.view_container_limit]}>
-                                <View>
-                                    <Text style={styles.text_title}>Shopping</Text>
-                                </View>
-                                <View style={styles.view_total}>
-                                    <View style={{ display: 'flex', gap: 6 }}>
-                                        <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                        <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.view_item, {backgroundColor: 'green'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
-                            <View style={styles.view_container_limit}>
-                                <View>
-                                    <Text style={styles.text_title}>Food & Drink</Text>
-                                </View>
-                                <View style={styles.view_total}>
-                                    <View style={{ display: 'flex', gap: 6 }}>
-                                        <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                        <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.view_item, {backgroundColor: '#9f9c73'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
-                            <View style={styles.view_container_limit}>
-                                <View>
-                                    <Text style={styles.text_title}>Drive</Text>
-                                </View>
-                                <View style={styles.view_total}>
-                                    <View style={{ display: 'flex', gap: 6 }}>
-                                        <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                        <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.view_item, {backgroundColor: 'orange'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
-                            <View style={styles.view_container_limit}>
-                                <View>
-                                    <Text style={styles.text_title}>Entertaiment</Text>
-                                </View>
-                                <View style={styles.view_total}>
-                                    <View style={{ display: 'flex', gap: 6 }}>
-                                        <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                        <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.view_item} onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
-                            <View style={styles.view_container_limit}>
-                                <View>
-                                    <Text style={styles.text_title}>Marriage</Text>
-                                </View>
-                                <View style={styles.view_total}>
-                                    <View style={{ display: 'flex', gap: 6 }}>
-                                        <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                        <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
+            <View style={{backgroundColor: '#b8def3', borderRadius: 50, height: 750}}>
+                <View style={styles.view_total_limit}> 
+                    <View >
+                        <Icon name='eye' size={23}></Icon>
+                        <Text>12.11.2002</Text>
                     </View>
-                </ScrollView>
+                    <View >
+                        <Text style={styles.txt_money_remain}>Remaining: 5.000.000</Text>
+                        <Text style={styles.txt_money_total}>Total: 6.000.000</Text>
+                        
+                    </View>
+                </View>
+
+                <View>
+                    <Text style={{paddingStart: 20, paddingTop: 10, fontFamily: FONT_FAMILY, color: 'black'}}>List all Limitation</Text>
+                </View>
+
+                <View style={{height: 500, backgroundColor: 'white',borderRadius: 20, margin: 20, marginTop: 10}}>
+                    <ScrollView> 
+                        <View style={styles.view_list_item_limit}> 
+                            <TouchableOpacity style={[styles.view_item, {backgroundColor: '#f18ca8'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                                <View style={[styles.view_container_limit]}>
+                                    <View>
+                                        <Text style={styles.text_title}>Shopping</Text>
+                                    </View>
+                                    <View style={styles.view_total}>
+                                        <View style={{ display: 'flex', gap: 6 }}>
+                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.view_item, {backgroundColor: 'green'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                                <View style={styles.view_container_limit}>
+                                    <View>
+                                        <Text style={styles.text_title}>Food & Drink</Text>
+                                    </View>
+                                    <View style={styles.view_total}>
+                                        <View style={{ display: 'flex', gap: 6 }}>
+                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.view_item, {backgroundColor: '#9f9c73'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                                <View style={styles.view_container_limit}>
+                                    <View>
+                                        <Text style={styles.text_title}>Drive</Text>
+                                    </View>
+                                    <View style={styles.view_total}>
+                                        <View style={{ display: 'flex', gap: 6 }}>
+                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.view_item, {backgroundColor: 'orange'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                                <View style={styles.view_container_limit}>
+                                    <View>
+                                        <Text style={styles.text_title}>Entertaiment</Text>
+                                    </View>
+                                    <View style={styles.view_total}>
+                                        <View style={{ display: 'flex', gap: 6 }}>
+                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.view_item} onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                                <View style={styles.view_container_limit}>
+                                    <View>
+                                        <Text style={styles.text_title}>Marriage</Text>
+                                    </View>
+                                    <View style={styles.view_total}>
+                                        <View style={{ display: 'flex', gap: 6 }}>
+                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </View>
             </View>
 
         </SafeAreaView>
@@ -116,7 +119,7 @@ const styles = StyleSheet.create ({
 
     view_total_limit : {
         height: 100,
-        backgroundColor: '#b8def3',
+        backgroundColor: 'white',
         borderRadius: 20,
         marginTop: 20,
         marginStart: 20,
@@ -128,7 +131,7 @@ const styles = StyleSheet.create ({
         justifyContent: 'space-between'
     },
     txt_money_remain:{
-        fontSize : 23,
+        fontSize : 20,
         color: 'blue',
     },
     txt_money_total: {
@@ -147,7 +150,7 @@ const styles = StyleSheet.create ({
         width:160,
         height: 100,
         backgroundColor: '#035397',
-        margin : 2,
+        margin : 3,
         borderRadius: 10,
         position: 'relative',
     },
