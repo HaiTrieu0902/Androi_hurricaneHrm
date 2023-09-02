@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { BG_SCREEN, BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 
 export const styles = StyleSheet.create({
     mt_16: {
@@ -70,8 +70,6 @@ export const styles = StyleSheet.create({
         marginEnd: -16,
         borderTopColor: TEXT_COLOR_PRIMARY,
         borderTopWidth: 0.5,
-        borderBottomColor: TEXT_COLOR_PRIMARY,
-        borderBottomWidth: 0.5,
     },
     view_pie_info_item: {
         paddingStart: 16,
@@ -99,5 +97,9 @@ export const styles = StyleSheet.create({
     },
     text_limit: {
         color: BG_SUB_COLOR,
+    },
+    view_bottom: {
+        height: 32,
+        backgroundColor: BG_SCREEN,
     },
 });

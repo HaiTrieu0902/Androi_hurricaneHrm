@@ -176,7 +176,7 @@ const AddOrUpdateEmployeeScreen = () => {
 
             {/* Info Pie */}
             <View style={[styles.mt_16, styles.view_pie_info]}>
-                <ScrollView style={{ maxHeight: 300 }}>
+                <ScrollView style={{ maxHeight: 220 }}>
                     {listDataExpense.map((item) => {
                         return (
                             <View key={item.key} style={[styles.view_item_display, styles.view_pie_info_item]}>

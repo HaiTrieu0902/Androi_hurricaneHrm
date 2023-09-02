@@ -35,7 +35,6 @@ const AddOrUpdateEmployeeScreen = () => {
             key: 'gift',
             name: 'Gift',
             icon: <AntDesign name="gift" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-            iconActive: <AntDesign name="gift" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
             expense: 48.6,
             percent: 25.5,
         },
@@ -175,7 +174,7 @@ const AddOrUpdateEmployeeScreen = () => {
 
             {/* Info Pie */}
             <View style={[styles.mt_16, styles.view_pie_info]}>
-                <ScrollView style={{ maxHeight: 300 }}>
+                <ScrollView style={{ maxHeight: 220 }}>
                     {listDataExpense.map((item) => {
                         return (
                             <View key={item.key} style={[styles.view_item_display, styles.view_pie_info_item]}>
