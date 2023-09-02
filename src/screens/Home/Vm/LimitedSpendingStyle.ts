@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
         marginTop: 12,
     },
     view_btn_submit: {
-        marginTop: 80,
+        marginTop: 60,
         marginBottom: 16,
         flex: 1,
         justifyContent: 'flex-end',
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
         fontSize: 17,
     },
     input_plan_category: {
-        width: 242,
+        width: 260,
     },
     btn_save: {
         paddingStart: 16,
@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     },
 
     text_field: {
-        fontSize: 16,
+        fontSize: 18,
         color: 'black',
         fontWeight: '700',
     },
@@ -72,13 +72,12 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         color: TEXT_COLOR_PRIMARY,
         fontWeight: '700',
-        width: 120,
+        width: 100,
     },
     text_total: {
         marginLeft: 2,
         color: BG_SUB_COLOR,
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '700',
-        width: 150,
     },
 });
