@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { BG_PRIMARYCOLOR } from '../../utils/common';
 
 interface ButtonUIProps {
