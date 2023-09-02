@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderText from '../../components/HeaderText';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { styles } from './HomeStyle';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ExpenseHome, LimitedSpending } from './Vm';
 
 interface HomeScreensProps {}
