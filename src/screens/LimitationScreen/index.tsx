@@ -18,10 +18,13 @@ const LimitationScreen = () => {
     
     return (
         <SafeAreaView>
+            {/* View  */}
             <View style={{ alignItems:'center', justifyContent: 'center', paddingTop: 10, paddingBottom: 10}}>
                 <Text style={{fontSize: 20, fontFamily: FONT_FAMILY, color: '#0d6ea2'}}>Limitation Screen</Text>
             </View>
+            {/* View  */}
             <View style={{backgroundColor: '#b8def3', borderRadius: 50, height: 750}}>
+                {/* View  card total*/}
                 <View style={styles.view_total_limit}> 
                     <View >
                         <Icon name='eye' size={23}></Icon>
@@ -37,10 +40,11 @@ const LimitationScreen = () => {
                 <View>
                     <Text style={{paddingStart: 20, paddingTop: 10, fontFamily: FONT_FAMILY, color: 'black'}}>List all Limitation</Text>
                 </View>
-
-                <View style={{height: 500, backgroundColor: 'white',borderRadius: 20, margin: 20, marginTop: 10}}>
+                {/* View  list limit*/}
+                <View style={{height: 540, backgroundColor: 'white',borderRadius: 20, margin: 20, marginTop: 10}}>
                     <ScrollView> 
                         <View style={styles.view_list_item_limit}> 
+                            {/* View  item limit*/}
                             <TouchableOpacity style={[styles.view_item, {backgroundColor: '#f18ca8'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
                                 <View style={[styles.view_container_limit]}>
                                     <View>
@@ -54,10 +58,11 @@ const LimitationScreen = () => {
                                     </View>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.view_item, {backgroundColor: 'green'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
-                                <View style={styles.view_container_limit}>
+                            {/* View  item limit*/}
+                            <TouchableOpacity style={[styles.view_item, {backgroundColor: '#66ab6a'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                                <View style={[styles.view_container_limit]}>
                                     <View>
-                                        <Text style={styles.text_title}>Food & Drink</Text>
+                                        <Text style={styles.text_title}>Shopping</Text>
                                     </View>
                                     <View style={styles.view_total}>
                                         <View style={{ display: 'flex', gap: 6 }}>
@@ -67,10 +72,11 @@ const LimitationScreen = () => {
                                     </View>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.view_item, {backgroundColor: '#9f9c73'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
-                                <View style={styles.view_container_limit}>
+                            {/* View  item limit*/}
+                            <TouchableOpacity style={[styles.view_item, {backgroundColor: '#664fc1'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                                <View style={[styles.view_container_limit]}>
                                     <View>
-                                        <Text style={styles.text_title}>Drive</Text>
+                                        <Text style={styles.text_title}>Shopping</Text>
                                     </View>
                                     <View style={styles.view_total}>
                                         <View style={{ display: 'flex', gap: 6 }}>
@@ -80,10 +86,11 @@ const LimitationScreen = () => {
                                     </View>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.view_item, {backgroundColor: 'orange'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
-                                <View style={styles.view_container_limit}>
+                            {/* View  item limit*/}
+                            <TouchableOpacity style={[styles.view_item, {backgroundColor: '#818562'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                                <View style={[styles.view_container_limit]}>
                                     <View>
-                                        <Text style={styles.text_title}>Entertaiment</Text>
+                                        <Text style={styles.text_title}>Shopping</Text>
                                     </View>
                                     <View style={styles.view_total}>
                                         <View style={{ display: 'flex', gap: 6 }}>
@@ -93,10 +100,11 @@ const LimitationScreen = () => {
                                     </View>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.view_item} onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
-                                <View style={styles.view_container_limit}>
+                            {/* View  item limit*/}
+                            <TouchableOpacity style={[styles.view_item, {backgroundColor: '#4564e0'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                                <View style={[styles.view_container_limit]}>
                                     <View>
-                                        <Text style={styles.text_title}>Marriage</Text>
+                                        <Text style={styles.text_title}>Shopping</Text>
                                     </View>
                                     <View style={styles.view_total}>
                                         <View style={{ display: 'flex', gap: 6 }}>

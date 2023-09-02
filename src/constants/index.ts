@@ -28,7 +28,8 @@ export const SCREENS: { [key: string]: string } = {
     ADD_OR_UPDATE_EMPLOYEE: 'user_add_update_employee',
 
     // Limitation Screen sub
-    INFOR_LIMITATION : 'infor_limitation'
+    INFOR_LIMITATION : 'infor_limitation',
+    CHANGE_HISTORY : 'change_history'
 };
 
 /* USer Infomation list  */
@@ -44,3 +45,5 @@ export const dataInfoEmployee = [
     { name: 'Number Phone', key: 'mobile_no' },
     { name: 'Code', key: 'employee_code' },
 ];
+
+export { listDataCategory } from './listDataCategory';
