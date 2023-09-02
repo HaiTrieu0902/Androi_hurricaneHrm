@@ -9,6 +9,51 @@ import { BG_PRIMARYCOLOR, FONT_FAMILY } from '../../../utils/common';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SCREENS } from '../../../constants';
 
+export const listDataHistory = [
+  {
+      key: '1',
+      note: 'Note 1',
+      date: '12/11/2002',
+      money: '-10.000',
+      cate : 'Shopping'
+  },
+  {
+    key: '2',
+    note: 'Note 2',
+    date: '12/11/2002',
+    money: '-10.000',
+    cate : 'Shopping'
+  },
+  {
+    key: '3',
+    note: 'Note 3',
+    date: '12/11/2002',
+    money: '-10.000',
+    cate : 'Shopping'
+  },
+  {
+    key: '4',
+    note: 'Note 4',
+    date: '12/11/2002',
+    money: '-10.000',
+    cate : 'Shopping'
+  },
+  {
+    key: '5',
+    note: 'Note 5',
+    date: '12/11/2002',
+    money: '-10.000',
+    cate : 'Shopping'
+  },
+  {
+    key: '6',
+    note: 'Note 6',
+    date: '12/11/2002',
+    money: '-10.000',
+    cate : 'Shopping'
+  },
+];
+
 
 const InforLimitScreen = () => {
   const navigation = useNavigation();
@@ -46,144 +91,35 @@ const InforLimitScreen = () => {
             <ScrollView>
               {/* View list item history */}
               <View style={styles.view_list_history}>
-                {/* View item history */}
-                <TouchableOpacity onPress={() => handleChangeNavigationLimit('CHANGE_HISTORY')}>
-                  <View style={styles.view_item_history}>
-                    <View style={styles.icon_history}>
-                      <Icon name='cart-shopping' size={16}></Icon>
-                    </View>
-                    <View style={styles.content_history}>
-                      <View style={styles.content_left}>
-                        <Text style={{fontSize: 20, color: 'black'}}>Note content</Text>
-                        <Text >12.11.2002</Text>
-                      </View>
-                      <View style={styles.content_right}>
-                        <View style={{justifyContent:'center' , paddingEnd: 5}}>
-                          <Text style={{textAlign: 'right', color: 'red'}}>- 10000</Text>
-                          <Text style={{textAlign: 'right'}}>Shopping</Text>
+
+                {listDataHistory.map((item) => {
+                  return (
+                    <TouchableOpacity onPress={() => handleChangeNavigationLimit('CHANGE_HISTORY')}>
+                      <View style={styles.view_item_history}> 
+                        <View style={styles.icon_history}>
+                          <Icon name='cart-shopping' size={16}></Icon>
                         </View>
-                        <View style={{justifyContent:'center' , paddingStart: 10}}>
-                          <Icon name='angle-right' size={20}></Icon>
+
+                        <View style={styles.content_history}>
+                          <View style={styles.content_left}>
+                            <Text style={{fontSize: 20, color: 'black'}}>{item.note}</Text>
+                            <Text >{item.date}</Text>
+                          </View>
+                          <View style={styles.content_right}>
+                            <View style={{justifyContent:'center' , paddingEnd: 5}}>
+                              <Text style={{textAlign: 'right', color: 'red'}}>{item.money}</Text>
+                              <Text style={{textAlign: 'right'}}>{item.cate}</Text>
+                            </View>
+                            <View style={{justifyContent:'center' , paddingStart: 10}}>
+                              <Icon name='angle-right' size={20}></Icon>
+                            </View>
+                          </View>
                         </View>
+
                       </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-                {/* View item history */}
-                <TouchableOpacity onPress={() => handleChangeNavigationLimit('CHANGE_HISTORY')}>
-                  <View style={styles.view_item_history}>
-                    <View style={styles.icon_history}>
-                      <Icon name='cart-shopping' size={16}></Icon>
-                    </View>
-                    <View style={styles.content_history}>
-                      <View style={styles.content_left}>
-                        <Text style={{fontSize: 20, color: 'black'}}>Note content</Text>
-                        <Text >12.11.2002</Text>
-                      </View>
-                      <View style={styles.content_right}>
-                        <View style={{justifyContent:'center' , paddingEnd: 5}}>
-                          <Text style={{textAlign: 'right', color: 'red'}}>- 10000</Text>
-                          <Text style={{textAlign: 'right'}}>Shopping</Text>
-                        </View>
-                        <View style={{justifyContent:'center' , paddingStart: 10}}>
-                          <Icon name='angle-right' size={20}></Icon>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-                {/* View item history */}
-                <TouchableOpacity onPress={() => handleChangeNavigationLimit('CHANGE_HISTORY')}>
-                  <View style={styles.view_item_history}>
-                    <View style={styles.icon_history}>
-                      <Icon name='cart-shopping' size={16}></Icon>
-                    </View>
-                    <View style={styles.content_history}>
-                      <View style={styles.content_left}>
-                        <Text style={{fontSize: 20, color: 'black'}}>Note content</Text>
-                        <Text >12.11.2002</Text>
-                      </View>
-                      <View style={styles.content_right}>
-                        <View style={{justifyContent:'center' , paddingEnd: 5}}>
-                          <Text style={{textAlign: 'right', color: 'red'}}>- 10000</Text>
-                          <Text style={{textAlign: 'right'}}>Shopping</Text>
-                        </View>
-                        <View style={{justifyContent:'center' , paddingStart: 10}}>
-                          <Icon name='angle-right' size={20}></Icon>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-                {/* View item history */}
-                <TouchableOpacity onPress={() => handleChangeNavigationLimit('CHANGE_HISTORY')}>
-                  <View style={styles.view_item_history}>
-                    <View style={styles.icon_history}>
-                      <Icon name='cart-shopping' size={16}></Icon>
-                    </View>
-                    <View style={styles.content_history}>
-                      <View style={styles.content_left}>
-                        <Text style={{fontSize: 20, color: 'black'}}>Note content</Text>
-                        <Text >12.11.2002</Text>
-                      </View>
-                      <View style={styles.content_right}>
-                        <View style={{justifyContent:'center' , paddingEnd: 5}}>
-                          <Text style={{textAlign: 'right', color: 'red'}}>- 10000</Text>
-                          <Text style={{textAlign: 'right'}}>Shopping</Text>
-                        </View>
-                        <View style={{justifyContent:'center' , paddingStart: 10}}>
-                          <Icon name='angle-right' size={20}></Icon>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-                {/* View item history */}
-                <TouchableOpacity onPress={() => handleChangeNavigationLimit('CHANGE_HISTORY')}>
-                  <View style={styles.view_item_history}>
-                    <View style={styles.icon_history}>
-                      <Icon name='cart-shopping' size={16}></Icon>
-                    </View>
-                    <View style={styles.content_history}>
-                      <View style={styles.content_left}>
-                        <Text style={{fontSize: 20, color: 'black'}}>Note content</Text>
-                        <Text >12.11.2002</Text>
-                      </View>
-                      <View style={styles.content_right}>
-                        <View style={{justifyContent:'center' , paddingEnd: 5}}>
-                          <Text style={{textAlign: 'right', color: 'red'}}>- 10000</Text>
-                          <Text style={{textAlign: 'right'}}>Shopping</Text>
-                        </View>
-                        <View style={{justifyContent:'center' , paddingStart: 10}}>
-                          <Icon name='angle-right' size={20}></Icon>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-                {/* View item history */}
-                <TouchableOpacity onPress={() => handleChangeNavigationLimit('CHANGE_HISTORY')}>
-                  <View style={styles.view_item_history}>
-                    <View style={styles.icon_history}>
-                      <Icon name='cart-shopping' size={16}></Icon>
-                    </View>
-                    <View style={styles.content_history}>
-                      <View style={styles.content_left}>
-                        <Text style={{fontSize: 20, color: 'black'}}>Note content</Text>
-                        <Text >12.11.2002</Text>
-                      </View>
-                      <View style={styles.content_right}>
-                        <View style={{justifyContent:'center' , paddingEnd: 5}}>
-                          <Text style={{textAlign: 'right', color: 'red'}}>- 10000</Text>
-                          <Text style={{textAlign: 'right'}}>Shopping</Text>
-                        </View>
-                        <View style={{justifyContent:'center' , paddingStart: 10}}>
-                          <Icon name='angle-right' size={20}></Icon>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>             
+                    </TouchableOpacity>
+                  )
+                })}        
               </View>
             </ScrollView>
           </View>
