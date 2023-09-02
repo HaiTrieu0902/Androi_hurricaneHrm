@@ -8,10 +8,10 @@ import { format } from 'date-fns';
 import DatePicker from 'react-native-date-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { BG_SUB_COLOR, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
-
-import { styles } from './MonthlyReportStyle';
 import PieChart from 'react-native-pie-chart';
+
+import { BG_SUB_COLOR, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { styles } from './ReportStyle';
 
 const AddOrUpdateEmployeeScreen = () => {
     const [open, setOpen] = useState(false);
