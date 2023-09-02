@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   view_item_history: {
     alignItems:'center',
     flexDirection: 'row',
-    height: 80,
+    height: 70,
     backgroundColor: 'white',
     borderRadius: 10,
     marginTop: 10

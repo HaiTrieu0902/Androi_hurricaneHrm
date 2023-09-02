@@ -18,6 +18,9 @@ const LimitationScreen = () => {
     
     return (
         <SafeAreaView>
+            <View style={{ alignItems:'center', justifyContent: 'center', paddingTop: 10}}>
+                <Text style={{fontSize: 20}}>Limitation Screen</Text>
+            </View>
             <View style={styles.view_total_limit}> 
                 <View >
                     <Icon name='eye' size={23}></Icon>
@@ -29,10 +32,14 @@ const LimitationScreen = () => {
                 </View>
             </View>
 
-            <View style={{height: 500, backgroundColor: '#b8def3',borderRadius: 20, margin: 20,}}>
+            <View>
+                <Text style={{paddingStart: 20, paddingTop: 10, fontFamily: FONT_FAMILY, color: 'black'}}>List all Limitation</Text>
+            </View>
+
+            <View style={{height: 500, backgroundColor: '#b8def3',borderRadius: 20, margin: 20, marginTop: 10}}>
                 <ScrollView> 
                     <View style={styles.view_list_item_limit}> 
-                        <TouchableOpacity style={[styles.view_item, {backgroundColor: 'red'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                        <TouchableOpacity style={[styles.view_item, {backgroundColor: '#f18ca8'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
                             <View style={[styles.view_container_limit]}>
                                 <View>
                                     <Text style={styles.text_title}>Shopping</Text>
@@ -58,7 +65,7 @@ const LimitationScreen = () => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.view_item, {backgroundColor: 'yellow'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
+                        <TouchableOpacity style={[styles.view_item, {backgroundColor: '#9f9c73'}] } onPress={() => handleChangeNavigationLimit('INFOR_LIMITATION')}>
                             <View style={styles.view_container_limit}>
                                 <View>
                                     <Text style={styles.text_title}>Drive</Text>
@@ -111,7 +118,9 @@ const styles = StyleSheet.create ({
         height: 100,
         backgroundColor: '#b8def3',
         borderRadius: 20,
-        margin: 20,
+        marginTop: 20,
+        marginStart: 20,
+        marginEnd: 20,
         paddingStart: 15,
         paddingEnd: 15,
         flexDirection: 'row',
