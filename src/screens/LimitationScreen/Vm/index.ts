@@ -1,2 +1,2 @@
-export{default as InforLimitScreen} from './InforLimitScreen'
-export {default as ChangeHistory} from './ChangeHistory'
+export { default as DetailLimitScreen } from './DetailLimitScreen';
+export { default as ChangeHistory } from './ChangeHistory';

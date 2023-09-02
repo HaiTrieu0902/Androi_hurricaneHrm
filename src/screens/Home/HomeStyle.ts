@@ -1,12 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {
-    BG_PRIMARYCOLOR,
-    BG_SCREEN,
-    BG_SUB_COLOR,
-    EXPLAIN_ERROR_TEXT,
-    FONT_FAMILY,
-    TEXT_COLOR_PRIMARY,
-} from '../../utils/common';
+import { BG_SCREEN, BG_SUB_COLOR, FONT_FAMILY } from '../../utils/common';
 export const styles = StyleSheet.create({
     bg_scrren: { backgroundColor: BG_SCREEN, height: '100%' },
     view_container: {

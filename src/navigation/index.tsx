@@ -9,7 +9,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import BottomTabNavigation from './BottomTabNavigation';
 import { PersonalNavigation } from './PersonalNavigation';
 import { UserNavigation } from './UserNavigation';
-import { LimitationNavigation } from './LimitationNavugation';
+import { LimitationNavigation } from './LimitationNavigation';
 const Stack = createStackNavigator();
 
 const NavigationMain = () => {
@@ -40,7 +40,7 @@ const NavigationMain = () => {
                                 <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
                             ))}
                             {/* Limit */}
-                            {LimitationNavigation.map((screen ) =>(
+                            {LimitationNavigation.map((screen) => (
                                 <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
                             ))}
                         </Stack.Group>
