@@ -23,7 +23,7 @@ const LimitationScreen = () => {
                 <Text style={{fontSize: 20, fontFamily: FONT_FAMILY, color: '#0d6ea2'}}>Limitation Screen</Text>
             </View>
             {/* View  */}
-            <View style={{backgroundColor: '#b8def3', borderRadius: 50, height: 750}}>
+            <View style={{backgroundColor: 'white', borderRadius: 50, height: 750}}>
                 {/* View  card total*/}
                 <View style={styles.view_total_limit}> 
                     <View >
@@ -37,11 +37,11 @@ const LimitationScreen = () => {
                     </View>
                 </View>
 
-                <View>
-                    <Text style={{paddingStart: 20, paddingTop: 10, fontFamily: FONT_FAMILY, color: 'black'}}>List all Limitation</Text>
+                <View style={{backgroundColor: '#b8def3', marginStart: 20, marginEnd: 20,marginTop: 5, borderRadius: 10, alignItems: 'center', justifyContent: 'center', height: 40}}>
+                    <Text style={{paddingStart: 20, fontFamily: FONT_FAMILY, color: 'black', fontSize: 20}}>List all Limitation</Text>
                 </View>
                 {/* View  list limit*/}
-                <View style={{height: 540, backgroundColor: 'white',borderRadius: 20, margin: 20, marginTop: 10}}>
+                <View style={{height: 540, backgroundColor: '#b8def3',borderRadius: 20, margin: 20, marginTop: 5}}>
                     <ScrollView> 
                         <View style={styles.view_list_item_limit}> 
                             {/* View  item limit*/}
@@ -127,9 +127,9 @@ const styles = StyleSheet.create ({
 
     view_total_limit : {
         height: 100,
-        backgroundColor: 'white',
+        backgroundColor: '#b8def3',
         borderRadius: 20,
-        marginTop: 20,
+        marginTop: 50,
         marginStart: 20,
         marginEnd: 20,
         paddingStart: 15,
