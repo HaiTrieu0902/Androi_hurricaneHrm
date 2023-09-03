@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { format } from 'date-fns';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
-
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { BG_SUB_COLOR, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ReportStyle';
 
@@ -168,9 +166,9 @@ const AddOrUpdateEmployeeScreen = () => {
             </View>
 
             <View style={[styles.mt_16, styles.view_pie_info]}>
-                <View style={[styles.view_item_display, styles.view_pie_info_item]}>
-                    <Text style={styles.text_main}>Total</Text>
-                    <Text style={styles.text_main}>113.2004 $</Text>
+                <View style={[styles.view_item_display, styles.view_pie_info_total]}>
+                    <Text style={[styles.text_main, styles.text_total]}>Total</Text>
+                    <Text style={[styles.text_main, styles.text_total]}>113.2004 $</Text>
                 </View>
             </View>
 

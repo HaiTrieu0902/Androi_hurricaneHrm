@@ -71,6 +71,13 @@ export const styles = StyleSheet.create({
         borderTopColor: TEXT_COLOR_PRIMARY,
         borderTopWidth: 0.5,
     },
+    view_pie_info_total: {
+        paddingStart: 16,
+        paddingRight: 16,
+        paddingTop: 10,
+        paddingBottom: 10,
+        backgroundColor: BUTTON_COLOR__HOME,
+    },
     view_pie_info_item: {
         paddingStart: 16,
         paddingRight: 16,
@@ -91,6 +98,11 @@ export const styles = StyleSheet.create({
         fontFamily: FONT_FAMILY,
         fontWeight: '600',
         fontSize: 16,
+    },
+    text_total: {
+        color: 'black',
+        fontSize: 18,
+        fontWeight: '700',
     },
     text_expense: {
         color: 'red',

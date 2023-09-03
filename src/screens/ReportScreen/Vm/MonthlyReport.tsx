@@ -1,15 +1,14 @@
+import { format } from 'date-fns';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DatePicker from 'react-native-date-picker';
-import { format } from 'date-fns';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import PieChart from 'react-native-pie-chart';
-
-import { BG_SUB_COLOR, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ReportStyle';
 
 const AddOrUpdateEmployeeScreen = () => {
@@ -149,8 +148,8 @@ const AddOrUpdateEmployeeScreen = () => {
             {/* Expense or Limit Spending Total */}
             <View style={styles.view_contain}>
                 <View style={[styles.view_item, styles.view_item_display, styles.view_total]}>
-                    <Text style={{ fontSize: 12 }}>Expense:</Text>
-                    <Text style={[styles.text_main, styles.text_expense]}>-9999$</Text>
+                    <Text style={{ fontSize: 14 }}>Expense:</Text>
+                    <Text style={[styles.text_main, styles.text_expense]}>-9999 $</Text>
                 </View>
             </View>
             {/* Pie */}

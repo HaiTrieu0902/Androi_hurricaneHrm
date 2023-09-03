@@ -1,13 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
 import HeaderText from '../../components/HeaderText';
-import { BG_SCREEN, BG_SUB_COLOR, FONT_FAMILY, SIZE_ICON_20 } from '../../utils/common';
 import { useAppSelector } from '../../redux/store';
+import { BG_SCREEN, BG_SUB_COLOR, FONT_FAMILY, SIZE_ICON_20 } from '../../utils/common';
 import { AnnualReport, MonthlyReport } from './Vm';
 const ReportScreen = () => {
     const navigation = useNavigation();
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         backgroundColor: '#e8e8e8',
-        width: '60%',
+        width: '58%',
         borderRadius: 8,
     },
 
