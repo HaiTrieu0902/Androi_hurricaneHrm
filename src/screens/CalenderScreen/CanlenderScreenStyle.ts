@@ -8,6 +8,7 @@ import {
     COLOR_BORDER,
     COLOR_BORDER_SOLID,
     FONT_FAMILY,
+    TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 
 export const styles = StyleSheet.create({
@@ -24,8 +25,18 @@ export const styles = StyleSheet.create({
         marginTop: 6,
         flexWrap: 'wrap',
     },
-    view_total: {
-        width: 360,
+
+    view_total_expense: {
+        marginTop: 8,
+        paddingHorizontal: 16,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    view_expense_item: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     view_item: {
         padding: 10,
@@ -48,6 +59,53 @@ export const styles = StyleSheet.create({
         width: '100%',
         gap: 10,
     },
+
+    view_header_expense_title: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        paddingVertical: 2,
+        backgroundColor: '#cccccc',
+        paddingHorizontal: 16,
+    },
+
+    /*Info Pie Styles*/
+    view_pie_info: {
+        marginTop: 16,
+        borderTopColor: TEXT_COLOR_PRIMARY,
+        borderTopWidth: 0.5,
+    },
+    view_pie_info_total: {
+        paddingStart: 16,
+        paddingEnd: 16,
+        paddingTop: 10,
+        paddingBottom: 10,
+        backgroundColor: BUTTON_COLOR__HOME,
+    },
+    view_pie_info_item: {
+        paddingStart: 16,
+        paddingEnd: 16,
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomColor: TEXT_COLOR_PRIMARY,
+        borderBottomWidth: 0.5,
+    },
+    pie_info_contain: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+    },
+    text_main: {
+        color: 'black',
+        fontFamily: FONT_FAMILY,
+        fontWeight: '600',
+        fontSize: 16,
+    },
+
+    mt_16: {
+        marginTop: 8,
+    },
     button_bg: {
         paddingTop: 8,
         paddingBottom: 8,
@@ -58,7 +116,12 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     text_date: { color: 'black', fontFamily: FONT_FAMILY, fontWeight: '600', fontSize: 14 },
-
+    text_expense_title: {
+        fontFamily: FONT_FAMILY,
+        fontWeight: '600',
+        fontSize: 14,
+        color: TEXT_COLOR_PRIMARY,
+    },
     gridItemContainer: {
         flexDirection: 'row',
         alignItems: 'center',
