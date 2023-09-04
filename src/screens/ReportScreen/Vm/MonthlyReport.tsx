@@ -92,18 +92,21 @@ const AddOrUpdateEmployeeScreen = () => {
 
     /* Function custom date*/
     const formatDateCustom = (date: Date) => {
-        return format(date, 'd.M.yyyy, EEE');
+        const month = format(date, 'MMM');
+        const year = format(date, 'yyyy');
+        const startOfMonth = format(new Date(date.getFullYear(), date.getMonth(), 1), 'dd');
+        const endOfMonth = format(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd');
+        return `${month},${year} (${startOfMonth} ${month} - ${endOfMonth} ${month})`;
     };
-
     /* handle Next Or Prev Date */
     const handleNextDateOrPrevDate = (type: string) => {
         const currentDate = new Date(selectedDate);
         if (type === 'next') {
-            currentDate.setDate(selectedDate.getDate() + 1);
-            setSelectedDate(currentDate);
+            const nextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+            setSelectedDate(nextMonth);
         } else {
-            currentDate.setDate(selectedDate.getDate() - 1);
-            setSelectedDate(currentDate);
+            const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+            setSelectedDate(prevMonth);
         }
     };
 
