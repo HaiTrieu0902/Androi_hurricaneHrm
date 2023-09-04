@@ -25,7 +25,9 @@ export const SCREENS: { [key: string]: string } = {
 
     /* Limitation Screen sub */
     DETAIL_LIMITATION: 'detail_limitation',
-    CHANGE_HISTORY: 'change_history',
+
+    /* Edit Detail category Screen */
+    EDIT_DETAIL_CATEGORY: 'edit_detail_category',
 };
 
 /* USer Infomation list  */

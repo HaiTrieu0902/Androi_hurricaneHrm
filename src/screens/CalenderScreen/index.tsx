@@ -20,6 +20,8 @@ import {
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
+import { useNavigation } from '@react-navigation/native';
+import { SCREENS } from '../../constants';
 
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {
@@ -162,6 +164,7 @@ const listDataExpense = [
     // },
 ];
 const CalenderScreen = () => {
+    const navigation = useNavigation();
     const [open, setOpen] = useState(false);
     const [selectedCalender, setSelectedCalender] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -193,6 +196,10 @@ const CalenderScreen = () => {
             const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
             setSelectedDate(prevMonth);
         }
+    };
+
+    const handleChangeNavigationLimit = async (type: string) => {
+        navigation.navigate(SCREENS[type] as never);
     };
 
     const renderCustomDay = (date: any, state: any) => {
@@ -308,14 +315,15 @@ const CalenderScreen = () => {
                         <View>
                             {listDataExpense.map((item, index) => {
                                 return (
-                                    <>
-                                        <View key={index} style={styles.view_header_expense_title}>
+                                    <React.Fragment key={index}>
+                                        <View style={styles.view_header_expense_title}>
                                             <Text style={{ fontSize: 12 }}>{item.date}</Text>
                                             <Text style={{ fontSize: 12 }}>-{item.total} $</Text>
                                         </View>
-                                        {item?.data?.map((item, index) => {
+                                        {item?.data?.map((item) => {
                                             return (
-                                                <View
+                                                <TouchableOpacity
+                                                    onPress={() => handleChangeNavigationLimit('EDIT_DETAIL_CATEGORY')}
                                                     key={item.key}
                                                     style={[styles.view_item_display, styles.view_pie_info_item]}
                                                 >
@@ -323,7 +331,7 @@ const CalenderScreen = () => {
                                                         {item.icon}
                                                         <Text style={styles.text_main}>
                                                             {item.name}
-                                                            <Text style={{ fontSize: 11 }}>({item.comment})</Text>
+                                                            <Text style={{ fontSize: 11 }}> ({item.comment})</Text>
                                                         </Text>
                                                     </View>
                                                     <View style={styles.pie_info_contain}>
@@ -335,10 +343,10 @@ const CalenderScreen = () => {
                                                             size={SIZE_ICON_16}
                                                         />
                                                     </View>
-                                                </View>
+                                                </TouchableOpacity>
                                             );
                                         })}
-                                    </>
+                                    </React.Fragment>
                                 );
                             })}
                         </View>

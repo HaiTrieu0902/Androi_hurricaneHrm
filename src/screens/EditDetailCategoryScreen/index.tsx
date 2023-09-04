@@ -1,18 +1,26 @@
-import { format } from 'date-fns';
+import { StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
-import DatePicker from 'react-native-date-picker';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+    BG_SCREEN,
+    BG_SUB_COLOR,
+    BUTTON_COLOR__HOME,
+    EXPLAIN_ERROR_TEXT,
+    FONT_FAMILY,
+    SIZE_ICON_16,
+    SIZE_ICON_20,
+    TEXT_COLOR_PRIMARY,
+} from '../../utils/common';
+import NavigationGoBack from '../../components/NavigationGoBack';
+import { format } from 'date-fns';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import ButtonUI from '../../../components/Button';
-import { listDataCategory } from '../../../constants';
-import { BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
-import { StyleSheet } from 'react-native';
-import { BUTTON_COLOR__HOME, FONT_FAMILY, } from '../../../utils/common';
-import NavigationGoBack from '../../../components/NavigationGoBack';
-
-const ExpenseHome = () => {
+import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import DatePicker from 'react-native-date-picker';
+import ContainLimited from '../../components/ContainLimited';
+import { listDataCategory } from '../../constants';
+import ButtonUI from '../../components/Button';
+const EditDetailCategoryScreen = () => {
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectCategory, setselectCategory] = useState('food');
@@ -42,13 +50,12 @@ const ExpenseHome = () => {
     const handleActiveCategory = (type: string) => {
         setselectCategory(type);
     };
-
     return (
-        <View>
-            <View>
-                <NavigationGoBack paddingBottom={12} paddingTop={12} paddingStart={10} title="Change and Update" />
+        <SafeAreaView style={styles.bg_scrren}>
+            <View style={styles.bg_container}>
+                <NavigationGoBack paddingBottom={12} paddingTop={12} title="Edit" />
             </View>
-            <View style={{ marginTop: 20 , paddingStart: 20, paddingEnd: 20}}>
+            <View style={{ marginTop: 6, paddingHorizontal: 16 }}>
                 {/* view date */}
                 <View style={styles.view_contain}>
                     <Text style={styles.text_field}>Date</Text>
@@ -150,17 +157,27 @@ const ExpenseHome = () => {
                 </View>
 
                 <View style={styles.view_btn_submit}>
-                    <ButtonUI bgColor={BG_SUB_COLOR} text="Submit Change" onPress={() => {}} />
-                </View>
-                <View style={styles.view_btn_submit}>
-                    <ButtonUI bgColor={BG_SUB_COLOR} text="Delete this history" onPress={() => {}} />
+                    <View style={{ width: '49%' }}>
+                        <ButtonUI bgColor={BG_SUB_COLOR} text="Submit" onPress={() => {}} />
+                    </View>
+                    <View style={{ width: '49%' }}>
+                        <ButtonUI bgColor={EXPLAIN_ERROR_TEXT} text="Delete" onPress={() => {}} />
+                    </View>
                 </View>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+    bg_scrren: {
+        backgroundColor: BG_SCREEN,
+        height: '100%',
+    },
+    bg_container: {
+        paddingStart: 16,
+        paddingEnd: 16,
+    },
     view_contain: {
         display: 'flex',
         flexDirection: 'row',
@@ -206,10 +223,12 @@ const styles = StyleSheet.create({
     },
 
     view_btn_submit: {
-        marginTop: 50,
+        marginTop: 96,
         marginBottom: 16,
-        flex: 1,
-        justifyContent: 'flex-end',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 10,
     },
     category_item_contain: {
         width: '100%',
@@ -282,4 +301,4 @@ const styles = StyleSheet.create({
     text_date: { color: 'black', fontFamily: FONT_FAMILY, fontWeight: '600', fontSize: 14 },
 });
 
-export default ExpenseHome;
+export default EditDetailCategoryScreen;

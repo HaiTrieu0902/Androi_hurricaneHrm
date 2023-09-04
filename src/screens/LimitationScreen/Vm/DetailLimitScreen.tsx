@@ -135,7 +135,7 @@ const DetailLimitScreen = () => {
                             return (
                                 <TouchableOpacity
                                     key={index}
-                                    onPress={() => handleChangeNavigationLimit('CHANGE_HISTORY')}
+                                    onPress={() => handleChangeNavigationLimit('EDIT_DETAIL_CATEGORY')}
                                 >
                                     <View style={styles.view_item_history}>
                                         <View style={styles.icon_history}>

@@ -5,7 +5,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { SCREENS } from '../../constants';
-import { BG_SUB_COLOR, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../utils/common';
+import { BG_PRIMARYCOLOR, BG_SUB_COLOR, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../utils/common';
 import { styles } from './LimitationScreenStyle';
 import HeaderText from '../../components/HeaderText';
 import { format } from 'date-fns';
@@ -44,7 +44,7 @@ const LimitationScreen = () => {
                                 alignItems: 'center',
                             }}
                         >
-                            <Text style={styles.txt_money_remain}>Bag: 10,000,000</Text>
+                            <Text style={styles.txt_money_remain}>Bag: 310,000</Text>
                             <MaterialIcons name="attach-money" color={BG_SUB_COLOR} size={18} />
                         </View>
 
@@ -57,7 +57,7 @@ const LimitationScreen = () => {
                                 justifyContent: 'flex-end',
                             }}
                         >
-                            <Text style={styles.txt_money_total}>Total: 6.000.000</Text>
+                            <Text style={styles.txt_money_total}>Total: 1,870,000</Text>
                             <MaterialIcons name="attach-money" color={TEXT_COLOR_PRIMARY} size={18} />
                         </View>
                     </View>
@@ -69,24 +69,24 @@ const LimitationScreen = () => {
                         <View style={styles.view_list_item_limit}>
                             {/* View  item limit*/}
                             <TouchableOpacity
-                                style={[styles.view_item, { backgroundColor: '#f18ca8' }]}
+                                style={[styles.view_item, { backgroundColor: BG_PRIMARYCOLOR }]}
                                 onPress={() => handleChangeNavigationLimit('DETAIL_LIMITATION')}
                             >
                                 <View style={[styles.view_container_limit]}>
                                     <View>
-                                        <Text style={styles.text_title}>Shopping</Text>
+                                        <Text style={styles.text_title}>Food</Text>
                                     </View>
                                     <View style={styles.view_total}>
                                         <View style={{ display: 'flex', gap: 6 }}>
-                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                            <Text style={[styles.text_right, styles.text_total]}>Spent: 110,000</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Bag: 60,000</Text>
                                         </View>
                                     </View>
                                 </View>
                             </TouchableOpacity>
                             {/* View  item limit*/}
                             <TouchableOpacity
-                                style={[styles.view_item, { backgroundColor: '#66ab6a' }]}
+                                style={[styles.view_item, { backgroundColor: BG_PRIMARYCOLOR }]}
                                 onPress={() => handleChangeNavigationLimit('DETAIL_LIMITATION')}
                             >
                                 <View style={[styles.view_container_limit]}>
@@ -95,59 +95,59 @@ const LimitationScreen = () => {
                                     </View>
                                     <View style={styles.view_total}>
                                         <View style={{ display: 'flex', gap: 6 }}>
-                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                            <Text style={[styles.text_right, styles.text_total]}>Spent: 300,000</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Bag: 100,00</Text>
                                         </View>
                                     </View>
                                 </View>
                             </TouchableOpacity>
                             {/* View  item limit*/}
                             <TouchableOpacity
-                                style={[styles.view_item, { backgroundColor: '#664fc1' }]}
+                                style={[styles.view_item, { backgroundColor: BG_PRIMARYCOLOR }]}
                                 onPress={() => handleChangeNavigationLimit('DETAIL_LIMITATION')}
                             >
                                 <View style={[styles.view_container_limit]}>
                                     <View>
-                                        <Text style={styles.text_title}>Shopping</Text>
+                                        <Text style={styles.text_title}>Homeware</Text>
                                     </View>
                                     <View style={styles.view_total}>
                                         <View style={{ display: 'flex', gap: 6 }}>
-                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                            <Text style={[styles.text_right, styles.text_total]}>Spent: 600,000</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Bag: 50,000</Text>
                                         </View>
                                     </View>
                                 </View>
                             </TouchableOpacity>
                             {/* View  item limit*/}
                             <TouchableOpacity
-                                style={[styles.view_item, { backgroundColor: '#818562' }]}
+                                style={[styles.view_item, { backgroundColor: BG_PRIMARYCOLOR }]}
                                 onPress={() => handleChangeNavigationLimit('DETAIL_LIMITATION')}
                             >
                                 <View style={[styles.view_container_limit]}>
                                     <View>
-                                        <Text style={styles.text_title}>Shopping</Text>
+                                        <Text style={styles.text_title}>Invest</Text>
                                     </View>
                                     <View style={styles.view_total}>
                                         <View style={{ display: 'flex', gap: 6 }}>
-                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                            <Text style={[styles.text_right, styles.text_total]}>Spent: 500,000</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Bag: 100,000</Text>
                                         </View>
                                     </View>
                                 </View>
                             </TouchableOpacity>
                             {/* View  item limit*/}
                             <TouchableOpacity
-                                style={[styles.view_item, { backgroundColor: '#4564e0' }]}
+                                style={[styles.view_item, { backgroundColor: BG_PRIMARYCOLOR }]}
                                 onPress={() => handleChangeNavigationLimit('DETAIL_LIMITATION')}
                             >
                                 <View style={[styles.view_container_limit]}>
                                     <View>
-                                        <Text style={styles.text_title}>Shopping</Text>
+                                        <Text style={styles.text_title}>Phone</Text>
                                     </View>
                                     <View style={styles.view_total}>
                                         <View style={{ display: 'flex', gap: 6 }}>
-                                            <Text style={[styles.text_right, styles.text_total]}>Total: 11111</Text>
-                                            <Text style={[styles.text_right, styles.text_remain]}>Remaining: 6000</Text>
+                                            <Text style={[styles.text_right, styles.text_total]}>Spent: 50,000</Text>
+                                            <Text style={[styles.text_right, styles.text_remain]}>Bag: 0</Text>
                                         </View>
                                     </View>
                                 </View>
