@@ -1,15 +1,64 @@
 import { format } from 'date-fns';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
+import { PieChart } from 'react-native-chart-kit';
 import DatePicker from 'react-native-date-picker';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import PieChart from 'react-native-pie-chart';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ReportStyle';
+
+const data = [
+    {
+        name: 'Food',
+        population: 21500000,
+        color: 'red',
+        legendFontColor: TEXT_COLOR_PRIMARY,
+        legendFontSize: 14,
+    },
+    {
+        name: 'Shopping',
+        population: 2800000,
+        color: 'black',
+        legendFontColor: TEXT_COLOR_PRIMARY,
+        legendFontSize: 14,
+    },
+    {
+        name: 'Homware',
+        population: 527612,
+        color: 'red',
+        legendFontColor: TEXT_COLOR_PRIMARY,
+        legendFontSize: 14,
+    },
+    {
+        name: 'Phone',
+        population: 8538000,
+        color: 'blue',
+        legendFontColor: TEXT_COLOR_PRIMARY,
+        legendFontSize: 14,
+    },
+    {
+        name: 'Gift',
+        population: 11920000,
+        color: 'pink',
+        legendFontColor: TEXT_COLOR_PRIMARY,
+        legendFontSize: 14,
+    },
+];
+
+const chartConfig = {
+    backgroundGradientFrom: '#1E2923',
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: '#08130D',
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2,
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false,
+};
 
 const AddOrUpdateEmployeeScreen = () => {
     const [open, setOpen] = useState(false);
@@ -165,11 +214,14 @@ const AddOrUpdateEmployeeScreen = () => {
 
                 <View style={styles.pie_chart}>
                     <PieChart
-                        widthAndHeight={widthAndHeight}
-                        series={series}
-                        sliceColor={sliceColor}
-                        coverRadius={0.5}
-                        coverFill={'#FFF'}
+                        data={data}
+                        width={400}
+                        height={220}
+                        chartConfig={chartConfig}
+                        accessor={'population'}
+                        backgroundColor={'transparent'}
+                        paddingLeft={'0'}
+                        center={[16, 0]}
                     />
                 </View>
             </View>
