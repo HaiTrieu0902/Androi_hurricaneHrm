@@ -8,42 +8,49 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { EXPLAIN_ERROR_TEXT, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ReportStyle';
 
 const data = [
     {
         name: 'Food',
         population: 21500000,
-        color: 'red',
+        color: '#fca75b',
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },
     {
         name: 'Shopping',
         population: 2800000,
-        color: 'black',
+        color: '#5d71a9',
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },
     {
-        name: 'Homware',
+        name: 'Homeware',
         population: 527612,
-        color: 'red',
+        color: '#04aa6d',
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },
     {
         name: 'Phone',
         population: 8538000,
-        color: 'blue',
+        color: TEXT_COLOR_PRIMARY,
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },
     {
         name: 'Gift',
         population: 11920000,
-        color: 'pink',
+        color: '#ffc107',
+        legendFontColor: TEXT_COLOR_PRIMARY,
+        legendFontSize: 14,
+    },
+    {
+        name: 'Invest',
+        population: 21500000,
+        color: '#f31c31',
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },

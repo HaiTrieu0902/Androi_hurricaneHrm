@@ -143,16 +143,8 @@ const ExpenseHome = () => {
                                             onPress={() => handleActiveCategory(item.key)}
                                             style={styles.category_item_contain}
                                         >
-                                            {selectCategory === item.key ? item.iconActive : item.icon}
-                                            <Text
-                                                style={
-                                                    selectCategory === item.key
-                                                        ? styles.text_category_active
-                                                        : styles.text_category
-                                                }
-                                            >
-                                                {item.name}
-                                            </Text>
+                                            {item.icon}
+                                            <Text style={styles.text_category}>{item.name}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 );

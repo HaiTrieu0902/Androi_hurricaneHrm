@@ -7,43 +7,50 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { BG_SUB_COLOR, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { BG_SUB_COLOR, EXPLAIN_ERROR_TEXT, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ReportStyle';
 import { PieChart } from 'react-native-chart-kit';
 
 const data = [
     {
         name: 'Food',
-        population: 21500000,
-        color: 'red',
+        total: 21500000,
+        color: '#fca75b',
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },
     {
         name: 'Shopping',
-        population: 2800000,
-        color: 'black',
+        total: 2800000,
+        color: '#5d71a9',
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },
     {
-        name: 'Homware',
-        population: 527612,
-        color: 'red',
+        name: 'Homeware',
+        total: 527612,
+        color: '#04aa6d',
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },
     {
         name: 'Phone',
-        population: 8538000,
-        color: 'blue',
+        total: 8538000,
+        color: TEXT_COLOR_PRIMARY,
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },
     {
         name: 'Gift',
-        population: 11920000,
-        color: 'pink',
+        total: 11920000,
+        color: '#ffc107',
+        legendFontColor: TEXT_COLOR_PRIMARY,
+        legendFontSize: 14,
+    },
+    {
+        name: 'Invest',
+        total: 21500000,
+        color: '#f31c31',
         legendFontColor: TEXT_COLOR_PRIMARY,
         legendFontSize: 14,
     },
@@ -131,10 +138,6 @@ const AddOrUpdateEmployeeScreen = () => {
         },
     ];
 
-    const widthAndHeight = 180;
-    const series = [10.6, 40, 0.2, 1.1, 15.2, 28.2, 1.4, 3.3];
-    const sliceColor = ['#fbd203', '#ffb300', '#ff9100', '#ff6c00', '#ff3c00', '#39a2db', '#dddddd', 'red'];
-
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
@@ -209,7 +212,7 @@ const AddOrUpdateEmployeeScreen = () => {
                         width={400}
                         height={220}
                         chartConfig={chartConfig}
-                        accessor={'population'}
+                        accessor={'total'}
                         backgroundColor={'transparent'}
                         paddingLeft={'0'}
                         center={[16, 0]}
