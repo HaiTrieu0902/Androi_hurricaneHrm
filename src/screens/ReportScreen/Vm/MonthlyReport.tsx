@@ -8,7 +8,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { EXPLAIN_ERROR_TEXT, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { BG_SUB_COLOR, EXPLAIN_ERROR_TEXT, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ReportStyle';
 
 const data = [
@@ -75,56 +75,56 @@ const AddOrUpdateEmployeeScreen = () => {
         {
             key: 'food',
             name: 'Food',
-            icon: <MaterialCommunityIcons name="food" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
+            icon: <MaterialCommunityIcons name="food" color={'#fca75b'} size={SIZE_ICON_16} />,
             expense: 1207.07,
             percent: 10.6,
         },
         {
             key: 'shopping',
             name: 'Shopping',
-            icon: <AntDesign name="shoppingcart" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
+            icon: <AntDesign name="shoppingcart" color={'#5d71a9'} size={SIZE_ICON_16} />,
             expense: 111,
             percent: 40,
         },
         {
             key: 'gift',
             name: 'Gift',
-            icon: <AntDesign name="gift" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
+            icon: <AntDesign name="gift" color={'#ffc107'} size={SIZE_ICON_16} />,
             expense: 48.6,
             percent: 25.5,
         },
         {
             key: 'homeware',
             name: 'Homeware',
-            icon: <AntDesign name="home" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
+            icon: <AntDesign name="home" color={'#04aa6d'} size={SIZE_ICON_16} />,
             expense: 7.97,
             percent: 0.2,
         },
         {
             key: 'medical',
             name: 'Medical',
-            icon: <Ionicons name="medical-outline" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
+            icon: <Ionicons name="medical-outline" color={'#fc9b93'} size={SIZE_ICON_16} />,
             expense: 88.88,
             percent: 1.1,
         },
         {
             key: 'education',
             name: 'Education',
-            icon: <AntDesign name="book" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
+            icon: <AntDesign name="book" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
             expense: 95.92,
             percent: 15.2,
         },
         {
             key: 'exchange',
             name: 'Exchange',
-            icon: <Ionicons name="wine-outline" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
+            icon: <Ionicons name="wine-outline" color={'#ecce23'} size={SIZE_ICON_16} />,
             expense: 80.69,
             percent: 18.2,
         },
         {
             key: 'invest',
             name: 'Invest',
-            icon: <AntDesign name="linechart" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
+            icon: <AntDesign name="linechart" color={'#f31c31'} size={SIZE_ICON_16} />,
             expense: 108,
             percent: 28.2,
         },
@@ -136,10 +136,6 @@ const AddOrUpdateEmployeeScreen = () => {
             percent: 11.11,
         },
     ];
-
-    const widthAndHeight = 180;
-    const series = [10.6, 40, 0.2, 1.1, 15.2, 28.2, 1.4, 3.3];
-    const sliceColor = ['#fbd203', '#ffb300', '#ff9100', '#ff6c00', '#ff3c00', '#39a2db', '#dddddd', 'red'];
 
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
