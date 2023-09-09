@@ -1,14 +1,19 @@
 import React, { useRef, useState } from 'react';
-import { KeyboardAvoidingView, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, TouchableOpacity, Text, TextInput, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ButtonUI from '../../../components/Button';
 import { BG_SUB_COLOR, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './LimitedSpendingStyle';
+import { format } from 'date-fns';
+import DatePicker from 'react-native-modern-datepicker';
 
 const LimitedSpending = () => {
     const inputRef = useRef<TextInput | null>(null);
     const [valueTotal, setValueTotal] = useState(0);
+    const [open, setOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
     const [categoryLimits, setCategoryLimits] = useState({
         food: 0,
         shopping: 0,
@@ -27,10 +32,33 @@ const LimitedSpending = () => {
         setCategoryLimits(newCategoryLimits);
         setValueTotal(total);
     };
-
     /* Convert number */
     const formatNumber = (number: number) => {
         return number.toLocaleString();
+    };
+
+    /* Handle changed date*/
+    const handleDateChange = (newDate: Date) => {
+        setSelectedDate(newDate);
+    };
+
+    /* Function custom date*/
+    const formatDateCustom = (date: Date) => {
+        const month = format(date, 'MMM');
+        const year = format(date, 'yyyy');
+        const startOfMonth = format(new Date(date.getFullYear(), date.getMonth(), 1), 'dd');
+        const endOfMonth = format(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd');
+        return `${month},${year} (${startOfMonth} ${month} - ${endOfMonth} ${month})`;
+    };
+
+    const handleOpenModal = () => {
+        setOpen(!open);
+    };
+
+    const handleDateDatePickerChange = (dateString: string) => {
+        const [year, month] = dateString.split('-');
+        const newDate = new Date(parseInt(year), parseInt(month) - 1);
+        setSelectedDate(newDate);
     };
 
     return (
@@ -45,7 +73,30 @@ const LimitedSpending = () => {
 
                 {/* View Category */}
                 <View style={[styles.view_container_column, { marginTop: 16 }]}>
-                    <Text style={[styles.text_field, { marginBottom: 10 }]}>Category Limitation</Text>
+                    <View>
+                        <View style={styles.view_category}>
+                            <Text style={styles.text_field}>Category Limited</Text>
+                            <TouchableOpacity
+                                style={[styles.input_plan, { alignItems: 'center' }]}
+                                onPress={() => setOpen(true)}
+                            >
+                                <Text style={styles.text_date}>{formatDateCustom(selectedDate)}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <Modal style={{ height: 200 }} animationType="slide" transparent={true} visible={open}>
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={styles.view_modal}>
+                                    <DatePicker mode="monthYear" onSelectedChange={handleDateDatePickerChange} />
+                                    <TouchableOpacity style={{ paddingBottom: 10 }} onPress={handleOpenModal}>
+                                        <Text>Close</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{ paddingBottom: 10 }}>
+                                        <Text>Confirm</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Modal>
+                    </View>
                     <ScrollView style={{ maxHeight: 440 }}>
                         <View style={[styles.view_category_item]}>
                             <Text style={styles.text_category}>Food: </Text>
