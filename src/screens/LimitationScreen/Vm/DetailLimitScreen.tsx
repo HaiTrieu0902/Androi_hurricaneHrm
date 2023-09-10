@@ -14,6 +14,7 @@ import {
     SIZE_ICON_DEFAULT,
     TEXT_COLOR_PRIMARY,
 } from '../../../utils/common';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { styles } from './DetailLimitScreenStyle';
 
 export const listDataHistory = [
@@ -135,11 +136,11 @@ const DetailLimitScreen = () => {
                             return (
                                 <TouchableOpacity
                                     key={index}
-                                    onPress={() => handleChangeNavigationLimit('CHANGE_HISTORY')}
+                                    onPress={() => handleChangeNavigationLimit('EDIT_DETAIL_CATEGORY')}
                                 >
                                     <View style={styles.view_item_history}>
                                         <View style={styles.icon_history}>
-                                            <Icon name="cart-shopping" size={SIZE_ICON_DEFAULT}></Icon>
+                                            <AntDesign name="shoppingcart" color={'#5d71a9'} size={SIZE_ICON_16} />
                                         </View>
 
                                         <View style={styles.content_history}>

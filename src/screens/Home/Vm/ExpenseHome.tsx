@@ -110,25 +110,16 @@ const ExpenseHome = () => {
             <View style={{ marginTop: 26 }}>
                 <ScrollView horizontal={true} style={styles.view_contain_navigation}>
                     <View style={styles.view_navigation_item}>
-                        <ContainLimited />
+                        <ContainLimited category="Food" spent={100000} bag={500000} />
                     </View>
                     <View style={[styles.view_navigation_item, styles.ml_10]}>
-                        <ContainLimited bgColor="blue" />
+                        <ContainLimited category="Shopping" spent={200000} bag={100000} />
                     </View>
                     <View style={[styles.view_navigation_item, styles.ml_10]}>
-                        <ContainLimited bgColor="red" />
+                        <ContainLimited category="Homeware" spent={100000} bag={500000} />
                     </View>
                     <View style={[styles.view_navigation_item, styles.ml_10]}>
-                        <ContainLimited bgColor="pink" />
-                    </View>
-                    <View style={[styles.view_navigation_item, styles.ml_10]}>
-                        <ContainLimited bgColor="gray" />
-                    </View>
-                    <View style={[styles.view_navigation_item, styles.ml_10]}>
-                        <ContainLimited />
-                    </View>
-                    <View style={[styles.view_navigation_item, styles.ml_10]}>
-                        <ContainLimited />
+                        <ContainLimited category="Phone" spent={100000} bag={500000} />
                     </View>
                 </ScrollView>
             </View>
@@ -152,16 +143,8 @@ const ExpenseHome = () => {
                                             onPress={() => handleActiveCategory(item.key)}
                                             style={styles.category_item_contain}
                                         >
-                                            {selectCategory === item.key ? item.iconActive : item.icon}
-                                            <Text
-                                                style={
-                                                    selectCategory === item.key
-                                                        ? styles.text_category_active
-                                                        : styles.text_category
-                                                }
-                                            >
-                                                {item.name}
-                                            </Text>
+                                            {item.icon}
+                                            <Text style={styles.text_category}>{item.name}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 );

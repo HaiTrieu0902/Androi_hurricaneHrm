@@ -13,3 +13,16 @@ export const SIZE_ICON_20 = 20;
 
 /* HOME */
 export const BUTTON_COLOR__HOME = '#b8def3';
+
+/* List Color Icon */
+export const ListIconColor = {
+    food: '#fca75b',
+    shopping: '#5d71a9',
+    gift: '#ffc107',
+    homeware: '#04aa6d',
+    medical: '#fc9b93',
+    education: BG_SUB_COLOR,
+    exchange: '#ecce23',
+    invest: '#f31c31',
+    phone: TEXT_COLOR_PRIMARY,
+};

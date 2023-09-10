@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
         height: 100,
         backgroundColor: '#035397',
         margin: 3,
-        borderRadius: 10,
+        borderRadius: 6,
         position: 'relative',
     },
     view_container_limit: {
@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
     },
     text_remain: {
         fontSize: 14,
-        color: 'white',
+        color: '#dddddd',
         fontFamily: FONT_FAMILY,
     },
     text_title: {

@@ -10,6 +10,7 @@ import BottomTabNavigation from './BottomTabNavigation';
 import { PersonalNavigation } from './PersonalNavigation';
 import { UserNavigation } from './UserNavigation';
 import { LimitationNavigation } from './LimitationNavigation';
+import EditDetailCategoryScreen from '../screens/EditDetailCategoryScreen';
 const Stack = createStackNavigator();
 
 const NavigationMain = () => {
@@ -43,6 +44,7 @@ const NavigationMain = () => {
                             {LimitationNavigation.map((screen) => (
                                 <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
                             ))}
+                            <Stack.Screen name={SCREENS.EDIT_DETAIL_CATEGORY} component={EditDetailCategoryScreen} />
                         </Stack.Group>
                     </>
                 )}

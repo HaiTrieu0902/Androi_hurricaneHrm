@@ -20,6 +20,8 @@ import {
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
+import { useNavigation } from '@react-navigation/native';
+import { SCREENS } from '../../constants';
 
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {
@@ -31,141 +33,79 @@ type CalendarTheme = Theme & {
 
 const listDataExpense = [
     {
-        date: '8/28/2023',
+        date: '01/09/2023',
         total: '20000',
         data: [
             {
                 key: 'food',
                 name: 'Food',
-                icon: <MaterialCommunityIcons name="food" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-                expense: 1207.07,
+                icon: <MaterialCommunityIcons name="food" color={'#fca75b'} size={SIZE_ICON_16} />,
+                expense: 16000,
                 comment: 'hihi',
             },
             {
                 key: 'shopping',
                 name: 'Shopping',
-                icon: <AntDesign name="shoppingcart" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-                expense: 111,
+                icon: <AntDesign name="shoppingcart" color={'#5d71a9'} size={SIZE_ICON_16} />,
+                expense: 4000,
                 comment: 'khoc',
             },
         ],
     },
     {
-        date: '8/29/2023',
+        date: '02/09/2023',
         total: '30000',
         data: [
             {
                 key: 'gift',
                 name: 'Gift',
-                icon: <AntDesign name="gift" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-                expense: 48.6,
+                icon: <AntDesign name="gift" color={'#ffc107'} size={SIZE_ICON_16} />,
+                expense: 15000,
                 comment: 'khoc',
             },
             {
                 key: 'homeware',
                 name: 'Homeware',
-                icon: <AntDesign name="home" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-                expense: 7.97,
+                icon: <AntDesign name="home" color={'#04aa6d'} size={SIZE_ICON_16} />,
+                expense: 15000,
                 comment: 'khoc',
             },
         ],
     },
     {
-        date: '8/30/2023',
+        date: '04/09/2023',
         total: '30000',
         data: [
             {
                 key: 'food',
                 name: 'Food',
-                icon: <MaterialCommunityIcons name="food" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-                expense: 1207.07,
+                icon: <MaterialCommunityIcons name="food" color={'#fca75b'} size={SIZE_ICON_16} />,
+                expense: 15000,
                 comment: 'khoc',
             },
             {
                 key: 'gift',
                 name: 'Gift',
                 icon: <AntDesign name="gift" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-                expense: 48.6,
+                expense: 10000,
                 comment: 'khoc',
             },
             {
                 key: 'homeware',
                 name: 'Homeware',
                 icon: <AntDesign name="home" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-                expense: 7.97,
+                expense: 5000,
                 comment: 'khoc',
             },
         ],
     },
-    // {
-    //     key: 'food',
-    //     name: 'Food',
-    //     icon: <MaterialCommunityIcons name="food" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-    //     expense: 1207.07,
-    //     percent: 10.6,
-    // },
-    // {
-    //     key: 'shopping',
-    //     name: 'Shopping',
-    //     icon: <AntDesign name="shoppingcart" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-    //     expense: 111,
-    //     percent: 40,
-    // },
-    // {
-    //     key: 'gift',
-    //     name: 'Gift',
-    //     icon: <AntDesign name="gift" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-    //     expense: 48.6,
-    //     percent: 25.5,
-    // },
-    // {
-    //     key: 'homeware',
-    //     name: 'Homeware',
-    //     icon: <AntDesign name="home" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-    //     expense: 7.97,
-    //     percent: 0.2,
-    // },
-    // {
-    //     key: 'medical',
-    //     name: 'Medical',
-    //     icon: <Ionicons name="medical-outline" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-    //     expense: 88.88,
-    //     percent: 1.1,
-    // },
-    // {
-    //     key: 'education',
-    //     name: 'Education',
-    //     icon: <AntDesign name="book" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-    //     expense: 95.92,
-    //     percent: 15.2,
-    // },
-    // {
-    //     key: 'exchange',
-    //     name: 'Exchange',
-    //     icon: <Ionicons name="wine-outline" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-    //     expense: 80.69,
-    //     percent: 18.2,
-    // },
-    // {
-    //     key: 'invest',
-    //     name: 'Invest',
-    //     icon: <AntDesign name="linechart" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-    //     expense: 108,
-    //     percent: 28.2,
-    // },
-    // {
-    //     key: 'phone',
-    //     name: 'Phone',
-    //     icon: <AntDesign name="mobile1" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-    //     expense: 555.55,
-    //     percent: 11.11,
-    // },
 ];
 const CalenderScreen = () => {
+    const navigation = useNavigation();
     const [open, setOpen] = useState(false);
     const [selectedCalender, setSelectedCalender] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
+    let value = 0;
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
@@ -195,17 +135,32 @@ const CalenderScreen = () => {
         }
     };
 
+    const handleChangeNavigationLimit = async (type: string) => {
+        navigation.navigate(SCREENS[type] as never);
+    };
+
     const renderCustomDay = (date: any, state: any) => {
         console.log('date', date);
+        if (date?.dateString === '2023-09-01') {
+            value = 20000;
+        } else if (date?.dateString === '2023-09-02') {
+            value = 30000;
+        } else if (date?.dateString === '2023-09-04') {
+            value = 40000;
+        } else {
+            value = 0;
+        }
         return (
             <View style={styles.gridItemContainer}>
                 <View style={[styles.gridItem]}>
                     <Text style={{ textAlign: 'center', color: state === 'disabled' ? 'gray' : 'black' }}>
                         {date.day}
                     </Text>
-                    <Text style={{ textAlign: 'right', marginLeft: 6, color: EXPLAIN_ERROR_TEXT, fontSize: 11 }}>
-                        -300
-                    </Text>
+                    {value > 0 && (
+                        <Text style={{ textAlign: 'right', marginLeft: 6, color: EXPLAIN_ERROR_TEXT, fontSize: 11 }}>
+                            {value.toLocaleString()}
+                        </Text>
+                    )}
                 </View>
             </View>
         );
@@ -288,15 +243,15 @@ const CalenderScreen = () => {
                 <View style={styles.view_total_expense}>
                     <View style={styles.view_expense_item}>
                         <Text style={styles.text_expense_title}>Limited</Text>
-                        <Text style={{ color: BG_PRIMARYCOLOR }}>300 $</Text>
+                        <Text style={{ color: BG_PRIMARYCOLOR }}>400,000 $</Text>
                     </View>
                     <View style={styles.view_expense_item}>
                         <Text style={styles.text_expense_title}>Expense</Text>
-                        <Text style={{ color: EXPLAIN_ERROR_TEXT }}>200 $</Text>
+                        <Text style={{ color: EXPLAIN_ERROR_TEXT }}>90,000 $</Text>
                     </View>
                     <View style={styles.view_expense_item}>
                         <Text style={styles.text_expense_title}>Bag</Text>
-                        <Text style={{ color: BG_PRIMARYCOLOR }}>100 $</Text>
+                        <Text style={{ color: BG_PRIMARYCOLOR }}>310,000 $</Text>
                     </View>
                 </View>
             </View>
@@ -308,14 +263,15 @@ const CalenderScreen = () => {
                         <View>
                             {listDataExpense.map((item, index) => {
                                 return (
-                                    <>
-                                        <View key={index} style={styles.view_header_expense_title}>
+                                    <React.Fragment key={index}>
+                                        <View style={styles.view_header_expense_title}>
                                             <Text style={{ fontSize: 12 }}>{item.date}</Text>
                                             <Text style={{ fontSize: 12 }}>-{item.total} $</Text>
                                         </View>
-                                        {item?.data?.map((item, index) => {
+                                        {item?.data?.map((item) => {
                                             return (
-                                                <View
+                                                <TouchableOpacity
+                                                    onPress={() => handleChangeNavigationLimit('EDIT_DETAIL_CATEGORY')}
                                                     key={item.key}
                                                     style={[styles.view_item_display, styles.view_pie_info_item]}
                                                 >
@@ -323,7 +279,7 @@ const CalenderScreen = () => {
                                                         {item.icon}
                                                         <Text style={styles.text_main}>
                                                             {item.name}
-                                                            <Text style={{ fontSize: 11 }}>({item.comment})</Text>
+                                                            <Text style={{ fontSize: 11 }}> ({item.comment})</Text>
                                                         </Text>
                                                     </View>
                                                     <View style={styles.pie_info_contain}>
@@ -335,10 +291,10 @@ const CalenderScreen = () => {
                                                             size={SIZE_ICON_16}
                                                         />
                                                     </View>
-                                                </View>
+                                                </TouchableOpacity>
                                             );
                                         })}
-                                    </>
+                                    </React.Fragment>
                                 );
                             })}
                         </View>
