@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authSlice from './auth.slice';
-import employeeSlice from './employee.slice';
+import limitationSlice from './limitation.slice';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -14,7 +14,7 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
 const store = configureStore({
     reducer: {
         auth: persistedAuthReducer,
-        employee: employeeSlice,
+        limitation: limitationSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

@@ -21,6 +21,7 @@ import { isValidPassword, isValidUsername } from '../../utils/validation';
 import { BG_SUB_COLOR, COLOR_BORDER_SOLID, TEXT_COLOR_PRIMARY } from './../../utils/common';
 import { styles } from './LoginStyle';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { asyncStorageService } from '../../utils/storage';
 
 const LoginPage = () => {
     const dispatch = useAppDispatch();
@@ -84,6 +85,7 @@ const LoginPage = () => {
                 const res = await loginAPI(param);
                 if (res) {
                     await dispatch(setAuthToken(res?.data?.token));
+                    asyncStorageService.setValue('access_token', res?.data?.token);
                     await dispatch(setAuthUser(res?.data));
                     showToast(`${res?.message}`, 'success', 'top');
                     navigation.navigate(SCREENS.BOTTOM as never);

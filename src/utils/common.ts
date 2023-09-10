@@ -26,3 +26,15 @@ export const ListIconColor = {
     invest: '#f31c31',
     phone: TEXT_COLOR_PRIMARY,
 };
+
+export type CategoryLimits = {
+    food: number;
+    shopping: number;
+    gift: number;
+    homeware: number;
+    medical: number;
+    education: number;
+    exchange: number;
+    invest: number;
+    phone: number;
+};

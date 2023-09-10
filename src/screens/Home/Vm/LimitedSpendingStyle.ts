@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     input_plan: {
         backgroundColor: BUTTON_COLOR__HOME,
         color: 'black',
-        width: 208,
+        width: 120,
         paddingStart: 12,
         paddingEnd: 12,
         paddingTop: 4,
