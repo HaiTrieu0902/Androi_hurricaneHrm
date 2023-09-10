@@ -92,7 +92,6 @@ export const styles = StyleSheet.create({
     },
     text_date: { color: 'black', fontFamily: FONT_FAMILY, fontWeight: '600', fontSize: 14 },
     view_modal: {
-        //margin: 10,
         backgroundColor: 'white',
         borderRadius: 10,
         width: '90%',
@@ -106,5 +105,13 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+    },
+    view_modal_child: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginLeft: 40,
+        marginTop: -30,
+        marginBottom: 10,
+        gap: 12,
     },
 });

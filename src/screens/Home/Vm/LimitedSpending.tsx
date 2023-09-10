@@ -13,6 +13,7 @@ const LimitedSpending = () => {
     const [valueTotal, setValueTotal] = useState(0);
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [valueChangedDate, setValueChangedDate] = useState<any>('');
 
     const [categoryLimits, setCategoryLimits] = useState({
         food: 0,
@@ -37,28 +38,31 @@ const LimitedSpending = () => {
         return number.toLocaleString();
     };
 
-    /* Handle changed date*/
-    const handleDateChange = (newDate: Date) => {
-        setSelectedDate(newDate);
-    };
-
     /* Function custom date*/
     const formatDateCustom = (date: Date) => {
         const month = format(date, 'MMM');
         const year = format(date, 'yyyy');
-        const startOfMonth = format(new Date(date.getFullYear(), date.getMonth(), 1), 'dd');
-        const endOfMonth = format(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd');
-        return `${month},${year} (${startOfMonth} ${month} - ${endOfMonth} ${month})`;
+        return `${month},${year}`;
     };
 
-    const handleOpenModal = () => {
-        setOpen(!open);
+    const handleCloseOrConfirmModal = (type: string) => {
+        if (type === 'close') {
+            setOpen(!open);
+        } else {
+            const parsedDate = Date.parse(valueChangedDate);
+            if (!isNaN(parsedDate)) {
+                setSelectedDate(new Date(parsedDate));
+            } else {
+                console.error('Invalid date:', valueChangedDate);
+            }
+            setOpen(!open);
+        }
     };
 
-    const handleDateDatePickerChange = (dateString: string) => {
-        const [year, month] = dateString.split('-');
-        const newDate = new Date(parseInt(year), parseInt(month) - 1);
-        setSelectedDate(newDate);
+    const handleMonthYearChange = (dateString: string) => {
+        const [year, month] = dateString.split(' ');
+        const firstDayOfMonth = new Date(`${year}-${month}-01T00:00:00.000Z`);
+        setValueChangedDate(firstDayOfMonth.toISOString());
     };
 
     return (
@@ -86,13 +90,19 @@ const LimitedSpending = () => {
                         <Modal style={{ height: 200 }} animationType="slide" transparent={true} visible={open}>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                 <View style={styles.view_modal}>
-                                    <DatePicker mode="monthYear" onSelectedChange={handleDateDatePickerChange} />
-                                    <TouchableOpacity style={{ paddingBottom: 10 }} onPress={handleOpenModal}>
-                                        <Text>Close</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{ paddingBottom: 10 }}>
-                                        <Text>Confirm</Text>
-                                    </TouchableOpacity>
+                                    <DatePicker
+                                        mode="monthYear"
+                                        onMonthYearChange={(selectedDate) => handleMonthYearChange(selectedDate)}
+                                        selected={valueChangedDate}
+                                    />
+                                    <View style={styles.view_modal_child}>
+                                        <TouchableOpacity onPress={() => handleCloseOrConfirmModal('close')}>
+                                            <Text>Close</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => handleCloseOrConfirmModal('confirm')}>
+                                            <Text>Confirm</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             </View>
                         </Modal>
