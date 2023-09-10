@@ -80,4 +80,31 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '700',
     },
+
+    //Change Date category limited
+    view_category: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+        marginBottom: 10,
+    },
+    text_date: { color: 'black', fontFamily: FONT_FAMILY, fontWeight: '600', fontSize: 14 },
+    view_modal: {
+        //margin: 10,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        width: '90%',
+        padding: 6,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
 });
