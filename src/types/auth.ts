@@ -6,6 +6,14 @@ export interface IParamsAuth {
     confirmPassword?: string;
 }
 
+export interface ChangeAuth {
+    email? : string;
+    username? : string;
+    password : string;
+    newPassword : string;
+    confirmPassword: string;
+}
+
 export interface IUser {
     username_id: string;
     user_code: string;
