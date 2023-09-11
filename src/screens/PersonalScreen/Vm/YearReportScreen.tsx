@@ -186,8 +186,6 @@ const SettingScreen = () => {
                         <Text style={[styles.text_main]}>13.2004 $</Text>
                     </View>
                 </View>
-                {/* View Average */}
-
                 {/* Month of the year */}
                 <View style={[styles.view_contain, styles.view_info_year]}>
                     <ScrollView style={{ maxHeight: 240 }}>
@@ -220,7 +218,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 10,
         marginTop: 10,
         marginBottom: 10,
         flexWrap: 'wrap',
