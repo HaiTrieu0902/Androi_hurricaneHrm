@@ -80,7 +80,7 @@ export const styles = StyleSheet.create({
     },
     view_pie_info_item: {
         paddingStart: 16,
-        paddingRight: 16,
+        paddingEnd: 16,
         paddingTop: 10,
         paddingBottom: 10,
         borderBottomColor: TEXT_COLOR_PRIMARY,

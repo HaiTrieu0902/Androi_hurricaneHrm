@@ -74,7 +74,7 @@ const PersonalScreen = () => {
                                     <Text style={styles.text_manage_item}>Category Report</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleChangeNavigationPersonal('YEAR_REPORT')}>
                                 <View style={styles.view_manage_item}>
                                     <Icon name="chart-simple" color={ACTIVE_NAV_BOTTOM} size={SIZE_ICON_DEFAULT} />
                                     <Text style={styles.text_manage_item}>Year report</Text>

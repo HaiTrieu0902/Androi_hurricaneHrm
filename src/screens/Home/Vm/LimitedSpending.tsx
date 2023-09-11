@@ -55,12 +55,6 @@ const LimitedSpending = () => {
         setOpen(!open);
     };
 
-    const handleDateDatePickerChange = (dateString: string) => {
-        const [year, month] = dateString.split('-');
-        const newDate = new Date(parseInt(year), parseInt(month) - 1);
-        setSelectedDate(newDate);
-    };
-
     return (
         <KeyboardAvoidingView>
             <View style={{ marginTop: 6 }}>
@@ -86,7 +80,7 @@ const LimitedSpending = () => {
                         <Modal style={{ height: 200 }} animationType="slide" transparent={true} visible={open}>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                 <View style={styles.view_modal}>
-                                    <DatePicker mode="monthYear" onSelectedChange={handleDateDatePickerChange} />
+                                    <DatePicker mode="monthYear" />
                                     <TouchableOpacity style={{ paddingBottom: 10 }} onPress={handleOpenModal}>
                                         <Text>Close</Text>
                                     </TouchableOpacity>

@@ -14,6 +14,9 @@ export const SCREENS: { [key: string]: string } = {
     REPORT: 'Report',
     CALENDER: 'calender',
 
+    /* Personal Report */
+    YEAR_REPORT: 'year_report',
+
     /* Personal Screen Sub */
     HOME_PERSONAL: 'personal_home',
     SETTINGS: 'personal_settings',
