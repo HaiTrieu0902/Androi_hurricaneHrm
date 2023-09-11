@@ -61,7 +61,7 @@ const ExpenseHome = () => {
         return () => {
             getListCategory.abort();
         };
-    }, [selectedDate]);
+    }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear()]);
 
     return (
         <View style={{ marginTop: 6 }}>
