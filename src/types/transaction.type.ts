@@ -13,3 +13,14 @@ export interface categoryItem {
     category_id: number;
     isLimiation: boolean;
 }
+
+/*===================================================================*/
+// TRANSACTION
+
+export interface IParamTransaction {
+    user_id: number;
+    category_key: String;
+    amount: number;
+    note: String;
+    date: Date | any;
+}

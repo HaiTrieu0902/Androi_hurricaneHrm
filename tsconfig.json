@@ -5,6 +5,17 @@
         "baseUrl": ".", // this must be specified if "paths" is specified.
         "paths": {
             "@env": ["node_modules/react-native-dotenv"] // this mapping is relative to "baseUrl"
+            // "@components/*": ["./src/components/*"],
+            // "@screens/*": ["./src/screens/*"],
+            // "@types/*": ["./src/types/*"],
+            // "@hook/*": ["./src/hook/*"],
+            // "@constants/*": ["./src/constants/*"],
+            // "@navigation/*": ["./src/navigation/*"],
+            // "@services/*": ["./src/services/*"],
+            // "@utils/*": ["./src/utils/*"],
+            // "@configs/*": ["./src/configs/*"],
+            // "@redux/*": ["./src/redux/*"],
+            // "@assets/*": ["./src/assets/*"]
         }
     }
 }
