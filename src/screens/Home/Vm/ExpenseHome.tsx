@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -8,10 +8,16 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ButtonUI from '../../../components/Button';
 import ContainLimited from '../../../components/ContainLimited';
 import { listDataCategory } from '../../../constants';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { getListCategoryUserLimitationRedux } from '../../../redux/transaction.slice';
 import { BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ExpenseHomeStyle';
+import { getListCategoryUserAPI } from '../../../services/api/transaction.api';
 
 const ExpenseHome = () => {
+    const dispatch = useAppDispatch();
+    const { user } = useAppSelector((state) => state.auth);
+    const { listCategoryLimitation } = useAppSelector((state) => state.transaction);
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectCategory, setselectCategory] = useState('food');
@@ -38,9 +44,24 @@ const ExpenseHome = () => {
         }
     };
 
+    /* handle active category*/
     const handleActiveCategory = (type: string) => {
         setselectCategory(type);
     };
+
+    /* UseEffect call API category , if has category not call */
+    useEffect(() => {
+        const getListCategory = dispatch(
+            getListCategoryUserLimitationRedux({
+                userId: Number(user?.user_id),
+                month: selectedDate.getUTCMonth() + 1,
+                year: selectedDate.getFullYear(),
+            }),
+        );
+        return () => {
+            getListCategory.abort();
+        };
+    }, [selectedDate]);
 
     return (
         <View style={{ marginTop: 6 }}>
@@ -131,18 +152,23 @@ const ExpenseHome = () => {
                     <ScrollView style={{ maxHeight: 200 }}>
                         <View style={styles.view_category_list}>
                             {listDataCategory.map((item) => {
+                                const categoryLimitation = listCategoryLimitation?.data?.find(
+                                    (limitation) => limitation.category_key === item.key,
+                                );
+                                const isDisable = categoryLimitation && categoryLimitation.isLimiation;
+                                const onPressHandler = !isDisable ? undefined : () => handleActiveCategory(item.key);
                                 return (
                                     <View
                                         key={item.key}
                                         style={[
                                             styles.view_category_item,
-                                            selectCategory === item.key && styles.view_category_item_active,
+                                            isDisable &&
+                                                selectCategory === item.key &&
+                                                styles.view_category_item_active,
+                                            !isDisable && styles.view_disable_category,
                                         ]}
                                     >
-                                        <TouchableOpacity
-                                            onPress={() => handleActiveCategory(item.key)}
-                                            style={styles.category_item_contain}
-                                        >
+                                        <TouchableOpacity onPress={onPressHandler} style={styles.category_item_contain}>
                                             {item.icon}
                                             <Text style={styles.text_category}>{item.name}</Text>
                                         </TouchableOpacity>

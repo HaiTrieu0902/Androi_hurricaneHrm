@@ -12,14 +12,6 @@ export interface IQueryGetLimitationByMonth {
     year: number;
 }
 
-export interface IQueryUpdateLimitation {
-    userId: number;
-    categoryKey: String;
-    amount_limit: number;
-    month: number;
-    year: number;
-}
-
 export interface ILimitationListUserByMonth {
     user_id: number;
     month: number;

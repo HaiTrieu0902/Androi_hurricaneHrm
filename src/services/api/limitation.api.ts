@@ -1,5 +1,5 @@
 import { axiosCustom } from '../../configs';
-import { IQueryGetLimitationByMonth, IQueryUpdateLimitation, Ilimitation } from '../../types/limitation.type';
+import { IQueryGetLimitationByMonth, Ilimitation } from '../../types/limitation.type';
 
 export const getAllLimitationAPI = async () => {
     return axiosCustom.get('/api/v1/limitation/get-all-limitation').then((res) => res.data);

@@ -3,16 +3,17 @@ import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderText from '../../components/HeaderText';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 import { styles } from './HomeStyle';
 import { ExpenseHome, LimitedSpending } from './Vm';
 
 interface HomeScreensProps {}
 const HomeScreens = () => {
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector((state) => state.auth);
+
     const [isActiveButton, setIsActiveButton] = useState<boolean>(false);
 
+    /* handle changed screen sub */
     const handleChangedScreenSubHome = (type: string) => {
         if (type === 'expense') {
             setIsActiveButton(false);

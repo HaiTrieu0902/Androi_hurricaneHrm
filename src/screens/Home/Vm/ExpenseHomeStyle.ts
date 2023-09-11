@@ -46,6 +46,11 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
+    view_disable_category: {
+        backgroundColor: '#dcdbdb',
+        borderColor: '#dcdbdb',
+    },
+
     view_btn_submit: {
         marginTop: 96,
         marginBottom: 16,

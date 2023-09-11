@@ -190,7 +190,7 @@ const LimitedSpending = () => {
                 <View style={[styles.view_container_column, { marginTop: 16 }]}>
                     <View>
                         <View style={styles.view_category}>
-                            <Text style={styles.text_field}>Category Limited</Text>
+                            <Text style={styles.text_field}>Category Limitation</Text>
                             <TouchableOpacity
                                 style={[styles.input_plan, { alignItems: 'center' }]}
                                 onPress={() => setOpen(true)}
