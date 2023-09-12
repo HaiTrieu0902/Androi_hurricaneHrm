@@ -77,13 +77,13 @@ const ChangePassword = () => {
     };
     const handleValidatePrevSubmit = () => {
         const { currentPassword, newPassword,  confirmPassword } = valueForm;
-        const valueErrorPassword = isValidPassword(currentPassword);
+        const valueErrorCurrentPassword = isValidPassword(currentPassword);
         const valueErrorNewPassword = isValidPassword(newPassword);
         const valueConfirmPassword = isValidConfirmPassword(String(newPassword), String(confirmPassword));
         setValidationErrors((prev) => ({
             ...prev,
-            newPassword: valueErrorNewPassword,
-            password: valueErrorPassword,
+            currentPassword: valueErrorCurrentPassword ,
+            newPassword:  valueErrorNewPassword,
             confirmPassword: valueConfirmPassword,
         }));
     };
