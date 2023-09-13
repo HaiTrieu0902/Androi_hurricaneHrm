@@ -15,9 +15,9 @@ export interface IUser {
     token: string;
 }
 
-export interface ChangeAuth {
-    username? : any;
-    currentPassword : string;
-    newPassword : string;
+export interface IChangeAuth {
+    username?: any;
+    currentPassword: string;
+    newPassword: string;
     confirmPassword: string;
 }
