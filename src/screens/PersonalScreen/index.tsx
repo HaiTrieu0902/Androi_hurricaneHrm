@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Entypo from 'react-native-vector-icons/Entypo';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ButtonUI from '../../components/Button';
 import Container from '../../components/Container';
@@ -15,10 +15,8 @@ import { remoteAuthToken, remoteAuthUser } from '../../redux/auth.slice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
     ACTIVE_NAV_BOTTOM,
-    BG_SCREEN,
     BG_SUB_COLOR,
     EXPLAIN_ERROR_TEXT,
-    FONT_FAMILY,
     SIZE_ICON_16,
     SIZE_ICON_DEFAULT,
     TEXT_COLOR_PRIMARY,
@@ -74,7 +72,7 @@ const PersonalScreen = () => {
                                     <Text style={styles.text_manage_item}>Category Report</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleChangeNavigationPersonal('YEAR_REPORT')}>
                                 <View style={styles.view_manage_item}>
                                     <Icon name="chart-simple" color={ACTIVE_NAV_BOTTOM} size={SIZE_ICON_DEFAULT} />
                                     <Text style={styles.text_manage_item}>Year report</Text>
