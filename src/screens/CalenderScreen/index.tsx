@@ -11,7 +11,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import HeaderText from '../../components/HeaderText';
-import { SCREENS } from '../../constants';
+import { SCREENS, listDataCategory } from '../../constants';
 import {
     ACTIVE_NAV_BOTTOM,
     BG_PRIMARYCOLOR,
@@ -21,6 +21,8 @@ import {
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { getTransactionUserMonthRedux, setTransactionId } from '../../redux/transaction.slice';
 
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {
@@ -30,81 +32,15 @@ type CalendarTheme = Theme & {
     };
 };
 
-const listDataExpense = [
-    {
-        date: '01/09/2023',
-        total: '20000',
-        data: [
-            {
-                key: 'food',
-                name: 'Food',
-                icon: <MaterialCommunityIcons name="food" color={'#fca75b'} size={SIZE_ICON_16} />,
-                expense: 16000,
-                comment: 'hihi',
-            },
-            {
-                key: 'shopping',
-                name: 'Shopping',
-                icon: <AntDesign name="shoppingcart" color={'#5d71a9'} size={SIZE_ICON_16} />,
-                expense: 4000,
-                comment: 'khoc',
-            },
-        ],
-    },
-    {
-        date: '02/09/2023',
-        total: '30000',
-        data: [
-            {
-                key: 'gift',
-                name: 'Gift',
-                icon: <AntDesign name="gift" color={'#ffc107'} size={SIZE_ICON_16} />,
-                expense: 15000,
-                comment: 'khoc',
-            },
-            {
-                key: 'homeware',
-                name: 'Homeware',
-                icon: <AntDesign name="home" color={'#04aa6d'} size={SIZE_ICON_16} />,
-                expense: 15000,
-                comment: 'khoc',
-            },
-        ],
-    },
-    {
-        date: '04/09/2023',
-        total: '30000',
-        data: [
-            {
-                key: 'food',
-                name: 'Food',
-                icon: <MaterialCommunityIcons name="food" color={'#fca75b'} size={SIZE_ICON_16} />,
-                expense: 15000,
-                comment: 'khoc',
-            },
-            {
-                key: 'gift',
-                name: 'Gift',
-                icon: <AntDesign name="gift" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-                expense: 10000,
-                comment: 'khoc',
-            },
-            {
-                key: 'homeware',
-                name: 'Homeware',
-                icon: <AntDesign name="home" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-                expense: 5000,
-                comment: 'khoc',
-            },
-        ],
-    },
-];
 const CalenderScreen = () => {
     const navigation = useNavigation();
+    const dispatch = useAppDispatch();
+    const { user } = useAppSelector((state) => state.auth);
+    const { listTransactionUserMonth, isLoadingTransactionUserMonth } = useAppSelector((state) => state.transaction);
     const [open, setOpen] = useState(false);
     const [selectedCalender, setSelectedCalender] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-    let value = 0;
+    // let value = 0;
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
@@ -134,36 +70,55 @@ const CalenderScreen = () => {
         }
     };
 
-    const handleChangeNavigationLimit = async (type: string) => {
+    const handleChangeNavigationLimit = async (type: string, id: number) => {
         navigation.navigate(SCREENS[type] as never);
+        dispatch(setTransactionId(id));
     };
 
     const renderCustomDay = (date: any, state: any) => {
-        console.log('date', date);
-        if (date?.dateString === '2023-09-01') {
-            value = 20000;
-        } else if (date?.dateString === '2023-09-02') {
-            value = 30000;
-        } else if (date?.dateString === '2023-09-04') {
-            value = 40000;
-        } else {
-            value = 0;
-        }
+        const value = listTransactionUserMonth?.data?.filter((item) => {
+            if (item?.date === date?.dateString) {
+                return item?.totalAmountDate;
+            }
+            return 0;
+        });
         return (
             <View style={styles.gridItemContainer}>
                 <View style={[styles.gridItem]}>
                     <Text style={{ textAlign: 'center', color: state === 'disabled' ? 'gray' : 'black' }}>
                         {date.day}
                     </Text>
-                    {value > 0 && (
-                        <Text style={{ textAlign: 'right', marginLeft: 6, color: EXPLAIN_ERROR_TEXT, fontSize: 11 }}>
-                            {value.toLocaleString()}
+                    {value?.length > 0 && (
+                        <Text style={{ textAlign: 'right', marginLeft: 4, color: EXPLAIN_ERROR_TEXT, fontSize: 9 }}>
+                            {value[0]?.totalAmountDate?.toLocaleString().length > 8
+                                ? value[0]?.totalAmountDate?.toLocaleString().slice(0, 6) + '...'
+                                : value[0]?.totalAmountDate?.toLocaleString()}
                         </Text>
                     )}
                 </View>
             </View>
         );
     };
+
+    /* Function get category Icon  */
+    const getIconForCategory = (category_key: any) => {
+        const category = listDataCategory.find((item) => item.key === category_key);
+        return category ? category.icon : null;
+    };
+
+    /* UseEffect call API Transaction UserMonth */
+    useEffect(() => {
+        const getTransactionUserMonth = dispatch(
+            getTransactionUserMonthRedux({
+                userId: Number(user?.user_id),
+                month: selectedDate.getMonth() + 1,
+                year: selectedDate.getFullYear(),
+            }),
+        );
+        return () => {
+            getTransactionUserMonth.abort();
+        };
+    }, [selectedDate.getMonth() + 1, selectedDate.getFullYear(), isLoadingTransactionUserMonth, dispatch]);
 
     return (
         <SafeAreaView style={styles.bg_scrren}>
@@ -184,7 +139,7 @@ const CalenderScreen = () => {
                                 size={SIZE_ICON_16}
                             />
                             <TouchableOpacity style={styles.button_bg} onPress={() => setOpen(true)}>
-                                <Text style={styles.text_date}>{formatDateCustom(selectedDate)},</Text>
+                                <Text style={styles.text_date}>{formatDateCustom(selectedDate)}</Text>
                             </TouchableOpacity>
                             <FontAwesome6
                                 onPress={() => handleNextDateOrPrevDate('next')}
@@ -246,7 +201,9 @@ const CalenderScreen = () => {
                     </View>
                     <View style={styles.view_expense_item}>
                         <Text style={styles.text_expense_title}>Expense</Text>
-                        <Text style={{ color: EXPLAIN_ERROR_TEXT }}>90,000 $</Text>
+                        <Text style={{ color: EXPLAIN_ERROR_TEXT }}>
+                            {listTransactionUserMonth?.totalAmount?.toLocaleString()} $
+                        </Text>
                     </View>
                     <View style={styles.view_expense_item}>
                         <Text style={styles.text_expense_title}>Bag</Text>
@@ -260,29 +217,42 @@ const CalenderScreen = () => {
                 <View style={[styles.mt_16, styles.view_pie_info]}>
                     <ScrollView style={{ maxHeight: 230 }}>
                         <View>
-                            {listDataExpense.map((item, index) => {
+                            {listTransactionUserMonth?.data?.map((item, index) => {
                                 return (
                                     <React.Fragment key={index}>
                                         <View style={styles.view_header_expense_title}>
-                                            <Text style={{ fontSize: 12 }}>{item.date}</Text>
-                                            <Text style={{ fontSize: 12 }}>-{item.total} $</Text>
+                                            <Text style={{ fontSize: 12 }}>
+                                                {format(new Date(item?.date), 'dd/MM/yyyy')}
+                                            </Text>
+                                            <Text style={{ fontSize: 12 }}>
+                                                -{item.totalAmountDate.toLocaleString()} $
+                                            </Text>
                                         </View>
-                                        {item?.data?.map((item) => {
+                                        {item?.transactions?.map((item) => {
+                                            const icon = getIconForCategory(item.category_key);
                                             return (
                                                 <TouchableOpacity
-                                                    onPress={() => handleChangeNavigationLimit('EDIT_DETAIL_CATEGORY')}
-                                                    key={item.key}
+                                                    onPress={() =>
+                                                        handleChangeNavigationLimit(
+                                                            'EDIT_DETAIL_CATEGORY',
+                                                            item.transaction_id,
+                                                        )
+                                                    }
+                                                    key={item.transaction_id}
                                                     style={[styles.view_item_display, styles.view_pie_info_item]}
                                                 >
                                                     <View style={styles.pie_info_contain}>
-                                                        {item.icon}
+                                                        {icon}
                                                         <Text style={styles.text_main}>
-                                                            {item.name}
-                                                            <Text style={{ fontSize: 11 }}> ({item.comment})</Text>
+                                                            {item.category_key.charAt(0).toUpperCase() +
+                                                                item.category_key.slice(1)}
+                                                            <Text style={{ fontSize: 11 }}>
+                                                                {item.note && ` (${item.note})`}
+                                                            </Text>
                                                         </Text>
                                                     </View>
                                                     <View style={styles.pie_info_contain}>
-                                                        <Text style={styles.text_main}>{item.expense} $</Text>
+                                                        <Text style={styles.text_main}>{item.amount} $</Text>
                                                         <FontAwesome6
                                                             onPress={() => handleNextDateOrPrevDate('next')}
                                                             name="angle-right"

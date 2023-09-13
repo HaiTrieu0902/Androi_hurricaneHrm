@@ -10,7 +10,7 @@ import ContainLimited from '../../../components/ContainLimited';
 import { listDataCategory } from '../../../constants';
 import useToastNotifications from '../../../hook/useToastNotifications';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
-import { getListCategoryUserLimitationRedux } from '../../../redux/transaction.slice';
+import { getListCategoryUserLimitationRedux, triggerGetTransactionUserMonth } from '../../../redux/transaction.slice';
 import { addTransactionAPI } from '../../../services/api/transaction.api';
 import { BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ExpenseHomeStyle';
@@ -71,25 +71,30 @@ const ExpenseHome = () => {
 
     /* handle create new transaction */
     const handleCreateNewTransaction = async () => {
-        try {
-            const param = {
-                user_id: Number(user?.user_id),
-                category_key: selectCategory,
-                amount: Number(valueForm.amount),
-                note: valueForm.note,
-                date: format(selectedDate, 'dd/MM/yyyy'),
-            };
-            const res = await addTransactionAPI(param);
-            if (res) {
-                showToast(`${res?.message}`, 'success', 'top');
-                setValueForm({
-                    amount: '',
-                    note: '',
-                });
+        if (valueForm.amount > 0) {
+            try {
+                const param = {
+                    user_id: Number(user?.user_id),
+                    category_key: selectCategory,
+                    amount: Number(valueForm.amount),
+                    note: valueForm.note,
+                    date: format(selectedDate, 'dd/MM/yyyy'),
+                };
+                const res = await addTransactionAPI(param);
+                if (res) {
+                    showToast(`${res?.message}`, 'success', 'top');
+                    setValueForm({
+                        amount: '',
+                        note: '',
+                    });
+                    dispatch(triggerGetTransactionUserMonth());
+                }
+            } catch (error: any) {
+                showToast(`${error?.message}`, 'danger', 'top');
+                console.log(error);
             }
-        } catch (error: any) {
-            showToast(`${error?.message}`, 'danger', 'top');
-            console.log(error);
+        } else {
+            showToast(`Please enter value expense`, 'danger', 'top');
         }
     };
 
