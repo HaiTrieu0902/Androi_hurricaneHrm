@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
@@ -6,11 +7,11 @@ import { Theme } from 'react-native-calendars/src/types';
 import DatePicker from 'react-native-date-picker';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import HeaderText from '../../components/HeaderText';
+import { SCREENS } from '../../constants';
 import {
     ACTIVE_NAV_BOTTOM,
     BG_PRIMARYCOLOR,
@@ -20,8 +21,6 @@ import {
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
-import { useNavigation } from '@react-navigation/native';
-import { SCREENS } from '../../constants';
 
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {

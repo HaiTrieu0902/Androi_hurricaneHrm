@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { NativeSyntheticEvent, Text, TextInput, TextInputChangeEventData, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
@@ -8,17 +8,43 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ButtonUI from '../../../components/Button';
 import ContainLimited from '../../../components/ContainLimited';
 import { listDataCategory } from '../../../constants';
+import useToastNotifications from '../../../hook/useToastNotifications';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { getListCategoryUserLimitationRedux } from '../../../redux/transaction.slice';
+import { addTransactionAPI } from '../../../services/api/transaction.api';
 import { BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ExpenseHomeStyle';
 
 const ExpenseHome = () => {
+    const dispatch = useAppDispatch();
+    const showToast = useToastNotifications();
+    const inputRef = useRef<TextInput | null>(null);
+    const { user } = useAppSelector((state) => state.auth);
+    const { listCategoryLimitation } = useAppSelector((state) => state.transaction);
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectCategory, setselectCategory] = useState('food');
-
+    const [valueForm, setValueForm] = useState<{ note: string; amount: number | any }>({
+        note: '',
+        amount: '',
+    });
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
+    };
+
+    /* Handle changed note and value expense*/
+    const handleChangedValueForm = (e: NativeSyntheticEvent<TextInputChangeEventData>, field: any) => {
+        let newValue: any;
+        if (field === 'expense') {
+            newValue = Number(e.nativeEvent.text);
+        } else {
+            newValue = e.nativeEvent.text;
+        }
+        setValueForm((prev) => ({
+            ...prev,
+            [field]: newValue,
+        }));
     };
 
     /* Function custom date*/
@@ -38,10 +64,48 @@ const ExpenseHome = () => {
         }
     };
 
+    /* handle active category*/
     const handleActiveCategory = (type: string) => {
         setselectCategory(type);
     };
 
+    /* handle create new transaction */
+    const handleCreateNewTransaction = async () => {
+        try {
+            const param = {
+                user_id: Number(user?.user_id),
+                category_key: selectCategory,
+                amount: Number(valueForm.amount),
+                note: valueForm.note,
+                date: format(selectedDate, 'dd/MM/yyyy'),
+            };
+            const res = await addTransactionAPI(param);
+            if (res) {
+                showToast(`${res?.message}`, 'success', 'top');
+                setValueForm({
+                    amount: '',
+                    note: '',
+                });
+            }
+        } catch (error: any) {
+            showToast(`${error?.message}`, 'danger', 'top');
+            console.log(error);
+        }
+    };
+
+    /* UseEffect call API category , if has category not call */
+    useEffect(() => {
+        const getListCategory = dispatch(
+            getListCategoryUserLimitationRedux({
+                userId: Number(user?.user_id),
+                month: selectedDate.getUTCMonth() + 1,
+                year: selectedDate.getFullYear(),
+            }),
+        );
+        return () => {
+            getListCategory.abort();
+        };
+    }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear(), dispatch]);
     return (
         <View style={{ marginTop: 6 }}>
             {/* view date */}
@@ -86,7 +150,13 @@ const ExpenseHome = () => {
             <View style={[styles.view_contain, styles.mt_6]}>
                 <Text style={styles.text_field}>Note</Text>
                 <View style={styles.view_item}>
-                    <TextInput multiline={true} style={styles.text_area} placeholder="Enter note" />
+                    <TextInput
+                        multiline={true}
+                        style={styles.text_area}
+                        placeholder="Enter note"
+                        value={valueForm?.note}
+                        onChange={(e) => handleChangedValueForm(e, 'note')}
+                    />
                 </View>
             </View>
 
@@ -95,7 +165,13 @@ const ExpenseHome = () => {
                 <Text style={styles.text_field}>Expense</Text>
                 <View style={styles.view_item}>
                     <View style={styles.view_date}>
-                        <TextInput style={styles.text_expense} placeholder="0.0" />
+                        <TextInput
+                            style={styles.text_expense}
+                            value={valueForm.amount.toString()}
+                            keyboardType="numeric"
+                            placeholder="0.0"
+                            onChange={(e) => handleChangedValueForm(e, 'amount')}
+                        />
                         <MaterialIcons
                             style={{ marginLeft: -6 }}
                             name="attach-money"
@@ -131,18 +207,23 @@ const ExpenseHome = () => {
                     <ScrollView style={{ maxHeight: 200 }}>
                         <View style={styles.view_category_list}>
                             {listDataCategory.map((item) => {
+                                const categoryLimitation = listCategoryLimitation?.data?.find(
+                                    (limitation) => limitation.category_key === item.key,
+                                );
+                                const isDisable = categoryLimitation && categoryLimitation.isLimiation;
+                                const onPressHandler = !isDisable ? undefined : () => handleActiveCategory(item.key);
                                 return (
                                     <View
                                         key={item.key}
                                         style={[
                                             styles.view_category_item,
-                                            selectCategory === item.key && styles.view_category_item_active,
+                                            isDisable &&
+                                                selectCategory === item.key &&
+                                                styles.view_category_item_active,
+                                            !isDisable && styles.view_disable_category,
                                         ]}
                                     >
-                                        <TouchableOpacity
-                                            onPress={() => handleActiveCategory(item.key)}
-                                            style={styles.category_item_contain}
-                                        >
+                                        <TouchableOpacity onPress={onPressHandler} style={styles.category_item_contain}>
                                             {item.icon}
                                             <Text style={styles.text_category}>{item.name}</Text>
                                         </TouchableOpacity>
@@ -155,7 +236,7 @@ const ExpenseHome = () => {
             </View>
 
             <View style={styles.view_btn_submit}>
-                <ButtonUI bgColor={BG_SUB_COLOR} text="Submit" onPress={() => {}} />
+                <ButtonUI bgColor={BG_SUB_COLOR} text="Submit" onPress={handleCreateNewTransaction} />
             </View>
         </View>
     );

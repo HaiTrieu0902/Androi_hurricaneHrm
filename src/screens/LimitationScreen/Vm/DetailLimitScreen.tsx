@@ -1,20 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { format } from 'date-fns';
+import React, { useState } from 'react';
+import { Modal, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import DatePicker from 'react-native-modern-datepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import NavigationGoBack from '../../../components/NavigationGoBack';
 import { SCREENS } from '../../../constants';
-import {
-    EXPLAIN_ERROR_TEXT,
-    FONT_FAMILY,
-    SIZE_ICON_16,
-    SIZE_ICON_DEFAULT,
-    TEXT_COLOR_PRIMARY,
-} from '../../../utils/common';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { EXPLAIN_ERROR_TEXT, FONT_FAMILY, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './DetailLimitScreenStyle';
 
 export const listDataHistory = [
@@ -92,9 +88,63 @@ export const listDataHistory = [
 
 const DetailLimitScreen = () => {
     const navigation = useNavigation();
+    const [open, setOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [valueChangedDate, setValueChangedDate] = useState<any>('');
+
     const handleChangeNavigationLimit = async (type: string) => {
         navigation.navigate(SCREENS[type] as never);
     };
+
+    const handleOpenModal = () => {
+        setOpen(!open);
+    };
+
+    /* Handle changed date*/
+    const handleDateChange = (newDate: Date) => {
+        setSelectedDate(newDate);
+    };
+
+    /* Function custom date*/
+    const formatDateCustom = (date: Date) => {
+        const month = format(date, 'MMM');
+        const year = format(date, 'yyyy');
+        const startOfMonth = format(new Date(date.getFullYear(), date.getMonth(), 1), 'dd');
+        const endOfMonth = format(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd');
+        return `${month},${year} (${startOfMonth} ${month} - ${endOfMonth} ${month})`;
+    };
+    /* handle Next Or Prev Date */
+    const handleNextDateOrPrevDate = (type: string) => {
+        const currentDate = new Date(selectedDate);
+        if (type === 'next') {
+            const nextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+            setSelectedDate(nextMonth);
+        } else {
+            const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+            setSelectedDate(prevMonth);
+        }
+    };
+
+    const handleCloseOrConfirmModal = (type: string) => {
+        if (type === 'close') {
+            setOpen(!open);
+        } else {
+            const parsedDate = Date.parse(valueChangedDate);
+            if (!isNaN(parsedDate)) {
+                setSelectedDate(new Date(parsedDate));
+            } else {
+                console.error('Invalid date:', valueChangedDate);
+            }
+            setOpen(!open);
+        }
+    };
+
+    const handleMonthYearChange = (dateString: string) => {
+        const [year, month] = dateString.split(' ');
+        const firstDayOfMonth = new Date(`${year}-${month}-01T00:00:00.000Z`);
+        setValueChangedDate(firstDayOfMonth.toISOString());
+    };
+
     return (
         <SafeAreaView style={styles.bg_scrren}>
             <View>
@@ -126,9 +176,42 @@ const DetailLimitScreen = () => {
 
             {/* View history */}
             <View style={styles.view_history}>
-                <View style={styles.view_date}>
-                    <Text>January, 2023</Text>
+                <View style={[styles.view_date, styles.view_date_contain]}>
+                    <Icon
+                        onPress={() => handleNextDateOrPrevDate('prev')}
+                        name="angle-left"
+                        color={TEXT_COLOR_PRIMARY}
+                        size={SIZE_ICON_16}
+                    />
+                    <TouchableOpacity onPress={() => setOpen(true)}>
+                        <Text>{formatDateCustom(selectedDate)}</Text>
+                    </TouchableOpacity>
+                    <Icon
+                        onPress={() => handleNextDateOrPrevDate('next')}
+                        name="angle-right"
+                        color={TEXT_COLOR_PRIMARY}
+                        size={SIZE_ICON_16}
+                    />
                 </View>
+                <Modal style={{ height: 200 }} animationType="slide" transparent={true} visible={open}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={styles.view_modal}>
+                            <DatePicker
+                                mode="monthYear"
+                                onMonthYearChange={(selectedDate) => handleMonthYearChange(selectedDate)}
+                                selected={valueChangedDate}
+                            />
+                            <View style={styles.view_modal_child}>
+                                <TouchableOpacity onPress={() => handleCloseOrConfirmModal('close')}>
+                                    <Text>Close</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => handleCloseOrConfirmModal('confirm')}>
+                                    <Text>Confirm</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
                 <ScrollView style={{ maxHeight: 440 }}>
                     {/* View list item history */}
                     <View style={styles.view_list_history}>

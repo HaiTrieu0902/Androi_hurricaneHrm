@@ -46,11 +46,18 @@ export const styles = StyleSheet.create({
         height: 550,
     },
     view_date: {
-        height: 40,
-        justifyContent: 'center',
+        height: 30,
+        justifyContent: 'space-between',
         paddingStart: 20,
+        paddingEnd: 20,
         backgroundColor: BUTTON_COLOR__HOME,
         marginBottom: 16,
+    },
+    view_date_contain: {
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 10,
+        alignItems: 'center',
     },
     view_list_history: {
         marginStart: 16,
@@ -89,5 +96,29 @@ export const styles = StyleSheet.create({
     content_right: {
         justifyContent: 'center',
         flexDirection: 'row',
+    },
+
+    view_modal: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        width: '90%',
+        padding: 6,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    view_modal_child: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginLeft: 40,
+        marginTop: -30,
+        marginBottom: 10,
+        gap: 12,
     },
 });

@@ -12,6 +12,12 @@ const initialState: Auth = {
     user: {} as IUser,
     screenName: null,
 };
+
+// export const getListCategoryRedux = createAsyncThunk('category/getListCategory', async () => {
+//     const response = await getListCategoryAPI();
+//     return response;
+// });
+
 const authSlice = createSlice({
     name: 'auth',
     initialState: initialState,
@@ -32,6 +38,12 @@ const authSlice = createSlice({
             state.user = initialState.user;
         },
     },
+
+    // extraReducers: (builder) => {
+    //     builder.addCase(getListCategoryRedux.fulfilled, (state, action: PayloadAction<IlistCategory>) => {
+    //         state.listCategory = action.payload;
+    //     });
+    // },
 });
 
 export const { setAuthToken, setAuthUser, remoteAuthToken, remoteAuthUser } = authSlice.actions;

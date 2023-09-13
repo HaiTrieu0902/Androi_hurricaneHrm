@@ -46,6 +46,11 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
+    view_disable_category: {
+        backgroundColor: '#dcdbdb',
+        borderColor: '#dcdbdb',
+    },
+
     view_btn_submit: {
         marginTop: 96,
         marginBottom: 16,
@@ -117,8 +122,8 @@ export const styles = StyleSheet.create({
         paddingBottom: 4,
         fontFamily: FONT_FAMILY,
         borderRadius: 6,
-        fontWeight: '900',
-        fontSize: 17,
+        fontWeight: '600',
+        fontSize: 14,
     },
     text_date: { color: 'black', fontFamily: FONT_FAMILY, fontWeight: '600', fontSize: 14 },
 });
