@@ -14,3 +14,10 @@ export interface IUser {
     email: string;
     token: string;
 }
+
+export interface ChangeAuth {
+    username? : any;
+    currentPassword : string;
+    newPassword : string;
+    confirmPassword: string;
+}
