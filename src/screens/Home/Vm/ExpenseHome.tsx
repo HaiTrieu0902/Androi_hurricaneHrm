@@ -8,13 +8,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ButtonUI from '../../../components/Button';
 import ContainLimited from '../../../components/ContainLimited';
 import { listDataCategory } from '../../../constants';
+import useToastNotifications from '../../../hook/useToastNotifications';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { getListCategoryUserLimitationRedux } from '../../../redux/transaction.slice';
+import { addTransactionAPI } from '../../../services/api/transaction.api';
 import { BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ExpenseHomeStyle';
-import { addTransactionAPI, getListCategoryUserAPI } from '../../../services/api/transaction.api';
-import useToastNotifications from '../../../hook/useToastNotifications';
-import moment from 'moment';
+
 const ExpenseHome = () => {
     const dispatch = useAppDispatch();
     const showToast = useToastNotifications();
@@ -93,8 +93,6 @@ const ExpenseHome = () => {
         }
     };
 
-    console.log('value', valueForm);
-
     /* UseEffect call API category , if has category not call */
     useEffect(() => {
         const getListCategory = dispatch(
@@ -107,7 +105,7 @@ const ExpenseHome = () => {
         return () => {
             getListCategory.abort();
         };
-    }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear()]);
+    }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear(), dispatch]);
     return (
         <View style={{ marginTop: 6 }}>
             {/* view date */}

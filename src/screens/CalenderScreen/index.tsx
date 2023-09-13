@@ -10,7 +10,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import HeaderText from '../../components/HeaderText';
 import { SCREENS } from '../../constants';
 import {
