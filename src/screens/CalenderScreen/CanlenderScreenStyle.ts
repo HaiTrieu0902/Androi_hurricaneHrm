@@ -1,15 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {
-    ACTIVE_NAV_BOTTOM,
-    BG_PRIMARYCOLOR,
-    BG_SCREEN,
-    BG_SUB_COLOR,
-    BUTTON_COLOR__HOME,
-    COLOR_BORDER,
-    COLOR_BORDER_SOLID,
-    FONT_FAMILY,
-    TEXT_COLOR_PRIMARY,
-} from '../../utils/common';
+import { BG_SCREEN, BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../utils/common';
 
 export const styles = StyleSheet.create({
     bg_scrren: { backgroundColor: BG_SCREEN, height: '100%' },

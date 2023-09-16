@@ -1,23 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
+import { format } from 'date-fns';
 import React, { useState } from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import DatePicker from 'react-native-modern-datepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import NavigationGoBack from '../../../components/NavigationGoBack';
 import { SCREENS } from '../../../constants';
-import {
-    EXPLAIN_ERROR_TEXT,
-    FONT_FAMILY,
-    SIZE_ICON_16,
-    SIZE_ICON_DEFAULT,
-    TEXT_COLOR_PRIMARY,
-} from '../../../utils/common';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { EXPLAIN_ERROR_TEXT, FONT_FAMILY, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './DetailLimitScreenStyle';
-import { format } from 'date-fns';
-import DatePicker from 'react-native-modern-datepicker';
 
 export const listDataHistory = [
     {
@@ -96,7 +90,7 @@ const DetailLimitScreen = () => {
     const navigation = useNavigation();
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-    const [dateModern, setDateModern] = useState('');
+    const [valueChangedDate, setValueChangedDate] = useState<any>('');
 
     const handleChangeNavigationLimit = async (type: string) => {
         navigation.navigate(SCREENS[type] as never);
@@ -129,6 +123,26 @@ const DetailLimitScreen = () => {
             const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
             setSelectedDate(prevMonth);
         }
+    };
+
+    const handleCloseOrConfirmModal = (type: string) => {
+        if (type === 'close') {
+            setOpen(!open);
+        } else {
+            const parsedDate = Date.parse(valueChangedDate);
+            if (!isNaN(parsedDate)) {
+                setSelectedDate(new Date(parsedDate));
+            } else {
+                console.error('Invalid date:', valueChangedDate);
+            }
+            setOpen(!open);
+        }
+    };
+
+    const handleMonthYearChange = (dateString: string) => {
+        const [year, month] = dateString.split(' ');
+        const firstDayOfMonth = new Date(`${year}-${month}-01T00:00:00.000Z`);
+        setValueChangedDate(firstDayOfMonth.toISOString());
     };
 
     return (
@@ -184,12 +198,17 @@ const DetailLimitScreen = () => {
                         <View style={styles.view_modal}>
                             <DatePicker
                                 mode="monthYear"
-                                selectorStartingYear={2000}
-                                onMonthYearChange={(selectedDateModern) => setDateModern(selectedDateModern)}
+                                onMonthYearChange={(selectedDate) => handleMonthYearChange(selectedDate)}
+                                selected={valueChangedDate}
                             />
-                            <TouchableOpacity style={{ paddingBottom: 10 }} onPress={handleOpenModal}>
-                                <Text>Close</Text>
-                            </TouchableOpacity>
+                            <View style={styles.view_modal_child}>
+                                <TouchableOpacity onPress={() => handleCloseOrConfirmModal('close')}>
+                                    <Text>Close</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => handleCloseOrConfirmModal('confirm')}>
+                                    <Text>Confirm</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </Modal>

@@ -18,7 +18,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { BarChart } from 'react-native-chart-kit';
 
-const SettingScreen = () => {
+const YearReportScreen = () => {
     const navigation = useNavigation();
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -284,4 +284,4 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
     },
 });
-export default SettingScreen;
+export default YearReportScreen;

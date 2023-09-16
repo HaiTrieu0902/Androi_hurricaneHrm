@@ -7,10 +7,17 @@ export interface IParamsAuth {
 }
 
 export interface IUser {
-    username_id: string;
+    user_id: string;
     user_code: string;
     username: string;
     fullName: string;
     email: string;
     token: string;
+}
+
+export interface IChangeAuth {
+    username?: any;
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
 }

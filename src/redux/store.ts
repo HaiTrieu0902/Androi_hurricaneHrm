@@ -1,9 +1,10 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { persistReducer, persistStore } from 'redux-persist';
 import authSlice from './auth.slice';
-import employeeSlice from './employee.slice';
-import { persistStore, persistReducer } from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import limitationSlice from './limitation.slice';
+import transactionSlice from './transaction.slice';
 
 const authPersistConfig = {
     key: 'auth',
@@ -14,7 +15,8 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
 const store = configureStore({
     reducer: {
         auth: persistedAuthReducer,
-        employee: employeeSlice,
+        limitation: limitationSlice,
+        transaction: transactionSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -23,6 +25,7 @@ const store = configureStore({
 });
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 

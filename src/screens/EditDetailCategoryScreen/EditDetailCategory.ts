@@ -1,7 +1,15 @@
 import { StyleSheet } from 'react-native';
-import { BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { BG_SCREEN, BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../utils/common';
 
 export const styles = StyleSheet.create({
+    bg_scrren: {
+        backgroundColor: BG_SCREEN,
+        height: '100%',
+    },
+    bg_container: {
+        paddingStart: 16,
+        paddingEnd: 16,
+    },
     view_contain: {
         display: 'flex',
         flexDirection: 'row',
@@ -23,6 +31,10 @@ export const styles = StyleSheet.create({
     },
     ml_10: {
         marginLeft: 10,
+    },
+    view_disable_category: {
+        backgroundColor: '#dcdbdb',
+        borderColor: '#dcdbdb',
     },
 
     /* view category */
@@ -46,16 +58,13 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
     },
 
-    view_disable_category: {
-        backgroundColor: '#dcdbdb',
-        borderColor: '#dcdbdb',
-    },
-
     view_btn_submit: {
         marginTop: 96,
         marginBottom: 16,
-        flex: 1,
-        justifyContent: 'flex-end',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 10,
     },
     category_item_contain: {
         width: '100%',
@@ -122,8 +131,8 @@ export const styles = StyleSheet.create({
         paddingBottom: 4,
         fontFamily: FONT_FAMILY,
         borderRadius: 6,
-        fontWeight: '600',
-        fontSize: 14,
+        fontWeight: '900',
+        fontSize: 17,
     },
     text_date: { color: 'black', fontFamily: FONT_FAMILY, fontWeight: '600', fontSize: 14 },
 });
