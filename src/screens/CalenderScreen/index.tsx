@@ -7,22 +7,21 @@ import { Theme } from 'react-native-calendars/src/types';
 import DatePicker from 'react-native-date-picker';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import HeaderText from '../../components/HeaderText';
 import { SCREENS, listDataCategory } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { getTransactionUserMonthRedux, setTransactionId } from '../../redux/transaction.slice';
+import { getLimitationTransactionUserByMonthAPI } from '../../services/api/limitation.api';
+import { ILimitationTransaction } from '../../types/limitation.type';
 import {
     ACTIVE_NAV_BOTTOM,
     BG_PRIMARYCOLOR,
-    BG_SUB_COLOR,
     EXPLAIN_ERROR_TEXT,
     SIZE_ICON_16,
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { getTransactionUserMonthRedux, setTransactionId } from '../../redux/transaction.slice';
 
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {
@@ -36,6 +35,8 @@ const CalenderScreen = () => {
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
     const { user } = useAppSelector((state) => state.auth);
+    const { isLoadingLimitationTransaction } = useAppSelector((state) => state.limitation);
+    const [listLimitationTractionMonth, setListLimitationTractionMonth] = useState<ILimitationTransaction>();
     const { listTransactionUserMonth, isLoadingTransactionUserMonth } = useAppSelector((state) => state.transaction);
     const [open, setOpen] = useState(false);
     const [selectedCalender, setSelectedCalender] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
@@ -107,6 +108,24 @@ const CalenderScreen = () => {
         const category = listDataCategory.find((item) => item.key === category_key);
         return category ? category.icon : null;
     };
+
+    /* Handle get API LimitationTransactionUserByMonth*/
+    const getLimitationTransactionUserByMonth = async () => {
+        try {
+            const res = await getLimitationTransactionUserByMonthAPI({
+                userId: Number(user?.user_id),
+                month: selectedDate.getMonth() + 1,
+                year: selectedDate.getFullYear(),
+            });
+            if (res) {
+                setListLimitationTractionMonth(res);
+            }
+        } catch (error) {}
+    };
+    /* Useffect call API limitation transaction by month  */
+    useEffect(() => {
+        getLimitationTransactionUserByMonth();
+    }, [selectedDate.getMonth() + 1, selectedDate.getFullYear(), dispatch, isLoadingLimitationTransaction]);
 
     /* UseEffect call API Transaction UserMonth */
     useEffect(() => {
@@ -199,7 +218,9 @@ const CalenderScreen = () => {
                 <View style={styles.view_total_expense}>
                     <View style={styles.view_expense_item}>
                         <Text style={styles.text_expense_title}>Limited</Text>
-                        <Text style={{ color: BG_PRIMARYCOLOR }}>400,000 $</Text>
+                        <Text style={{ color: BG_PRIMARYCOLOR }}>
+                            {listLimitationTractionMonth?.total_limit.toLocaleString()} $
+                        </Text>
                     </View>
                     <View style={styles.view_expense_item}>
                         <Text style={styles.text_expense_title}>Expense</Text>
@@ -209,7 +230,12 @@ const CalenderScreen = () => {
                     </View>
                     <View style={styles.view_expense_item}>
                         <Text style={styles.text_expense_title}>Bag</Text>
-                        <Text style={{ color: BG_PRIMARYCOLOR }}>310,000 $</Text>
+                        <Text style={{ color: BG_PRIMARYCOLOR }}>
+                            {(
+                                Number(listLimitationTractionMonth?.total_limit) - listTransactionUserMonth?.totalAmount
+                            ).toLocaleString()}{' '}
+                            $
+                        </Text>
                     </View>
                 </View>
             </View>

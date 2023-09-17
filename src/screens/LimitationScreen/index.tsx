@@ -5,14 +5,13 @@ import { Text, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import HeaderText from '../../components/HeaderText';
 import { SCREENS } from '../../constants';
-import { ILimitationTransaction } from '../../types/limitation.type';
-import { ACTIVE_NAV_BOTTOM, BG_PRIMARYCOLOR, BG_SUB_COLOR, TEXT_COLOR_PRIMARY } from '../../utils/common';
-import { styles } from './LimitationScreenStyle';
-import { getLimitationTransactionUserByMonthAPI } from '../../services/api/limitation.api';
 import { useAppSelector } from '../../redux/store';
+import { getLimitationTransactionUserByMonthAPI } from '../../services/api/limitation.api';
+import { ILimitationTransaction } from '../../types/limitation.type';
+import { ACTIVE_NAV_BOTTOM, BG_PRIMARYCOLOR } from '../../utils/common';
+import { styles } from './LimitationScreenStyle';
 
 const LimitationScreen = () => {
     const navigation = useNavigation();
@@ -20,10 +19,12 @@ const LimitationScreen = () => {
     const { isLoadingLimitationTransaction } = useAppSelector((state) => state.limitation);
     const [listLimitationTractionMonth, setListLimitationTractionMonth] = useState<ILimitationTransaction>();
 
+    /* hanlde navigation*/
     const handleChangeNavigationLimit = async (type: string) => {
         navigation.navigate(SCREENS[type] as never);
     };
 
+    /*  Format date*/
     const formatDateCustom = (date: Date) => {
         return format(date, 'd.M.yyyy');
     };
