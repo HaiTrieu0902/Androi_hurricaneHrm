@@ -45,7 +45,7 @@ const CalenderScreen = () => {
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
     };
-
+    /* Effect change value date*/
     useEffect(() => {
         setSelectedCalender(format(selectedDate, 'yyyy-MM-dd'));
     }, [selectedDate]);
@@ -70,11 +70,13 @@ const CalenderScreen = () => {
         }
     };
 
+    /* hanlde changed navigation */
     const handleChangeNavigationLimit = async (type: string, id: number) => {
         navigation.navigate(SCREENS[type] as never);
         dispatch(setTransactionId(id));
     };
 
+    /* Handle render calendar all transction by month */
     const renderCustomDay = (date: any, state: any) => {
         const value = listTransactionUserMonth?.data?.filter((item) => {
             if (item?.date === date?.dateString) {

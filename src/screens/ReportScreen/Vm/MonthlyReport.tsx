@@ -65,6 +65,7 @@ const chartConfig = {
     strokeWidth: 2,
     barPercentage: 0.5,
     useShadowColorFromDataset: false,
+    name: 'category_name',
 };
 
 const AddOrUpdateEmployeeScreen = () => {

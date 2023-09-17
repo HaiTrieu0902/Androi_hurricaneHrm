@@ -27,3 +27,19 @@ export interface dataLimitation {
     updatedAt: Date;
     limitation_id: number;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+export interface ILimitationTransaction {
+    user_id: number;
+    month: number;
+    total_spent: number;
+    total_limit: number;
+    year: number;
+    data: ILimitationItem[];
+}
+
+export interface ILimitationItem {
+    category_key: string;
+    amount_spent: number;
+    amount_limit: number;
+}
