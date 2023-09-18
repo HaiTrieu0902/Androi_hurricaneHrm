@@ -7,20 +7,24 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import HeaderText from '../../components/HeaderText';
 import { SCREENS } from '../../constants';
-import { useAppSelector } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { getLimitationTransactionUserByMonthAPI } from '../../services/api/limitation.api';
 import { ILimitationTransaction } from '../../types/limitation.type';
 import { ACTIVE_NAV_BOTTOM, BG_PRIMARYCOLOR } from '../../utils/common';
 import { styles } from './LimitationScreenStyle';
+import { setLimitationCategoryKey } from '../../redux/limitation.slice';
 
 const LimitationScreen = () => {
+    const dispatch = useAppDispatch();
     const navigation = useNavigation();
     const { user } = useAppSelector((state) => state.auth);
     const { isLoadingLimitationTransaction } = useAppSelector((state) => state.limitation);
     const [listLimitationTractionMonth, setListLimitationTractionMonth] = useState<ILimitationTransaction>();
 
     /* hanlde navigation*/
-    const handleChangeNavigationLimit = async (type: string) => {
+    const handleChangeNavigationLimit = async (type: string, categorykey: string) => {
+        // setLimitationCategoryKey
+        dispatch(setLimitationCategoryKey(categorykey));
         navigation.navigate(SCREENS[type] as never);
     };
 
@@ -103,8 +107,11 @@ const LimitationScreen = () => {
                                 listLimitationTractionMonth?.data?.map((item) => {
                                     return (
                                         <TouchableOpacity
+                                            key={item?.category_key}
                                             style={[styles.view_item, { backgroundColor: BG_PRIMARYCOLOR }]}
-                                            onPress={() => handleChangeNavigationLimit('DETAIL_LIMITATION')}
+                                            onPress={() =>
+                                                handleChangeNavigationLimit('DETAIL_LIMITATION', item?.category_key)
+                                            }
                                         >
                                             <View style={[styles.view_container_limit]}>
                                                 <View>
@@ -116,10 +123,13 @@ const LimitationScreen = () => {
                                                 <View style={styles.view_total}>
                                                     <View style={{ display: 'flex', gap: 6 }}>
                                                         <Text style={[styles.text_right, styles.text_total]}>
-                                                            Bag: {item?.amount_limit - item?.amount_spent}
+                                                            Bag:{' '}
+                                                            {Number(
+                                                                item?.amount_limit - item?.amount_spent,
+                                                            ).toLocaleString()}
                                                         </Text>
                                                         <Text style={[styles.text_right, styles.text_remain]}>
-                                                            limited: {item?.amount_limit}
+                                                            limited: {item?.amount_limit.toLocaleString()}
                                                         </Text>
                                                     </View>
                                                 </View>

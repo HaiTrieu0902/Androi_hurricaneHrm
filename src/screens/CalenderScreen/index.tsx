@@ -125,7 +125,7 @@ const CalenderScreen = () => {
     /* Useffect call API limitation transaction by month  */
     useEffect(() => {
         getLimitationTransactionUserByMonth();
-    }, [selectedDate.getMonth() + 1, selectedDate.getFullYear(), dispatch, isLoadingLimitationTransaction]);
+    }, [selectedDate, dispatch, isLoadingLimitationTransaction]);
 
     /* UseEffect call API Transaction UserMonth */
     useEffect(() => {
@@ -139,7 +139,7 @@ const CalenderScreen = () => {
         return () => {
             getTransactionUserMonth.abort();
         };
-    }, [selectedDate.getMonth() + 1, selectedDate.getFullYear(), isLoadingTransactionUserMonth, dispatch]);
+    }, [selectedDate, isLoadingTransactionUserMonth, dispatch]);
 
     return (
         <SafeAreaView style={styles.bg_scrren}>

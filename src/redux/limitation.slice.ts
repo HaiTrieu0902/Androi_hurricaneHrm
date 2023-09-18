@@ -5,10 +5,12 @@ import { ILimitationListUserByMonth, IQueryGetLimitationByMonth } from '../types
 interface LimitationSlice {
     isLoadingLimitationTransaction: boolean;
     listLimitationListUserByMonth: ILimitationListUserByMonth;
+    limitation_categorykey: string;
 }
 const initialState: LimitationSlice = {
     isLoadingLimitationTransaction: false,
     listLimitationListUserByMonth: {} as ILimitationListUserByMonth,
+    limitation_categorykey: '',
 };
 
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
@@ -31,6 +33,9 @@ const limitationSlice = createSlice({
         triggerCallAPILimitationTransaction: (state) => {
             state.isLoadingLimitationTransaction = !state.isLoadingLimitationTransaction;
         },
+        setLimitationCategoryKey: (state, action) => {
+            state.limitation_categorykey = action.payload;
+        },
     },
 
     extraReducers: (builder) => {
@@ -47,6 +52,6 @@ const limitationSlice = createSlice({
     },
 });
 
-export const { triggerCallAPILimitationTransaction } = limitationSlice.actions;
+export const { triggerCallAPILimitationTransaction, setLimitationCategoryKey } = limitationSlice.actions;
 
 export default limitationSlice.reducer;
