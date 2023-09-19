@@ -11,16 +11,21 @@ import ButtonUI from '../../components/Button';
 import NavigationGoBack from '../../components/NavigationGoBack';
 import { SCREENS, listDataCategory } from '../../constants';
 import useToastNotifications from '../../hook/useToastNotifications';
+import { triggerCallAPILimitationTransaction } from '../../redux/limitation.slice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { getListCategoryUserLimitationRedux, triggerGetTransactionUserMonth } from '../../redux/transaction.slice';
-import { getDetailTransactionAPI, updateTransactionAPI } from '../../services/api/transaction.api';
+import {
+    deletedTransactionAPI,
+    getDetailTransactionAPI,
+    updateTransactionAPI,
+} from '../../services/api/transaction.api';
 import { BG_SUB_COLOR, EXPLAIN_ERROR_TEXT, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../utils/common';
 import { styles } from './EditDetailCategory';
 const EditDetailCategoryScreen = () => {
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
     const showToast = useToastNotifications();
-    const { user } = useAppSelector((state) => state.auth);
+    const { user, screenNameEditTransaction } = useAppSelector((state) => state.auth);
     const { listCategoryLimitation, transactionID } = useAppSelector((state) => state.transaction);
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -90,7 +95,12 @@ const EditDetailCategoryScreen = () => {
                         note: '',
                     });
                     dispatch(triggerGetTransactionUserMonth());
-                    navigation.navigate(SCREENS.CALENDER as never);
+                    dispatch(triggerCallAPILimitationTransaction());
+                    if (screenNameEditTransaction === 'Limiation Edit') {
+                        navigation.navigate(SCREENS.DETAIL_LIMITATION as never);
+                    } else {
+                        navigation.navigate(SCREENS.CALENDER as never);
+                    }
                 }
             } catch (error: any) {
                 showToast(`${error?.message}`, 'danger', 'top');
@@ -100,6 +110,24 @@ const EditDetailCategoryScreen = () => {
         }
     };
 
+    /* handle delete transaction */
+    const handleDeletedTransaction = async () => {
+        try {
+            const res = await deletedTransactionAPI(transactionID);
+            if (res) {
+                showToast(`${res}`, 'success', 'top');
+                dispatch(triggerGetTransactionUserMonth());
+                dispatch(triggerCallAPILimitationTransaction());
+                if (screenNameEditTransaction === 'Limiation Edit') {
+                    navigation.navigate(SCREENS.DETAIL_LIMITATION as never);
+                } else {
+                    navigation.navigate(SCREENS.CALENDER as never);
+                }
+            }
+        } catch (error: any) {
+            showToast(`${error?.error}`, 'danger', 'top');
+        }
+    };
     /* UseEffect call API category , if has category not call */
     useEffect(() => {
         const getListCategory = dispatch(
@@ -139,7 +167,7 @@ const EditDetailCategoryScreen = () => {
     return (
         <SafeAreaView style={styles.bg_scrren}>
             <View style={styles.bg_container}>
-                <NavigationGoBack paddingBottom={12} paddingTop={12} title="Calender Edit" />
+                <NavigationGoBack paddingBottom={12} paddingTop={12} title={String(screenNameEditTransaction)} />
             </View>
             <View style={{ marginTop: 6, paddingHorizontal: 16 }}>
                 {/* view date */}
@@ -260,7 +288,7 @@ const EditDetailCategoryScreen = () => {
                         <ButtonUI bgColor={BG_SUB_COLOR} text="Submit" onPress={handleUpdateTransaction} />
                     </View>
                     <View style={{ width: '49%' }}>
-                        <ButtonUI bgColor={EXPLAIN_ERROR_TEXT} text="Delete" onPress={() => {}} />
+                        <ButtonUI bgColor={EXPLAIN_ERROR_TEXT} text="Delete" onPress={handleDeletedTransaction} />
                     </View>
                 </View>
             </View>

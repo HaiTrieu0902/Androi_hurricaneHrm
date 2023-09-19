@@ -23,6 +23,12 @@ export const updateTransactionAPI = async (data: IParamUpdateTransaction) => {
         .then((res) => res.data);
 };
 
+export const deletedTransactionAPI = async (transactionId: number) => {
+    return axiosCustom
+        .delete(`/api/v1/transaction/detele-transaction?transactionId=${transactionId}`)
+        .then((res) => res.data);
+};
+
 export const getDetailTransactionAPI = async (transactionId: number) => {
     return axiosCustom
         .get(`/api/v1/transaction/get-detail-transaction?transactionId=${transactionId}`)

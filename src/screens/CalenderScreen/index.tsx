@@ -22,6 +22,7 @@ import {
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
+import { setInitialScreenNameEditTransaction } from '../../redux/auth.slice';
 
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {
@@ -72,8 +73,9 @@ const CalenderScreen = () => {
     };
 
     /* hanlde changed navigation */
-    const handleChangeNavigationLimit = async (type: string, id: number) => {
+    const handleChangeNavigationEdit = async (type: string, id: number) => {
         navigation.navigate(SCREENS[type] as never);
+        dispatch(setInitialScreenNameEditTransaction('Calender Edit'));
         dispatch(setTransactionId(id));
     };
 
@@ -261,7 +263,7 @@ const CalenderScreen = () => {
                                             return (
                                                 <TouchableOpacity
                                                     onPress={() =>
-                                                        handleChangeNavigationLimit(
+                                                        handleChangeNavigationEdit(
                                                             'EDIT_DETAIL_CATEGORY',
                                                             item.transaction_id,
                                                         )

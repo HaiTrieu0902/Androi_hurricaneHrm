@@ -5,18 +5,19 @@ import { Modal, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import DatePicker from 'react-native-modern-datepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import NavigationGoBack from '../../../components/NavigationGoBack';
 import { SCREENS, listDataCategory } from '../../../constants';
-import { useAppSelector } from '../../../redux/store';
+import { setInitialScreenNameEditTransaction } from '../../../redux/auth.slice';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { setTransactionId } from '../../../redux/transaction.slice';
 import { getLimitationTransactionUserByMonthAPI } from '../../../services/api/limitation.api';
+import { getReportLimitationCategoryAPI } from '../../../services/api/report.api';
 import { ILimitationTransaction } from '../../../types/limitation.type';
+import { ILimitationTransactionCategory } from '../../../types/report.type';
 import { EXPLAIN_ERROR_TEXT, FONT_FAMILY, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './DetailLimitScreenStyle';
-import { getReportLimitationCategoryAPI } from '../../../services/api/report.api';
-import { ILimitationTransactionCategory } from '../../../types/report.type';
 
 export const listDataHistory = [
     {
@@ -92,6 +93,7 @@ export const listDataHistory = [
 ];
 
 const DetailLimitScreen = () => {
+    const dispatch = useAppDispatch();
     const navigation = useNavigation();
     const { user } = useAppSelector((state) => state.auth);
     const { limitation_categorykey, isLoadingLimitationTransaction } = useAppSelector((state) => state.limitation);
@@ -101,9 +103,6 @@ const DetailLimitScreen = () => {
     const [listLimitationTractionMonth, setListLimitationTractionMonth] = useState<ILimitationTransaction>();
     const [listLimitationTransactionCategory, setListLimitationTransactionCategory] =
         useState<ILimitationTransactionCategory>();
-    const handleChangeNavigationLimit = async (type: string) => {
-        navigation.navigate(SCREENS[type] as never);
-    };
 
     /* Function custom date*/
     const formatDateCustom = (date: Date) => {
@@ -147,6 +146,13 @@ const DetailLimitScreen = () => {
         setValueChangedDate(firstDayOfMonth.toISOString());
     };
 
+    /* hanlde changed navigation */
+    const handleChangeNavigationEdit = async (type: string, id: number) => {
+        navigation.navigate(SCREENS[type] as never);
+        dispatch(setInitialScreenNameEditTransaction('Limiation Edit'));
+        dispatch(setTransactionId(id));
+    };
+
     /* Handle get API LimitationTransactionUserByMonth*/
     const getLimitationTransactionUserByMonth = async () => {
         try {
@@ -187,9 +193,9 @@ const DetailLimitScreen = () => {
     }, [selectedDate, isLoadingLimitationTransaction]);
 
     /* Convert data from detail and limitation key */
-    // const dataConvert = listLimitationTractionMonth?.data
-    //     ?.map((item) => item?.category_key === limitation_categorykey && item)
-    //     .filter(Boolean);
+    /* const dataConvert = listLimitationTractionMonth?.data
+        ?.map((item) => item?.category_key === limitation_categorykey && item)
+        .filter(Boolean); */
     const dataConvert: any = listLimitationTractionMonth?.data?.reduce((result, item) => {
         if (item?.category_key === limitation_categorykey) {
             result = { ...result, ...item };
@@ -285,7 +291,9 @@ const DetailLimitScreen = () => {
                                 return (
                                     <TouchableOpacity
                                         key={index}
-                                        onPress={() => handleChangeNavigationLimit('EDIT_DETAIL_CATEGORY')}
+                                        onPress={() =>
+                                            handleChangeNavigationEdit('EDIT_DETAIL_CATEGORY', item?.transaction_id)
+                                        }
                                     >
                                         <View style={styles.view_item_history}>
                                             <View style={styles.icon_history}>{icon}</View>
