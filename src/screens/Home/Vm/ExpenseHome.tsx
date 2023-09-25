@@ -9,10 +9,13 @@ import ButtonUI from '../../../components/Button';
 import ContainLimited from '../../../components/ContainLimited';
 import { listDataCategory } from '../../../constants';
 import useToastNotifications from '../../../hook/useToastNotifications';
+import { triggerCallAPILimitationTransaction } from '../../../redux/limitation.slice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
-import { getListCategoryUserLimitationRedux } from '../../../redux/transaction.slice';
+import { getListCategoryUserLimitationRedux, triggerGetTransactionUserMonth } from '../../../redux/transaction.slice';
+import { getLimitationTransactionUserByMonthAPI } from '../../../services/api/limitation.api';
 import { addTransactionAPI } from '../../../services/api/transaction.api';
-import { BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { ILimitationTransaction } from '../../../types/limitation.type';
+import { ACTIVE_NAV_BOTTOM, BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ExpenseHomeStyle';
 
 const ExpenseHome = () => {
@@ -21,6 +24,7 @@ const ExpenseHome = () => {
     const inputRef = useRef<TextInput | null>(null);
     const { user } = useAppSelector((state) => state.auth);
     const { listCategoryLimitation } = useAppSelector((state) => state.transaction);
+    const { isLoadingLimitationTransaction } = useAppSelector((state) => state.limitation);
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectCategory, setselectCategory] = useState('food');
@@ -28,6 +32,8 @@ const ExpenseHome = () => {
         note: '',
         amount: '',
     });
+    const [listLimitationTractionMonth, setListLimitationTractionMonth] = useState<ILimitationTransaction>();
+
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
@@ -71,29 +77,53 @@ const ExpenseHome = () => {
 
     /* handle create new transaction */
     const handleCreateNewTransaction = async () => {
-        try {
-            const param = {
-                user_id: Number(user?.user_id),
-                category_key: selectCategory,
-                amount: Number(valueForm.amount),
-                note: valueForm.note,
-                date: format(selectedDate, 'dd/MM/yyyy'),
-            };
-            const res = await addTransactionAPI(param);
-            if (res) {
-                showToast(`${res?.message}`, 'success', 'top');
-                setValueForm({
-                    amount: '',
-                    note: '',
-                });
+        if (valueForm.amount > 0) {
+            try {
+                const param = {
+                    user_id: Number(user?.user_id),
+                    category_key: selectCategory,
+                    amount: Number(valueForm.amount),
+                    note: valueForm.note,
+                    date: format(selectedDate, 'dd/MM/yyyy'),
+                };
+                const res = await addTransactionAPI(param);
+                if (res) {
+                    showToast(`${res?.message}`, 'success', 'top');
+                    setValueForm({
+                        amount: '',
+                        note: '',
+                    });
+                    dispatch(triggerGetTransactionUserMonth());
+                    dispatch(triggerCallAPILimitationTransaction());
+                }
+            } catch (error: any) {
+                showToast(`${error?.message}`, 'danger', 'top');
+                console.log(error);
             }
-        } catch (error: any) {
-            showToast(`${error?.message}`, 'danger', 'top');
-            console.log(error);
+        } else {
+            showToast(`Please enter value expense`, 'danger', 'top');
         }
     };
 
-    /* UseEffect call API category , if has category not call */
+    /* Handle get API LimitationTransactionUserByMonth*/
+    const getLimitationTransactionUserByMonth = async () => {
+        try {
+            const res = await getLimitationTransactionUserByMonthAPI({
+                userId: Number(user?.user_id),
+                month: selectedDate.getUTCMonth() + 1,
+                year: selectedDate.getFullYear(),
+            });
+            if (res) {
+                setListLimitationTractionMonth(res);
+            }
+        } catch (error) {}
+    };
+    /* Useffect call API limitation transaction by month  */
+    useEffect(() => {
+        getLimitationTransactionUserByMonth();
+    }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear(), dispatch, isLoadingLimitationTransaction]);
+
+    /* UseEffect call API category  */
     useEffect(() => {
         const getListCategory = dispatch(
             getListCategoryUserLimitationRedux({
@@ -102,10 +132,12 @@ const ExpenseHome = () => {
                 year: selectedDate.getFullYear(),
             }),
         );
+        getLimitationTransactionUserByMonth();
         return () => {
             getListCategory.abort();
         };
     }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear(), dispatch]);
+
     return (
         <View style={{ marginTop: 6 }}>
             {/* view date */}
@@ -185,18 +217,34 @@ const ExpenseHome = () => {
             {/* View navigattion */}
             <View style={{ marginTop: 26 }}>
                 <ScrollView horizontal={true} style={styles.view_contain_navigation}>
-                    <View style={styles.view_navigation_item}>
-                        <ContainLimited category="Food" spent={100000} bag={500000} />
-                    </View>
-                    <View style={[styles.view_navigation_item, styles.ml_10]}>
-                        <ContainLimited category="Shopping" spent={200000} bag={100000} />
-                    </View>
-                    <View style={[styles.view_navigation_item, styles.ml_10]}>
-                        <ContainLimited category="Homeware" spent={100000} bag={500000} />
-                    </View>
-                    <View style={[styles.view_navigation_item, styles.ml_10]}>
-                        <ContainLimited category="Phone" spent={100000} bag={500000} />
-                    </View>
+                    {Number(listLimitationTractionMonth?.data?.length) > 0 &&
+                        listLimitationTractionMonth?.data
+                            ?.filter((item) => item?.amount_limit > 0)
+                            .map((item, index) => {
+                                return (
+                                    <View
+                                        key={item?.category_key}
+                                        style={[styles.view_navigation_item, index !== 0 && styles.ml_10]}
+                                    >
+                                        <ContainLimited
+                                            category={
+                                                item.category_key.charAt(0).toUpperCase() + item.category_key.slice(1)
+                                            }
+                                            bag={item?.amount_limit - item?.amount_spent}
+                                            limited={item?.amount_limit}
+                                        />
+                                    </View>
+                                );
+                            })}
+
+                    {Number(listLimitationTractionMonth?.data?.length) === 0 && (
+                        <View>
+                            <Text style={{ color: ACTIVE_NAV_BOTTOM, fontSize: 14 }}>
+                                You haven't entered a limitation for this month
+                            </Text>
+                            <Text style={{ color: ACTIVE_NAV_BOTTOM, fontSize: 14 }}>Please enter it</Text>
+                        </View>
+                    )}
                 </ScrollView>
             </View>
 

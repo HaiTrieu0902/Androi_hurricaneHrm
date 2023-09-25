@@ -3,10 +3,14 @@ import { getLimitationUserByMonthAPI } from '../services/api/limitation.api';
 import { ILimitationListUserByMonth, IQueryGetLimitationByMonth } from '../types/limitation.type';
 
 interface LimitationSlice {
+    isLoadingLimitationTransaction: boolean;
     listLimitationListUserByMonth: ILimitationListUserByMonth;
+    limitation_categorykey: string;
 }
 const initialState: LimitationSlice = {
+    isLoadingLimitationTransaction: false,
     listLimitationListUserByMonth: {} as ILimitationListUserByMonth,
+    limitation_categorykey: '',
 };
 
 type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>;
@@ -25,7 +29,14 @@ export const getLimitationUserByMonthRedux = createAsyncThunk(
 const limitationSlice = createSlice({
     name: 'limitation',
     initialState: initialState,
-    reducers: {},
+    reducers: {
+        triggerCallAPILimitationTransaction: (state) => {
+            state.isLoadingLimitationTransaction = !state.isLoadingLimitationTransaction;
+        },
+        setLimitationCategoryKey: (state, action) => {
+            state.limitation_categorykey = action.payload;
+        },
+    },
 
     extraReducers: (builder) => {
         builder
@@ -41,6 +52,6 @@ const limitationSlice = createSlice({
     },
 });
 
-export const {} = limitationSlice.actions;
+export const { triggerCallAPILimitationTransaction, setLimitationCategoryKey } = limitationSlice.actions;
 
 export default limitationSlice.reducer;

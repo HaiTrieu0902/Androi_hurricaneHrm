@@ -18,6 +18,7 @@ export const SCREENS: { [key: string]: string } = {
     HOME_PERSONAL: 'personal_home',
     SETTINGS: 'personal_settings',
     SETTING_THEME: 'personal_theme',
+    YEAR_REPORT: 'year_report',
 
     /* User Screen Sub */
     ADD_OR_UPDATE_USER: 'user_add_update_user',
