@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { format, set } from 'date-fns';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Easing, Image, Text, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { Theme } from 'react-native-calendars/src/types';
 import DatePicker from 'react-native-date-picker';
@@ -10,8 +10,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import HeaderText from '../../components/HeaderText';
 import { SCREENS, listDataCategory } from '../../constants';
+import { setInitialScreenNameEditTransaction } from '../../redux/auth.slice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { getTransactionUserMonthRedux, setTransactionId } from '../../redux/transaction.slice';
+import {
+    clearListTransactionUserMonth,
+    getTransactionUserMonthRedux,
+    setTransactionId,
+} from '../../redux/transaction.slice';
 import { getLimitationTransactionUserByMonthAPI } from '../../services/api/limitation.api';
 import { ILimitationTransaction } from '../../types/limitation.type';
 import {
@@ -22,8 +27,8 @@ import {
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
-import { setInitialScreenNameEditTransaction } from '../../redux/auth.slice';
 
+import LottieView from 'lottie-react-native';
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {
         header: {
@@ -31,7 +36,7 @@ type CalendarTheme = Theme & {
         };
     };
 };
-
+const percentage = 66;
 const CalenderScreen = () => {
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
@@ -42,7 +47,8 @@ const CalenderScreen = () => {
     const [open, setOpen] = useState(false);
     const [selectedCalender, setSelectedCalender] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-    // let value = 0;
+    const [isloading, setIsLoading] = useState(false);
+
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
@@ -62,6 +68,7 @@ const CalenderScreen = () => {
     };
     /* handle Next Or Prev Date */
     const handleNextDateOrPrevDate = (type: string) => {
+        dispatch(clearListTransactionUserMonth());
         const currentDate = new Date(selectedDate);
         if (type === 'next') {
             const nextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
@@ -131,6 +138,7 @@ const CalenderScreen = () => {
 
     /* UseEffect call API Transaction UserMonth */
     useEffect(() => {
+        setIsLoading(true);
         const getTransactionUserMonth = dispatch(
             getTransactionUserMonthRedux({
                 userId: Number(user?.user_id),
@@ -138,6 +146,7 @@ const CalenderScreen = () => {
                 year: selectedDate.getFullYear(),
             }),
         );
+        setIsLoading(false);
         return () => {
             getTransactionUserMonth.abort();
         };
@@ -217,29 +226,33 @@ const CalenderScreen = () => {
                 </View>
 
                 {/* View Total Expense */}
-                <View style={styles.view_total_expense}>
-                    <View style={styles.view_expense_item}>
-                        <Text style={styles.text_expense_title}>Limited</Text>
-                        <Text style={{ color: BG_PRIMARYCOLOR }}>
-                            {listLimitationTractionMonth?.total_limit.toLocaleString()} $
-                        </Text>
+
+                {listTransactionUserMonth?.data?.length > 0 && (
+                    <View style={styles.view_total_expense}>
+                        <View style={styles.view_expense_item}>
+                            <Text style={styles.text_expense_title}>Limited</Text>
+                            <Text style={{ color: BG_PRIMARYCOLOR }}>
+                                {listLimitationTractionMonth?.total_limit.toLocaleString()} $
+                            </Text>
+                        </View>
+                        <View style={styles.view_expense_item}>
+                            <Text style={styles.text_expense_title}>Expense</Text>
+                            <Text style={{ color: EXPLAIN_ERROR_TEXT }}>
+                                {listTransactionUserMonth?.totalAmount?.toLocaleString()} $
+                            </Text>
+                        </View>
+                        <View style={styles.view_expense_item}>
+                            <Text style={styles.text_expense_title}>Bag</Text>
+                            <Text style={{ color: BG_PRIMARYCOLOR }}>
+                                {(
+                                    Number(listLimitationTractionMonth?.total_limit) -
+                                    listTransactionUserMonth?.totalAmount
+                                ).toLocaleString()}{' '}
+                                $
+                            </Text>
+                        </View>
                     </View>
-                    <View style={styles.view_expense_item}>
-                        <Text style={styles.text_expense_title}>Expense</Text>
-                        <Text style={{ color: EXPLAIN_ERROR_TEXT }}>
-                            {listTransactionUserMonth?.totalAmount?.toLocaleString()} $
-                        </Text>
-                    </View>
-                    <View style={styles.view_expense_item}>
-                        <Text style={styles.text_expense_title}>Bag</Text>
-                        <Text style={{ color: BG_PRIMARYCOLOR }}>
-                            {(
-                                Number(listLimitationTractionMonth?.total_limit) - listTransactionUserMonth?.totalAmount
-                            ).toLocaleString()}{' '}
-                            $
-                        </Text>
-                    </View>
-                </View>
+                )}
             </View>
 
             {/* view thống kế */}
@@ -247,55 +260,64 @@ const CalenderScreen = () => {
                 <View style={[styles.mt_16, styles.view_pie_info]}>
                     <ScrollView style={{ maxHeight: 230 }}>
                         <View>
-                            {listTransactionUserMonth?.data?.map((item, index) => {
-                                return (
-                                    <React.Fragment key={index}>
-                                        <View style={styles.view_header_expense_title}>
-                                            <Text style={{ fontSize: 12 }}>
-                                                {format(new Date(item?.date), 'dd/MM/yyyy')}
-                                            </Text>
-                                            <Text style={{ fontSize: 12 }}>
-                                                -{item.totalAmountDate.toLocaleString()} $
-                                            </Text>
-                                        </View>
-                                        {item?.transactions?.map((item) => {
-                                            const icon = getIconForCategory(item.category_key);
-                                            return (
-                                                <TouchableOpacity
-                                                    onPress={() =>
-                                                        handleChangeNavigationEdit(
-                                                            'EDIT_DETAIL_CATEGORY',
-                                                            item.transaction_id,
-                                                        )
-                                                    }
-                                                    key={item.transaction_id}
-                                                    style={[styles.view_item_display, styles.view_pie_info_item]}
-                                                >
-                                                    <View style={styles.pie_info_contain}>
-                                                        {icon}
-                                                        <Text style={styles.text_main}>
-                                                            {item.category_key.charAt(0).toUpperCase() +
-                                                                item.category_key.slice(1)}
-                                                            <Text style={{ fontSize: 11 }}>
-                                                                {item.note && ` (${item.note})`}
+                            {listTransactionUserMonth?.data?.length > 0 ? (
+                                listTransactionUserMonth?.data?.map((item, index) => {
+                                    return (
+                                        <React.Fragment key={index}>
+                                            <View style={styles.view_header_expense_title}>
+                                                <Text style={{ fontSize: 12 }}>
+                                                    {format(new Date(item?.date), 'dd/MM/yyyy')}
+                                                </Text>
+                                                <Text style={{ fontSize: 12 }}>
+                                                    -{item.totalAmountDate.toLocaleString()} $
+                                                </Text>
+                                            </View>
+                                            {item?.transactions?.map((item) => {
+                                                const icon = getIconForCategory(item.category_key);
+                                                return (
+                                                    <TouchableOpacity
+                                                        onPress={() =>
+                                                            handleChangeNavigationEdit(
+                                                                'EDIT_DETAIL_CATEGORY',
+                                                                item.transaction_id,
+                                                            )
+                                                        }
+                                                        key={item.transaction_id}
+                                                        style={[styles.view_item_display, styles.view_pie_info_item]}
+                                                    >
+                                                        <View style={styles.pie_info_contain}>
+                                                            {icon}
+                                                            <Text style={styles.text_main}>
+                                                                {item.category_key.charAt(0).toUpperCase() +
+                                                                    item.category_key.slice(1)}
+                                                                <Text style={{ fontSize: 11 }}>
+                                                                    {item.note && ` (${item.note})`}
+                                                                </Text>
                                                             </Text>
-                                                        </Text>
-                                                    </View>
-                                                    <View style={styles.pie_info_contain}>
-                                                        <Text style={styles.text_main}>{item.amount} $</Text>
-                                                        <FontAwesome6
-                                                            onPress={() => handleNextDateOrPrevDate('next')}
-                                                            name="angle-right"
-                                                            color={TEXT_COLOR_PRIMARY}
-                                                            size={SIZE_ICON_16}
-                                                        />
-                                                    </View>
-                                                </TouchableOpacity>
-                                            );
-                                        })}
-                                    </React.Fragment>
-                                );
-                            })}
+                                                        </View>
+                                                        <View style={styles.pie_info_contain}>
+                                                            <Text style={styles.text_main}>{item.amount} $</Text>
+                                                            <FontAwesome6
+                                                                onPress={() => handleNextDateOrPrevDate('next')}
+                                                                name="angle-right"
+                                                                color={TEXT_COLOR_PRIMARY}
+                                                                size={SIZE_ICON_16}
+                                                            />
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                );
+                                            })}
+                                        </React.Fragment>
+                                    );
+                                })
+                            ) : (
+                                <LottieView
+                                    source={require('../../assets/animation_lala.json')}
+                                    style={{ marginLeft: '36%', width: 100, height: 100 }}
+                                    autoPlay={true}
+                                    loop
+                                />
+                            )}
                         </View>
                     </ScrollView>
                 </View>
