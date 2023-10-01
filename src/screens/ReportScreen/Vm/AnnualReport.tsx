@@ -67,7 +67,7 @@ const chartConfig = {
     useShadowColorFromDataset: false,
 };
 
-const AddOrUpdateEmployeeScreen = () => {
+const AnnualReportScreen = () => {
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
@@ -255,4 +255,4 @@ const AddOrUpdateEmployeeScreen = () => {
     );
 };
 
-export default AddOrUpdateEmployeeScreen;
+export default AnnualReportScreen;

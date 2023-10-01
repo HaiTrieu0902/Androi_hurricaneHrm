@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { format, set } from 'date-fns';
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Image, Text, View } from 'react-native';
+import { format } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { Theme } from 'react-native-calendars/src/types';
 import DatePicker from 'react-native-date-picker';
@@ -9,6 +9,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import HeaderText from '../../components/HeaderText';
+import LoadingView from '../../components/Loading';
 import { SCREENS, listDataCategory } from '../../constants';
 import { setInitialScreenNameEditTransaction } from '../../redux/auth.slice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
@@ -27,8 +28,7 @@ import {
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
-
-import LottieView from 'lottie-react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {
         header: {
@@ -121,6 +121,7 @@ const CalenderScreen = () => {
     /* Handle get API LimitationTransactionUserByMonth*/
     const getLimitationTransactionUserByMonth = async () => {
         try {
+            setIsLoading(true);
             const res = await getLimitationTransactionUserByMonthAPI({
                 userId: Number(user?.user_id),
                 month: selectedDate.getMonth() + 1,
@@ -129,6 +130,7 @@ const CalenderScreen = () => {
             if (res) {
                 setListLimitationTractionMonth(res);
             }
+            setIsLoading(false);
         } catch (error) {}
     };
     /* Useffect call API limitation transaction by month  */
@@ -138,7 +140,6 @@ const CalenderScreen = () => {
 
     /* UseEffect call API Transaction UserMonth */
     useEffect(() => {
-        setIsLoading(true);
         const getTransactionUserMonth = dispatch(
             getTransactionUserMonthRedux({
                 userId: Number(user?.user_id),
@@ -146,7 +147,7 @@ const CalenderScreen = () => {
                 year: selectedDate.getFullYear(),
             }),
         );
-        setIsLoading(false);
+
         return () => {
             getTransactionUserMonth.abort();
         };
@@ -296,7 +297,9 @@ const CalenderScreen = () => {
                                                             </Text>
                                                         </View>
                                                         <View style={styles.pie_info_contain}>
-                                                            <Text style={styles.text_main}>{item.amount} $</Text>
+                                                            <Text style={styles.text_main}>
+                                                                {item.amount.toLocaleString()} $
+                                                            </Text>
                                                             <FontAwesome6
                                                                 onPress={() => handleNextDateOrPrevDate('next')}
                                                                 name="angle-right"
@@ -310,13 +313,21 @@ const CalenderScreen = () => {
                                         </React.Fragment>
                                     );
                                 })
+                            ) : isloading ? (
+                                <LoadingView marginLeft={'36%'} />
                             ) : (
-                                <LottieView
-                                    source={require('../../assets/animation_lala.json')}
-                                    style={{ marginLeft: '36%', width: 100, height: 100 }}
-                                    autoPlay={true}
-                                    loop
-                                />
+                                <View>
+                                    <Text
+                                        style={{
+                                            marginLeft: 20,
+                                            marginTop: 16,
+                                            fontSize: 16,
+                                            color: TEXT_COLOR_PRIMARY,
+                                        }}
+                                    >
+                                        Not has transaction in {format(new Date(selectedCalender), 'MM/yyyy')}
+                                    </Text>
+                                </View>
                             )}
                         </View>
                     </ScrollView>
