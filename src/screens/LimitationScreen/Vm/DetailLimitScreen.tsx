@@ -7,6 +7,7 @@ import DatePicker from 'react-native-modern-datepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import LoadingView from '../../../components/Loading';
 import NavigationGoBack from '../../../components/NavigationGoBack';
 import { SCREENS, listDataCategory } from '../../../constants';
 import { setInitialScreenNameEditTransaction } from '../../../redux/auth.slice';
@@ -103,6 +104,7 @@ const DetailLimitScreen = () => {
     const [listLimitationTractionMonth, setListLimitationTractionMonth] = useState<ILimitationTransaction>();
     const [listLimitationTransactionCategory, setListLimitationTransactionCategory] =
         useState<ILimitationTransactionCategory>();
+    const [isloading, setIsLoading] = useState(false);
 
     /* Function custom date*/
     const formatDateCustom = (date: Date) => {
@@ -156,6 +158,7 @@ const DetailLimitScreen = () => {
     /* Handle get API LimitationTransactionUserByMonth*/
     const getLimitationTransactionUserByMonth = async () => {
         try {
+            setIsLoading(true);
             const res = await getLimitationTransactionUserByMonthAPI({
                 userId: Number(user?.user_id),
                 month: selectedDate.getMonth() + 1,
@@ -164,6 +167,7 @@ const DetailLimitScreen = () => {
             if (res) {
                 setListLimitationTractionMonth(res);
             }
+            setIsLoading(false);
         } catch (error) {}
     };
 
@@ -285,7 +289,7 @@ const DetailLimitScreen = () => {
                 <ScrollView style={{ maxHeight: 440 }}>
                     {/* View list item history */}
                     <View style={styles.view_list_history}>
-                        {Number(listLimitationTransactionCategory?.data?.length) > 0 &&
+                        {Number(listLimitationTransactionCategory?.data?.length) > 0 ? (
                             listLimitationTransactionCategory?.data?.map((item, index) => {
                                 const icon = getIconForCategory(item.category_key);
                                 return (
@@ -342,10 +346,21 @@ const DetailLimitScreen = () => {
                                         </View>
                                     </TouchableOpacity>
                                 );
-                            })}
-                        {listLimitationTransactionCategory?.data?.length === 0 && (
+                            })
+                        ) : isloading ? (
+                            <LoadingView marginLeft={'36%'} />
+                        ) : (
                             <View>
-                                <Text>You dont have transaction</Text>
+                                <Text
+                                    style={{
+                                        marginLeft: 20,
+                                        marginTop: 16,
+                                        fontSize: 16,
+                                        color: TEXT_COLOR_PRIMARY,
+                                    }}
+                                >
+                                    Not has transaction in {format(new Date(selectedDate), 'MM/yyyy')}
+                                </Text>
                             </View>
                         )}
                     </View>
