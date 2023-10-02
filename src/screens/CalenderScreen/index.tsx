@@ -291,8 +291,16 @@ const CalenderScreen = () => {
                                                             <Text style={styles.text_main}>
                                                                 {item.category_key.charAt(0).toUpperCase() +
                                                                     item.category_key.slice(1)}
-                                                                <Text style={{ fontSize: 11 }}>
-                                                                    {item.note && ` (${item.note})`}
+                                                                <Text style={styles.txt_note}>
+                                                                    {/* {item.note && ` (${item.note})`} */}
+
+                                                                    {item.note &&
+                                                                        ` (${
+                                                                            item.note?.length > 30
+                                                                                ? item?.note?.substring(0, 30 - 3) +
+                                                                                  '...'
+                                                                                : item?.note
+                                                                        })`}
                                                                 </Text>
                                                             </Text>
                                                         </View>
