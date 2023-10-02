@@ -1,61 +1,19 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
+import { PieChart } from 'react-native-chart-kit';
 import DatePicker from 'react-native-date-picker';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { BG_SUB_COLOR, EXPLAIN_ERROR_TEXT, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { listDataCategory } from '../../../constants';
+import { useAppSelector } from '../../../redux/store';
+import { getReportMonthOrYearTransactionAPI } from '../../../services/api/report.api';
+import { IReportTransaction } from '../../../types/report.type';
+import { BG_SUB_COLOR, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ReportStyle';
-import { PieChart } from 'react-native-chart-kit';
-
-const data = [
-    {
-        name: 'Food',
-        total: 21500000,
-        color: '#fca75b',
-        legendFontColor: TEXT_COLOR_PRIMARY,
-        legendFontSize: 14,
-    },
-    {
-        name: 'Shopping',
-        total: 2800000,
-        color: '#5d71a9',
-        legendFontColor: TEXT_COLOR_PRIMARY,
-        legendFontSize: 14,
-    },
-    {
-        name: 'Homeware',
-        total: 527612,
-        color: '#04aa6d',
-        legendFontColor: TEXT_COLOR_PRIMARY,
-        legendFontSize: 14,
-    },
-    {
-        name: 'Phone',
-        total: 8538000,
-        color: TEXT_COLOR_PRIMARY,
-        legendFontColor: TEXT_COLOR_PRIMARY,
-        legendFontSize: 14,
-    },
-    {
-        name: 'Gift',
-        total: 11920000,
-        color: '#ffc107',
-        legendFontColor: TEXT_COLOR_PRIMARY,
-        legendFontSize: 14,
-    },
-    {
-        name: 'Invest',
-        total: 21500000,
-        color: '#f31c31',
-        legendFontColor: TEXT_COLOR_PRIMARY,
-        legendFontSize: 14,
-    },
-];
-
 const chartConfig = {
     backgroundGradientFrom: '#1E2923',
     backgroundGradientFromOpacity: 0,
@@ -68,85 +26,19 @@ const chartConfig = {
 };
 
 const AnnualReportScreen = () => {
+    const { user } = useAppSelector((state) => state.auth);
+    const { isLoadingTransactionUserMonth } = useAppSelector((state) => state.transaction);
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-
-    const listDataExpense = [
-        {
-            key: 'food',
-            name: 'Food',
-            icon: <MaterialCommunityIcons name="food" color={'#fca75b'} size={SIZE_ICON_16} />,
-            expense: 1207.07,
-            percent: 10.6,
-        },
-        {
-            key: 'shopping',
-            name: 'Shopping',
-            icon: <AntDesign name="shoppingcart" color={'#5d71a9'} size={SIZE_ICON_16} />,
-            expense: 111,
-            percent: 40,
-        },
-        {
-            key: 'gift',
-            name: 'Gift',
-            icon: <AntDesign name="gift" color={'#ffc107'} size={SIZE_ICON_16} />,
-            expense: 48.6,
-            percent: 25.5,
-        },
-        {
-            key: 'homeware',
-            name: 'Homeware',
-            icon: <AntDesign name="home" color={'#04aa6d'} size={SIZE_ICON_16} />,
-            expense: 7.97,
-            percent: 0.2,
-        },
-        {
-            key: 'medical',
-            name: 'Medical',
-            icon: <Ionicons name="medical-outline" color={'#fc9b93'} size={SIZE_ICON_16} />,
-            expense: 88.88,
-            percent: 1.1,
-        },
-        {
-            key: 'education',
-            name: 'Education',
-            icon: <AntDesign name="book" color={BG_SUB_COLOR} size={SIZE_ICON_16} />,
-            expense: 95.92,
-            percent: 15.2,
-        },
-        {
-            key: 'exchange',
-            name: 'Exchange',
-            icon: <Ionicons name="wine-outline" color={'#ecce23'} size={SIZE_ICON_16} />,
-            expense: 80.69,
-            percent: 18.2,
-        },
-        {
-            key: 'invest',
-            name: 'Invest',
-            icon: <AntDesign name="linechart" color={'#f31c31'} size={SIZE_ICON_16} />,
-            expense: 108,
-            percent: 28.2,
-        },
-        {
-            key: 'phone',
-            name: 'Phone',
-            icon: <AntDesign name="mobile1" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
-            expense: 555.55,
-            percent: 11.11,
-        },
-    ];
-
+    const [listDataReportYear, setListDataReportYear] = useState<IReportTransaction>();
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
     };
-
     /* Function custom date*/
     const formatDateCustom = (date: Date) => {
         return format(date, 'yyyy');
     };
-
     /* handle Next Or Prev Date */
     const handleNextDateOrPrevDate = (type: string) => {
         const currentDate = new Date(selectedDate);
@@ -158,6 +50,44 @@ const AnnualReportScreen = () => {
             setSelectedDate(currentDate);
         }
     };
+
+    /* hanlde  getReportMonthOrYearTransactionAPI */
+    const handleGetReportMonthOrYearTransaction = async () => {
+        try {
+            const res = await getReportMonthOrYearTransactionAPI({
+                userId: Number(user?.user_id),
+                month: '',
+                year: selectedDate.getFullYear(),
+            });
+            setListDataReportYear(res);
+        } catch (error) {}
+    };
+
+    /* UseEffect call API Report Month */
+    useEffect(() => {
+        handleGetReportMonthOrYearTransaction();
+    }, [selectedDate, isLoadingTransactionUserMonth]);
+
+    /* Function get category Icon  */
+    const getIconForCategory = (category_key: any) => {
+        const category = listDataCategory.find((item) => item.key === category_key);
+        return category ? category.icon : null;
+    };
+
+    /* Convert data in FieChart */
+    const convertFieChartData = listDataCategory.map((category) => {
+        const matchingData = listDataReportYear?.data
+            ?.filter((item) => item.total > 0)
+            .find((item) => item.category_key === category.key);
+        const total = matchingData ? matchingData.total : 0;
+        return {
+            ...category,
+            total,
+            legendFontColor: TEXT_COLOR_PRIMARY,
+            legendFontSize: 14,
+        };
+    });
+    const filteredData = convertFieChartData.filter((item) => item.total > 0);
 
     return (
         <View>
@@ -206,45 +136,50 @@ const AnnualReportScreen = () => {
                 </View>
 
                 <View style={styles.pie_chart}>
-                    <PieChart
-                        data={data}
-                        width={400}
-                        height={220}
-                        chartConfig={chartConfig}
-                        accessor={'total'}
-                        backgroundColor={'transparent'}
-                        paddingLeft={'0'}
-                        center={[16, 0]}
-                    />
+                    {Number(listDataReportYear?.data?.length) > 0 ? (
+                        <PieChart
+                            data={filteredData}
+                            width={400}
+                            height={220}
+                            chartConfig={chartConfig}
+                            accessor={'total'}
+                            backgroundColor={'transparent'}
+                            paddingLeft={'0'}
+                            center={[16, 0]}
+                            avoidFalseZero={false}
+                        />
+                    ) : (
+                        <View>
+                            <Text>You has not tranaction in {format(selectedDate, 'yyyy')} </Text>
+                        </View>
+                    )}
                 </View>
             </View>
 
             <View style={[styles.mt_16, styles.view_pie_info]}>
                 <View style={[styles.view_item_display, styles.view_pie_info_total]}>
                     <Text style={[styles.text_main, styles.text_total]}>Total</Text>
-                    <Text style={[styles.text_main, styles.text_total]}>113.2004 $</Text>
+                    <Text style={[styles.text_main, styles.text_total]}>
+                        {listDataReportYear?.total_spent.toLocaleString()} $
+                    </Text>
                 </View>
             </View>
 
             {/* Info Pie */}
             <View style={[styles.mt_16, styles.view_pie_info]}>
                 <ScrollView style={{ maxHeight: 220 }}>
-                    {listDataExpense.map((item) => {
+                    {listDataReportYear?.data?.map((item) => {
+                        const icon = getIconForCategory(item.category_key);
                         return (
-                            <View key={item.key} style={[styles.view_item_display, styles.view_pie_info_item]}>
+                            <View key={item.category_key} style={[styles.view_item_display, styles.view_pie_info_item]}>
                                 <View style={styles.pie_info_contain}>
-                                    {item.icon}
-                                    <Text style={styles.text_main}>{item.name}</Text>
+                                    {icon}
+                                    <Text style={styles.text_main}>
+                                        {item.category_key.charAt(0).toUpperCase() + item.category_key.slice(1)}
+                                    </Text>
                                 </View>
                                 <View style={styles.pie_info_contain}>
-                                    <Text style={styles.text_main}>{item.expense} $</Text>
-                                    <Text style={{ fontSize: 12 }}>{item.percent}</Text>
-                                    <FontAwesome6
-                                        onPress={() => handleNextDateOrPrevDate('next')}
-                                        name="angle-right"
-                                        color={TEXT_COLOR_PRIMARY}
-                                        size={SIZE_ICON_16}
-                                    />
+                                    <Text style={styles.text_main}>{item.total.toLocaleString()} $</Text>
                                 </View>
                             </View>
                         );
