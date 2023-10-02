@@ -26,6 +26,7 @@ const chartConfig = {
 
 const MonthlyReportScreen = () => {
     const { user } = useAppSelector((state) => state.auth);
+    const { isLoadingTransactionUserMonth } = useAppSelector((state) => state.transaction);
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [listDataReportMonth, setListDataReportMonth] = useState<IReportTransaction>();
@@ -43,7 +44,7 @@ const MonthlyReportScreen = () => {
         const endOfMonth = format(new Date(date.getFullYear(), date.getMonth() + 1, 0), 'dd');
         return `${month},${year} (${startOfMonth} ${month} - ${endOfMonth} ${month})`;
     };
-    /* handle Next Or Prev Date */
+
     /* handle Next Or Prev Date */
     const handleNextDateOrPrevDate = (type: string) => {
         const currentDate = new Date(selectedDate);
@@ -71,7 +72,7 @@ const MonthlyReportScreen = () => {
     /* UseEffect call API Report Month */
     useEffect(() => {
         handleGetReportMonthOrYearTransaction();
-    }, [selectedDate]);
+    }, [selectedDate, isLoadingTransactionUserMonth]);
 
     /* Function get category Icon  */
     const getIconForCategory = (category_key: any) => {
