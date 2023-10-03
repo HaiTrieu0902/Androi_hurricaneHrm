@@ -93,6 +93,10 @@ export const styles = StyleSheet.create({
         fontSize: 16,
     },
 
+    txt_note: {
+        fontSize: 11,
+    },
+
     mt_16: {
         marginTop: 8,
     },

@@ -5,12 +5,12 @@ import { BG_PRIMARYCOLOR, FONT_FAMILY } from '../../utils/common';
 interface ContainLimitedProps {
     bgColor?: string;
     category: string;
-    spent: number;
+    limited: number;
     bag: number;
     data?: any[];
 }
 
-const ContainLimited = ({ bgColor, category, spent, bag }: ContainLimitedProps) => {
+const ContainLimited = ({ bgColor, category, limited, bag }: ContainLimitedProps) => {
     return (
         <View style={[styles.view_container, { backgroundColor: bgColor ? bgColor : BG_PRIMARYCOLOR }]}>
             <View>
@@ -18,8 +18,8 @@ const ContainLimited = ({ bgColor, category, spent, bag }: ContainLimitedProps) 
             </View>
             <View style={styles.view_total}>
                 <View style={{ display: 'flex', gap: 6 }}>
-                    <Text style={[styles.text_right, styles.text_total]}>Spent: {spent.toLocaleString()}</Text>
-                    <Text style={[styles.text_right, styles.text_remain]}>Bag: {bag.toLocaleString()}</Text>
+                    <Text style={[styles.text_right, styles.text_total]}>Bag: {bag.toLocaleString()}</Text>
+                    <Text style={[styles.text_right, styles.text_remain]}>limited: {limited.toLocaleString()} </Text>
                 </View>
             </View>
         </View>

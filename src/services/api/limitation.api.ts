@@ -13,6 +13,14 @@ export const getLimitationUserByMonthAPI = async (query: IQueryGetLimitationByMo
         .then((res) => res.data);
 };
 
+export const getLimitationTransactionUserByMonthAPI = async (query: IQueryGetLimitationByMonth) => {
+    return axiosCustom
+        .get(
+            `/api/v1/limitation/get-limitation-transaction-user-byMonth?userId=${query.userId}&month=${query.month}&year=${query.year}`,
+        )
+        .then((res) => res.data);
+};
+
 export const addLimitationAPI = async (data: Ilimitation) => {
     return axiosCustom.post('/api/v1/limitation/add-limitation', data).then((res) => res.data);
 };

@@ -49,6 +49,9 @@ const transactionSlice = createSlice({
         setTransactionId: (state, action) => {
             state.transactionID = action.payload;
         },
+        clearListTransactionUserMonth: (state) => {
+            state.listTransactionUserMonth = initialState.listTransactionUserMonth;
+        },
     },
 
     extraReducers: (builder) => {
@@ -61,6 +64,7 @@ const transactionSlice = createSlice({
     },
 });
 
-export const { setTransactionId, triggerGetTransactionUserMonth } = transactionSlice.actions;
+export const { setTransactionId, triggerGetTransactionUserMonth, clearListTransactionUserMonth } =
+    transactionSlice.actions;
 
 export default transactionSlice.reducer;

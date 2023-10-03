@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { NativeSyntheticEvent, Text, TextInputChangeEventData, View } from 'react-native';
+import { Modal, NativeSyntheticEvent, Text, TextInputChangeEventData, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,24 +11,31 @@ import ButtonUI from '../../components/Button';
 import NavigationGoBack from '../../components/NavigationGoBack';
 import { SCREENS, listDataCategory } from '../../constants';
 import useToastNotifications from '../../hook/useToastNotifications';
+import { triggerCallAPILimitationTransaction } from '../../redux/limitation.slice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { getListCategoryUserLimitationRedux, triggerGetTransactionUserMonth } from '../../redux/transaction.slice';
-import { getDetailTransactionAPI, updateTransactionAPI } from '../../services/api/transaction.api';
+import {
+    deletedTransactionAPI,
+    getDetailTransactionAPI,
+    updateTransactionAPI,
+} from '../../services/api/transaction.api';
 import { BG_SUB_COLOR, EXPLAIN_ERROR_TEXT, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../utils/common';
 import { styles } from './EditDetailCategory';
 const EditDetailCategoryScreen = () => {
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
     const showToast = useToastNotifications();
-    const { user } = useAppSelector((state) => state.auth);
+    const { user, screenNameEditTransaction } = useAppSelector((state) => state.auth);
     const { listCategoryLimitation, transactionID } = useAppSelector((state) => state.transaction);
     const [open, setOpen] = useState(false);
+    const [openModalDeleted, setOpenModalDeleted] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectCategory, setselectCategory] = useState('food');
     const [valueForm, setValueForm] = useState<{ note: string; amount: number | any }>({
         note: '',
         amount: '',
     });
+
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
@@ -90,13 +97,47 @@ const EditDetailCategoryScreen = () => {
                         note: '',
                     });
                     dispatch(triggerGetTransactionUserMonth());
-                    navigation.navigate(SCREENS.CALENDER as never);
+                    dispatch(triggerCallAPILimitationTransaction());
+                    if (screenNameEditTransaction === 'Limiation Edit') {
+                        navigation.navigate(SCREENS.DETAIL_LIMITATION as never);
+                    } else {
+                        navigation.navigate(SCREENS.CALENDER as never);
+                    }
                 }
             } catch (error: any) {
                 showToast(`${error?.message}`, 'danger', 'top');
             }
         } else {
             showToast(`Please enter value expense`, 'danger', 'top');
+        }
+    };
+
+    /* handle delete transaction */
+    const handleDeletedTransaction = async () => {
+        try {
+            const res = await deletedTransactionAPI(transactionID);
+            if (res) {
+                showToast(`${res}`, 'success', 'top');
+                dispatch(triggerGetTransactionUserMonth());
+                dispatch(triggerCallAPILimitationTransaction());
+                if (screenNameEditTransaction === 'Limiation Edit') {
+                    navigation.navigate(SCREENS.DETAIL_LIMITATION as never);
+                } else {
+                    navigation.navigate(SCREENS.CALENDER as never);
+                }
+            }
+        } catch (error: any) {
+            showToast(`${error?.error}`, 'danger', 'top');
+        }
+    };
+
+    /* Handle close or open modal*/
+    const handleCloseOrConfirmModal = async (type: string) => {
+        if (type === 'close') {
+            setOpenModalDeleted(!openModalDeleted);
+        } else {
+            await handleDeletedTransaction();
+            setOpenModalDeleted(!openModalDeleted);
         }
     };
 
@@ -139,7 +180,7 @@ const EditDetailCategoryScreen = () => {
     return (
         <SafeAreaView style={styles.bg_scrren}>
             <View style={styles.bg_container}>
-                <NavigationGoBack paddingBottom={12} paddingTop={12} title="Calender Edit" />
+                <NavigationGoBack paddingBottom={12} paddingTop={12} title={String(screenNameEditTransaction)} />
             </View>
             <View style={{ marginTop: 6, paddingHorizontal: 16 }}>
                 {/* view date */}
@@ -259,8 +300,46 @@ const EditDetailCategoryScreen = () => {
                     <View style={{ width: '49%' }}>
                         <ButtonUI bgColor={BG_SUB_COLOR} text="Submit" onPress={handleUpdateTransaction} />
                     </View>
-                    <View style={{ width: '49%' }}>
-                        <ButtonUI bgColor={EXPLAIN_ERROR_TEXT} text="Delete" onPress={() => {}} />
+                    <View style={{ width: '49%', position: 'relative' }}>
+                        <ButtonUI
+                            bgColor={EXPLAIN_ERROR_TEXT}
+                            text="Delete"
+                            onPress={() => setOpenModalDeleted(true)}
+                        />
+
+                        {/* Modal action */}
+                        <Modal animationType="slide" transparent={true} visible={openModalDeleted}>
+                            <View style={styles.view_modal}>
+                                <Text
+                                    style={{
+                                        textAlign: 'center',
+                                        marginTop: 10,
+                                        marginBottom: 20,
+                                        color: BG_SUB_COLOR,
+                                        fontSize: 16,
+                                    }}
+                                >
+                                    Do you want to delete this transaction?
+                                </Text>
+
+                                <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+                                    <View style={{ marginLeft: 6, width: '46%' }}>
+                                        <ButtonUI
+                                            bgColor={BG_SUB_COLOR}
+                                            text="Cancel"
+                                            onPress={() => handleCloseOrConfirmModal('close')}
+                                        />
+                                    </View>
+                                    <View style={{ width: '46%' }}>
+                                        <ButtonUI
+                                            bgColor={EXPLAIN_ERROR_TEXT}
+                                            text="Delete"
+                                            onPress={() => handleCloseOrConfirmModal('deleted')}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
                     </View>
                 </View>
             </View>

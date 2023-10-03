@@ -1,5 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { BG_SCREEN, BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../utils/common';
+import {
+    BG_SCREEN,
+    BG_SUB_COLOR,
+    BUTTON_COLOR__HOME,
+    COLOR_BORDER_SOLID,
+    EXPLAIN_ERROR_TEXT,
+    FONT_FAMILY,
+    TEXT_COLOR_PRIMARY,
+} from '../../utils/common';
 
 export const styles = StyleSheet.create({
     bg_scrren: {
@@ -66,6 +74,19 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         gap: 10,
     },
+
+    /* Modal*/
+    view_modal: {
+        position: 'absolute',
+        height: 120,
+        width: '93%',
+        bottom: 200,
+        right: 12,
+        borderRadius: 8,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: COLOR_BORDER_SOLID,
+    },
     category_item_contain: {
         width: '100%',
         display: 'flex',
@@ -131,8 +152,8 @@ export const styles = StyleSheet.create({
         paddingBottom: 4,
         fontFamily: FONT_FAMILY,
         borderRadius: 6,
-        fontWeight: '900',
-        fontSize: 17,
+        fontWeight: '600',
+        fontSize: 15,
     },
     text_date: { color: 'black', fontFamily: FONT_FAMILY, fontWeight: '600', fontSize: 14 },
 });

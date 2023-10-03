@@ -11,6 +11,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import NavigationMain from './src/navigation';
 import store, { persistor } from './src/redux/store';
 import { ToastProvider } from 'react-native-toast-notifications';
+
 function App(): JSX.Element {
     return (
         <Provider store={store}>

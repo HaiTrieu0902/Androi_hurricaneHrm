@@ -66,10 +66,17 @@ export const styles = StyleSheet.create({
     },
     txt_money_total: {
         textAlign: 'right',
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: FONT_FAMILY,
         fontWeight: '600',
-        color: TEXT_COLOR_PRIMARY,
+        color: 'black',
+    },
+    view_sub_bag: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 8,
+        justifyContent: 'flex-end',
     },
     text_right: {
         textAlign: 'right',
