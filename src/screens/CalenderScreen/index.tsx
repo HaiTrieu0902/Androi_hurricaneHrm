@@ -28,7 +28,6 @@ import {
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {
         header: {

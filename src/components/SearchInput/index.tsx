@@ -1,15 +1,46 @@
 import React, { useRef, useState } from 'react';
-import { NativeSyntheticEvent, StyleSheet, TextInputChangeEventData, View } from 'react-native';
+import {
+    Modal,
+    NativeSyntheticEvent,
+    StyleSheet,
+    Text,
+    TextInputChangeEventData,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
-import { BG_SUB_COLOR, FONT_FAMILY } from '../../utils/common';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { BG_SUB_COLOR, COLOR_BORDER, FONT_FAMILY } from '../../utils/common';
+import ButtonUI from '../Button';
+
 const SearchInput = () => {
     const inputRef = useRef<TextInput | null>(null);
     const [isShow, setIsShow] = useState(false);
     const [isValue, setIsValue] = useState('');
-
+    const [open, setOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<number | string>(new Date().getFullYear());
+    const [valueFilter, setValueFilter] = useState<number | string>(new Date().getFullYear());
+    const dataFilter = [
+        {
+            name: 'All Period',
+            value: '',
+        },
+        {
+            name: `${Number(selectedDate) - 1}`,
+            value: Number(selectedDate) - 1,
+        },
+        {
+            name: `${Number(selectedDate) - 2}`,
+            value: Number(selectedDate) - 2,
+        },
+        {
+            name: `${Number(selectedDate)}`,
+            value: Number(selectedDate),
+        },
+    ];
+    /* Handle forcus input*/
     const handleCAncelForcusInput = () => {
         setIsShow(false);
         if (inputRef.current) {
@@ -17,16 +48,25 @@ const SearchInput = () => {
         }
     };
 
+    /* Handle changed value input*/
     const handleChangeValue = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
         setIsValue(e.nativeEvent.text);
     };
 
+    /* Handle Forcus input*/
     const handleOnFocusInput = () => {
         setIsShow(true);
     };
 
+    /* Handle clear value*/
     const handleClearValue = () => {
         setIsValue('');
+    };
+
+    /* Handle changed filter*/
+    const handleChangeFilter = (newFilter: number | string) => {
+        setValueFilter(newFilter);
+        setOpen(false);
     };
 
     return (
@@ -65,7 +105,31 @@ const SearchInput = () => {
                 )}
             </View>
             <View style={styles.view_filter}>
-                <Ionicons color={'white'} name="filter" size={20}></Ionicons>
+                <Ionicons onPress={() => setOpen(true)} color={'white'} name="filter" size={20}></Ionicons>
+            </View>
+            <View style={styles.centeredView}>
+                <Modal animationType="slide" transparent={true} visible={open}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <View style={styles.view_modal_container}>
+                                {dataFilter?.map((item, index) => {
+                                    return (
+                                        <TouchableOpacity
+                                            onPress={() => handleChangeFilter(item?.value)}
+                                            key={index}
+                                            style={styles.view_nodal}
+                                        >
+                                            <Text style={styles.textModal}>{item?.name}</Text>
+                                        </TouchableOpacity>
+                                    );
+                                })}
+                            </View>
+                        </View>
+                        <View style={[styles.view_modal_container, styles.view_es_mt]}>
+                            <ButtonUI bgColor={BG_SUB_COLOR} onPress={() => setOpen(false)} text="Cancel" />
+                        </View>
+                    </View>
+                </Modal>
             </View>
         </View>
     );
@@ -93,6 +157,65 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginLeft: 10,
     },
+
+    centeredView: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 8,
+        // padding: 12,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+
+    view_modal_container: {
+        width: 370,
+    },
+    view_nodal: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomWidth: 1,
+        borderColor: COLOR_BORDER,
+    },
+    view_es_mt: {
+        marginBottom: 20,
+        marginTop: -10,
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+    },
+    buttonOpen: {
+        backgroundColor: '#F194FF',
+    },
+    buttonClose: {
+        backgroundColor: '#2196F3',
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    },
+
     input_search: {
         paddingTop: -10,
         paddingBottom: -10,
@@ -116,6 +239,11 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 6,
         top: 8,
+    },
+
+    textModal: {
+        fontSize: 16,
+        color: BG_SUB_COLOR,
     },
 });
 export default SearchInput;

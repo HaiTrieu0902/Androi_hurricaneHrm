@@ -11,6 +11,7 @@ import { PersonalNavigation } from './PersonalNavigation';
 import { UserNavigation } from './UserNavigation';
 import { LimitationNavigation } from './LimitationNavigation';
 import EditDetailCategoryScreen from '../screens/EditDetailCategoryScreen';
+import SearchSreen from '../screens/SearchScreen';
 const Stack = createStackNavigator();
 
 const NavigationMain = () => {
@@ -45,6 +46,7 @@ const NavigationMain = () => {
                                 <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
                             ))}
                             <Stack.Screen name={SCREENS.EDIT_DETAIL_CATEGORY} component={EditDetailCategoryScreen} />
+                            <Stack.Screen name={SCREENS.SEARCH_SCREEN} component={SearchSreen} />
                         </Stack.Group>
                     </>
                 )}
