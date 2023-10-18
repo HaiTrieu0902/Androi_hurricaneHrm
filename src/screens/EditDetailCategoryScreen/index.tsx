@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { NativeSyntheticEvent, Text, TextInputChangeEventData, View } from 'react-native';
+import { Modal, NativeSyntheticEvent, Text, TextInputChangeEventData, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,12 +28,14 @@ const EditDetailCategoryScreen = () => {
     const { user, screenNameEditTransaction } = useAppSelector((state) => state.auth);
     const { listCategoryLimitation, transactionID } = useAppSelector((state) => state.transaction);
     const [open, setOpen] = useState(false);
+    const [openModalDeleted, setOpenModalDeleted] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [selectCategory, setselectCategory] = useState('food');
     const [valueForm, setValueForm] = useState<{ note: string; amount: number | any }>({
         note: '',
         amount: '',
     });
+
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
@@ -128,6 +130,17 @@ const EditDetailCategoryScreen = () => {
             showToast(`${error?.error}`, 'danger', 'top');
         }
     };
+
+    /* Handle close or open modal*/
+    const handleCloseOrConfirmModal = async (type: string) => {
+        if (type === 'close') {
+            setOpenModalDeleted(!openModalDeleted);
+        } else {
+            await handleDeletedTransaction();
+            setOpenModalDeleted(!openModalDeleted);
+        }
+    };
+
     /* UseEffect call API category , if has category not call */
     useEffect(() => {
         const getListCategory = dispatch(
@@ -287,8 +300,46 @@ const EditDetailCategoryScreen = () => {
                     <View style={{ width: '49%' }}>
                         <ButtonUI bgColor={BG_SUB_COLOR} text="Submit" onPress={handleUpdateTransaction} />
                     </View>
-                    <View style={{ width: '49%' }}>
-                        <ButtonUI bgColor={EXPLAIN_ERROR_TEXT} text="Delete" onPress={handleDeletedTransaction} />
+                    <View style={{ width: '49%', position: 'relative' }}>
+                        <ButtonUI
+                            bgColor={EXPLAIN_ERROR_TEXT}
+                            text="Delete"
+                            onPress={() => setOpenModalDeleted(true)}
+                        />
+
+                        {/* Modal action */}
+                        <Modal animationType="slide" transparent={true} visible={openModalDeleted}>
+                            <View style={styles.view_modal}>
+                                <Text
+                                    style={{
+                                        textAlign: 'center',
+                                        marginTop: 10,
+                                        marginBottom: 20,
+                                        color: BG_SUB_COLOR,
+                                        fontSize: 16,
+                                    }}
+                                >
+                                    Do you want to delete this transaction?
+                                </Text>
+
+                                <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+                                    <View style={{ marginLeft: 6, width: '46%' }}>
+                                        <ButtonUI
+                                            bgColor={BG_SUB_COLOR}
+                                            text="Cancel"
+                                            onPress={() => handleCloseOrConfirmModal('close')}
+                                        />
+                                    </View>
+                                    <View style={{ width: '46%' }}>
+                                        <ButtonUI
+                                            bgColor={EXPLAIN_ERROR_TEXT}
+                                            text="Delete"
+                                            onPress={() => handleCloseOrConfirmModal('deleted')}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
                     </View>
                 </View>
             </View>
