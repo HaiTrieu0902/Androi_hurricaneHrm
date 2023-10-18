@@ -8,11 +8,13 @@ import HeaderText from '../../components/HeaderText';
 import { useAppSelector } from '../../redux/store';
 import { BG_SCREEN, BG_SUB_COLOR, FONT_FAMILY, SIZE_ICON_20 } from '../../utils/common';
 import { AnnualReport, MonthlyReport } from './Vm';
+import { SCREENS } from '../../constants';
 const ReportScreen = () => {
     const navigation = useNavigation();
     const { user } = useAppSelector((state) => state.auth);
     const [isActiveButton, setIsActiveButton] = useState<boolean>(false);
 
+    /* Handle changed screen sub name  */
     const handleChangedScreenSubHome = (type: string) => {
         if (type === 'Monthly') {
             setIsActiveButton(false);
@@ -21,11 +23,22 @@ const ReportScreen = () => {
         }
     };
 
+    /* Handle changed screen sub name  */
+    const handleNavigationSearchScreen = () => {
+        navigation.navigate(SCREENS.SEARCH_SCREEN as never);
+    };
+
     return (
         <SafeAreaView style={styles.bg_scrren}>
             <View style={styles.view_header}>
                 <HeaderText title="Report" />
-                <AntDesign name="search1" style={styles.view_icon} color={BG_SUB_COLOR} size={SIZE_ICON_20} />
+                <AntDesign
+                    onPress={handleNavigationSearchScreen}
+                    name="search1"
+                    style={styles.view_icon}
+                    color={BG_SUB_COLOR}
+                    size={SIZE_ICON_20}
+                />
             </View>
             <View style={styles.view_container}>
                 <View style={styles.view_list}>

@@ -13,6 +13,7 @@ export const SCREENS: { [key: string]: string } = {
     USER: 'User',
     REPORT: 'Report',
     CALENDER: 'calender',
+    SEARCH_SCREEN: 'Search_screen',
 
     /* Personal Screen Sub */
     HOME_PERSONAL: 'personal_home',

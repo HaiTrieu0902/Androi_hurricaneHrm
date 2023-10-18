@@ -20,79 +20,6 @@ import { ILimitationTransactionCategory } from '../../../types/report.type';
 import { EXPLAIN_ERROR_TEXT, FONT_FAMILY, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './DetailLimitScreenStyle';
 
-export const listDataHistory = [
-    {
-        key: '1',
-        note: 'Note 1',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-    {
-        key: '2',
-        note: 'Note 2',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-    {
-        key: '3',
-        note: 'Note 3',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-    {
-        key: '4',
-        note: 'Note 4',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-    {
-        key: '5',
-        note: 'Note 5',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-    {
-        key: '6',
-        note: 'Note 6',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-    {
-        key: '7',
-        note: 'Note 5',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-    {
-        key: '8',
-        note: 'Note 6',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-    {
-        key: '9',
-        note: 'Note 5',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-    {
-        key: '10',
-        note: 'Note 6',
-        date: '12/11/2002',
-        money: '-10.000',
-        cate: 'Shopping',
-    },
-];
-
 const DetailLimitScreen = () => {
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
@@ -306,12 +233,14 @@ const DetailLimitScreen = () => {
                                                 <View style={styles.content_left}>
                                                     <Text
                                                         style={{
-                                                            fontSize: 16,
+                                                            fontSize: 14,
                                                             color: TEXT_COLOR_PRIMARY,
                                                             fontFamily: FONT_FAMILY,
                                                         }}
                                                     >
-                                                        {item.note || 'None'}
+                                                        {item.note?.length > 30
+                                                            ? item?.note?.substring(0, 16 - 3) + '...'
+                                                            : item?.note || 'None'}
                                                     </Text>
                                                     <Text
                                                         style={{
