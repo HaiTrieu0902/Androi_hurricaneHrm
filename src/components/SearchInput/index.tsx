@@ -15,26 +15,31 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { BG_SUB_COLOR, COLOR_BORDER, FONT_FAMILY } from '../../utils/common';
 import ButtonUI from '../Button';
 
-const SearchInput = () => {
+interface SearchInputProps {
+    onSearch: (value: string) => void;
+    onSelected: (value: string | number) => void;
+}
+
+const SearchInput = ({ onSearch, onSelected }: SearchInputProps) => {
     const inputRef = useRef<TextInput | null>(null);
     const [isShow, setIsShow] = useState(false);
     const [isValue, setIsValue] = useState('');
     const [open, setOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<number | string>(new Date().getFullYear());
-    const [valueFilter, setValueFilter] = useState<number | string>(new Date().getFullYear());
     const dataFilter = [
         {
             name: 'All Period',
             value: '',
         },
         {
-            name: `${Number(selectedDate) - 1}`,
-            value: Number(selectedDate) - 1,
-        },
-        {
             name: `${Number(selectedDate) - 2}`,
             value: Number(selectedDate) - 2,
         },
+        {
+            name: `${Number(selectedDate) - 1}`,
+            value: Number(selectedDate) - 1,
+        },
+
         {
             name: `${Number(selectedDate)}`,
             value: Number(selectedDate),
@@ -51,6 +56,7 @@ const SearchInput = () => {
     /* Handle changed value input*/
     const handleChangeValue = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
         setIsValue(e.nativeEvent.text);
+        onSearch(e.nativeEvent.text);
     };
 
     /* Handle Forcus input*/
@@ -61,11 +67,12 @@ const SearchInput = () => {
     /* Handle clear value*/
     const handleClearValue = () => {
         setIsValue('');
+        onSearch('');
     };
 
     /* Handle changed filter*/
     const handleChangeFilter = (newFilter: number | string) => {
-        setValueFilter(newFilter);
+        onSelected(newFilter);
         setOpen(false);
     };
 
