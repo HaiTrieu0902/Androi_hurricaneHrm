@@ -1,5 +1,12 @@
 import { StyleSheet } from 'react-native';
-import { BG_SCREEN, BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import {
+    BG_PRIMARYCOLOR,
+    BG_SCREEN,
+    BG_SUB_COLOR,
+    BUTTON_COLOR__HOME,
+    FONT_FAMILY,
+    TEXT_COLOR_PRIMARY,
+} from '../../../utils/common';
 
 export const styles = StyleSheet.create({
     mt_16: {
@@ -16,8 +23,11 @@ export const styles = StyleSheet.create({
     view_total: {
         width: 360,
     },
+    view_two_draw: {
+        width: '48.5%',
+    },
     view_item: {
-        padding: 10,
+        padding: 8,
         width: '48.5%',
         borderWidth: 1,
         borderColor: BUTTON_COLOR__HOME,
@@ -29,6 +39,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
+
     //Date
     view_date: {
         display: 'flex',
@@ -106,6 +117,9 @@ export const styles = StyleSheet.create({
     },
     text_expense: {
         color: 'red',
+    },
+    text_info: {
+        color: BG_PRIMARYCOLOR,
     },
     text_limit: {
         color: BG_SUB_COLOR,

@@ -42,3 +42,15 @@ export const getTransactionUserMonthAPI = async (param: { userId: number; month:
         )
         .then((res) => res.data);
 };
+
+export const getDetailTrasactionSearchAPI = async (param: {
+    userId: number;
+    searchValue: string;
+    year: number | string;
+}) => {
+    return axiosCustom
+        .get(
+            `/api/v1/transaction/get-transaction-user?userId=${param?.userId}&searchValue=${param?.searchValue}&year=${param?.year}`,
+        )
+        .then((res) => res.data);
+};

@@ -2,6 +2,7 @@ export const BG_PRIMARYCOLOR = '#035397';
 export const BG_SUB_COLOR = '#39a2db';
 export const TEXT_COLOR_PRIMARY = '#00000073';
 export const EXPLAIN_ERROR_TEXT = '#ff4d4f';
+export const BG_EXPLAIN_ERROR = '#DC143C';
 export const ACTIVE_NAV_BOTTOM = '#2E4C6D';
 export const COLOR_BORDER = '#f6dbe2';
 export const COLOR_BORDER_SOLID = '#e2aebc';

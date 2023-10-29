@@ -22,6 +22,7 @@ import { getLimitationTransactionUserByMonthAPI } from '../../services/api/limit
 import { ILimitationTransaction } from '../../types/limitation.type';
 import {
     ACTIVE_NAV_BOTTOM,
+    BG_EXPLAIN_ERROR,
     BG_PRIMARYCOLOR,
     EXPLAIN_ERROR_TEXT,
     SIZE_ICON_16,
@@ -35,7 +36,6 @@ type CalendarTheme = Theme & {
         };
     };
 };
-const percentage = 66;
 const CalenderScreen = () => {
     const navigation = useNavigation();
     const dispatch = useAppDispatch();
@@ -231,19 +231,30 @@ const CalenderScreen = () => {
                     <View style={styles.view_total_expense}>
                         <View style={styles.view_expense_item}>
                             <Text style={styles.text_expense_title}>Limited</Text>
-                            <Text style={{ color: BG_PRIMARYCOLOR }}>
+                            <Text style={{ color: BG_PRIMARYCOLOR, fontWeight: '500', fontSize: 14 }}>
                                 {listLimitationTractionMonth?.total_limit.toLocaleString()} $
                             </Text>
                         </View>
                         <View style={styles.view_expense_item}>
                             <Text style={styles.text_expense_title}>Expense</Text>
-                            <Text style={{ color: EXPLAIN_ERROR_TEXT }}>
+                            <Text style={{ color: EXPLAIN_ERROR_TEXT, fontWeight: '500', fontSize: 14 }}>
                                 {listTransactionUserMonth?.totalAmount?.toLocaleString()} $
                             </Text>
                         </View>
                         <View style={styles.view_expense_item}>
                             <Text style={styles.text_expense_title}>Bag</Text>
-                            <Text style={{ color: BG_PRIMARYCOLOR }}>
+                            <Text
+                                style={{
+                                    color:
+                                        Number(listLimitationTractionMonth?.total_limit) -
+                                            listTransactionUserMonth?.totalAmount <
+                                        0
+                                            ? BG_EXPLAIN_ERROR
+                                            : BG_PRIMARYCOLOR,
+                                    fontWeight: '500',
+                                    fontSize: 14,
+                                }}
+                            >
                                 {(
                                     Number(listLimitationTractionMonth?.total_limit) -
                                     listTransactionUserMonth?.totalAmount

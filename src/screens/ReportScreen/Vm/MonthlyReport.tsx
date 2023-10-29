@@ -94,7 +94,6 @@ const MonthlyReportScreen = () => {
         };
     });
     const filteredData = convertFieChartData.filter((item) => item.total > 0);
-
     return (
         <View>
             {/* view date */}
@@ -135,10 +134,37 @@ const MonthlyReportScreen = () => {
 
             {/* Expense or Limit Spending Total */}
             <View style={styles.view_contain}>
+                <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+                    <View style={[styles.view_item, styles.view_item_display, styles.view_two_draw]}>
+                        <Text style={{ fontSize: 14 }}>Expense:</Text>
+                        <Text style={[styles.text_main, styles.text_expense]}>
+                            -{listDataReportMonth?.total_spent.toLocaleString()} $
+                        </Text>
+                    </View>
+                    <View style={[styles.view_item, styles.view_item_display, styles.view_two_draw]}>
+                        <Text style={{ fontSize: 14 }}>Limited:</Text>
+                        <Text style={[styles.text_main, styles.text_info]}>
+                            {listDataReportMonth?.total_spent.toLocaleString()} $
+                        </Text>
+                    </View>
+                </View>
                 <View style={[styles.view_item, styles.view_item_display, styles.view_total]}>
-                    <Text style={{ fontSize: 14 }}>Expense:</Text>
-                    <Text style={[styles.text_main, styles.text_expense]}>
-                        -{listDataReportMonth?.total_spent.toLocaleString()} $
+                    <Text style={{ fontSize: 14 }}>Expense and Limited:</Text>
+                    <Text
+                        style={[
+                            styles.text_main,
+                            Number(listDataReportMonth?.total_limited) - Number(listDataReportMonth?.total_spent) < 0
+                                ? styles.text_expense
+                                : styles.text_info,
+                        ]}
+                    >
+                        {`${
+                            Number(listDataReportMonth?.total_limited) - Number(listDataReportMonth?.total_spent) < 0
+                                ? '-'
+                                : ''
+                        } ${Number(
+                            Number(listDataReportMonth?.total_limited) - Number(listDataReportMonth?.total_spent),
+                        ).toLocaleString()}$`}
                     </Text>
                 </View>
             </View>
@@ -149,7 +175,6 @@ const MonthlyReportScreen = () => {
                         <Text>Expense</Text>
                     </View>
                 </View>
-
                 <View style={styles.pie_chart}>
                     <PieChart
                         data={filteredData}
@@ -167,7 +192,7 @@ const MonthlyReportScreen = () => {
 
             {/* Info Pie */}
             <View style={[styles.mt_16, styles.view_pie_info]}>
-                <ScrollView style={{ maxHeight: 220 }}>
+                <ScrollView style={{ maxHeight: 190 }}>
                     {listDataReportMonth?.data?.map((item) => {
                         const icon = getIconForCategory(item.category_key);
                         return (

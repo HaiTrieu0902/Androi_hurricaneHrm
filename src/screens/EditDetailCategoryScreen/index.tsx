@@ -36,6 +36,9 @@ const EditDetailCategoryScreen = () => {
         amount: '',
     });
 
+    console.log('Month now', new Date().getUTCMonth() + 1);
+    console.log('Month curent', selectedDate.getUTCMonth() + 1);
+
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
         setSelectedDate(newDate);
@@ -298,11 +301,25 @@ const EditDetailCategoryScreen = () => {
 
                 <View style={styles.view_btn_submit}>
                     <View style={{ width: '49%' }}>
-                        <ButtonUI bgColor={BG_SUB_COLOR} text="Submit" onPress={handleUpdateTransaction} />
+                        <ButtonUI
+                            disable={selectedDate.getUTCMonth() + 1 < new Date().getUTCMonth() + 1}
+                            bgColor={
+                                selectedDate.getUTCMonth() + 1 < new Date().getUTCMonth() + 1
+                                    ? TEXT_COLOR_PRIMARY
+                                    : BG_SUB_COLOR
+                            }
+                            text="Submit"
+                            onPress={handleUpdateTransaction}
+                        />
                     </View>
                     <View style={{ width: '49%', position: 'relative' }}>
                         <ButtonUI
-                            bgColor={EXPLAIN_ERROR_TEXT}
+                            disable={selectedDate.getUTCMonth() + 1 < new Date().getUTCMonth() + 1}
+                            bgColor={
+                                selectedDate.getUTCMonth() + 1 < new Date().getUTCMonth() + 1
+                                    ? TEXT_COLOR_PRIMARY
+                                    : EXPLAIN_ERROR_TEXT
+                            }
                             text="Delete"
                             onPress={() => setOpenModalDeleted(true)}
                         />

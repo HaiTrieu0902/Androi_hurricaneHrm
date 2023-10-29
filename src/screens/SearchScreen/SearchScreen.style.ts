@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { BG_SCREEN, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../utils/common';
+import { BG_PRIMARYCOLOR, BG_SCREEN, BG_SUB_COLOR, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../utils/common';
 
 export const styles = StyleSheet.create({
     bg_scrren: {
@@ -46,6 +46,43 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderBottomColor: TEXT_COLOR_PRIMARY,
     },
+    view_pie_info_item: {
+        paddingStart: 16,
+        paddingEnd: 16,
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderBottomColor: TEXT_COLOR_PRIMARY,
+        borderBottomWidth: 0.5,
+    },
+    pie_info_contain: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+    },
+    view_item_display: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    view_btn: {
+        paddingStart: 16,
+        paddingEnd: 16,
+        paddingTop: 60,
+        paddingBottom: 16,
+        flex: 1,
+        justifyContent: 'flex-end',
+        backgroundColor: BG_SCREEN,
+    },
+    view_header_expense_title: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        paddingVertical: 4,
+        backgroundColor: '#cccccc',
+        paddingHorizontal: 16,
+    },
 
     text_title: {
         marginBottom: 10,
@@ -66,13 +103,14 @@ export const styles = StyleSheet.create({
         marginTop: -3,
         color: 'black',
     },
-    view_btn: {
-        paddingStart: 16,
-        paddingEnd: 16,
-        paddingTop: 60,
-        paddingBottom: 16,
-        flex: 1,
-        justifyContent: 'flex-end',
-        backgroundColor: BG_SCREEN,
+    text_main: {
+        color: 'black',
+        fontFamily: FONT_FAMILY,
+        fontWeight: '600',
+        fontSize: 16,
+    },
+
+    txt_note: {
+        fontSize: 11,
     },
 });

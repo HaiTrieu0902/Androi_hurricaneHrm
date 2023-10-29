@@ -10,12 +10,23 @@ interface ButtonUIProps {
     borderWidth?: number;
     borderColor?: string;
     color?: string;
+    disable?: boolean;
 }
 
-const ButtonUI = ({ onPress, text, bgColor, borderRadius, color, borderWidth, borderColor }: ButtonUIProps) => {
+const ButtonUI = ({
+    onPress,
+    text,
+    bgColor,
+    borderRadius,
+    color,
+    borderWidth,
+    borderColor,
+    disable,
+}: ButtonUIProps) => {
     return (
         <TouchableOpacity
             onPress={onPress}
+            disabled={disable}
             style={[
                 {
                     borderWidth: borderWidth ? borderWidth : 0,
