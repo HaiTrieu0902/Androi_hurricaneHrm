@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { BG_PRIMARYCOLOR, FONT_FAMILY } from '../../utils/common';
+import { StyleSheet, Text, View } from 'react-native';
+import { BG_EXPLAIN_ERROR, BG_PRIMARYCOLOR, FONT_FAMILY } from '../../utils/common';
 
 interface ContainLimitedProps {
     bgColor?: string;
@@ -12,13 +12,15 @@ interface ContainLimitedProps {
 
 const ContainLimited = ({ bgColor, category, limited, bag }: ContainLimitedProps) => {
     return (
-        <View style={[styles.view_container, { backgroundColor: bgColor ? bgColor : BG_PRIMARYCOLOR }]}>
+        <View style={[styles.view_container, { backgroundColor: bag < 0 ? BG_EXPLAIN_ERROR : BG_PRIMARYCOLOR }]}>
             <View>
                 <Text style={styles.text_title}>{category}</Text>
             </View>
             <View style={styles.view_total}>
                 <View style={{ display: 'flex', gap: 6 }}>
-                    <Text style={[styles.text_right, styles.text_total]}>Bag: {bag.toLocaleString()}</Text>
+                    <Text style={[styles.text_right, styles.text_total]}>
+                        Bag: <Text>{bag.toLocaleString()}</Text>
+                    </Text>
                     <Text style={[styles.text_right, styles.text_remain]}>limited: {limited.toLocaleString()} </Text>
                 </View>
             </View>
@@ -56,6 +58,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'white',
         fontFamily: FONT_FAMILY,
+    },
+    text_expalin_error: {
+        color: '#DC143C',
     },
 });
 export default ContainLimited;

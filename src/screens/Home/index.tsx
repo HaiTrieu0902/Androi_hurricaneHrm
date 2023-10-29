@@ -10,9 +10,7 @@ import { ExpenseHome, LimitedSpending } from './Vm';
 interface HomeScreensProps {}
 const HomeScreens = () => {
     const dispatch = useAppDispatch();
-
     const [isActiveButton, setIsActiveButton] = useState<boolean>(false);
-
     /* handle changed screen sub */
     const handleChangedScreenSubHome = (type: string) => {
         if (type === 'expense') {
@@ -21,7 +19,6 @@ const HomeScreens = () => {
             setIsActiveButton(true);
         }
     };
-
     return (
         <SafeAreaView>
             <View>

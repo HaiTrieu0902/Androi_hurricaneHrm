@@ -20,6 +20,7 @@ export interface IReportTransaction {
     month: number | null;
     year: number;
     total_spent: number;
+    total_limited: number;
     data: Idata[];
 }
 

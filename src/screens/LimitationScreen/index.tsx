@@ -10,7 +10,7 @@ import { SCREENS } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { getLimitationTransactionUserByMonthAPI } from '../../services/api/limitation.api';
 import { ILimitationTransaction } from '../../types/limitation.type';
-import { ACTIVE_NAV_BOTTOM, BG_PRIMARYCOLOR } from '../../utils/common';
+import { ACTIVE_NAV_BOTTOM, BG_EXPLAIN_ERROR, BG_PRIMARYCOLOR } from '../../utils/common';
 import { styles } from './LimitationScreenStyle';
 import { setLimitationCategoryKey } from '../../redux/limitation.slice';
 
@@ -108,7 +108,15 @@ const LimitationScreen = () => {
                                     return (
                                         <TouchableOpacity
                                             key={item?.category_key}
-                                            style={[styles.view_item, { backgroundColor: BG_PRIMARYCOLOR }]}
+                                            style={[
+                                                styles.view_item,
+                                                {
+                                                    backgroundColor:
+                                                        Number(item?.amount_limit - item?.amount_spent) < 0
+                                                            ? BG_EXPLAIN_ERROR
+                                                            : BG_PRIMARYCOLOR,
+                                                },
+                                            ]}
                                             onPress={() =>
                                                 handleChangeNavigationLimit('DETAIL_LIMITATION', item?.category_key)
                                             }
@@ -153,5 +161,5 @@ const LimitationScreen = () => {
         </SafeAreaView>
     );
 };
-
+//BG_EXPLAIN_ERROR
 export default LimitationScreen;
