@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import React, { useEffect, useRef, useState } from 'react';
 import { NativeSyntheticEvent, Text, TextInput, TextInputChangeEventData, View } from 'react-native';
@@ -7,7 +8,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ButtonUI from '../../../components/Button';
 import ContainLimited from '../../../components/ContainLimited';
-import { listDataCategory } from '../../../constants';
+import { SCREENS, listDataCategory } from '../../../constants';
 import useToastNotifications from '../../../hook/useToastNotifications';
 import { triggerCallAPILimitationTransaction } from '../../../redux/limitation.slice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
@@ -17,9 +18,9 @@ import { addTransactionAPI } from '../../../services/api/transaction.api';
 import { ILimitationTransaction } from '../../../types/limitation.type';
 import { ACTIVE_NAV_BOTTOM, BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ExpenseHomeStyle';
-
 const ExpenseHome = () => {
     const dispatch = useAppDispatch();
+    const navigation: any = useNavigation();
     const showToast = useToastNotifications();
     const inputRef = useRef<TextInput | null>(null);
     const { user } = useAppSelector((state) => state.auth);
@@ -33,6 +34,12 @@ const ExpenseHome = () => {
         amount: '',
     });
     const [listLimitationTractionMonth, setListLimitationTractionMonth] = useState<ILimitationTransaction>();
+
+    /* hanlde navigation*/
+    const handleChangeNavigationLimit = async (type: string) => {
+        // setLimitationCategoryKey
+        navigation.navigate(SCREENS[type] as never, { test: 'test' });
+    };
 
     /* Handle changed date*/
     const handleDateChange = (newDate: Date) => {
@@ -222,9 +229,10 @@ const ExpenseHome = () => {
                             ?.filter((item) => item?.amount_limit > 0)
                             .map((item, index) => {
                                 return (
-                                    <View
+                                    <TouchableOpacity
                                         key={item?.category_key}
                                         style={[styles.view_navigation_item, index !== 0 && styles.ml_10]}
+                                        onPress={() => handleChangeNavigationLimit('SWITCH_LIMITATION')}
                                     >
                                         <ContainLimited
                                             category={
@@ -233,7 +241,7 @@ const ExpenseHome = () => {
                                             bag={item?.amount_limit - item?.amount_spent}
                                             limited={item?.amount_limit}
                                         />
-                                    </View>
+                                    </TouchableOpacity>
                                 );
                             })}
 

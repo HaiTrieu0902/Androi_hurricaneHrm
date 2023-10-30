@@ -27,6 +27,7 @@ export const SCREENS: { [key: string]: string } = {
 
     /* Limitation Screen sub */
     DETAIL_LIMITATION: 'detail_limitation',
+    SWITCH_LIMITATION: 'switch_limitation',
 
     /* Edit Detail category Screen */
     EDIT_DETAIL_CATEGORY: 'edit_detail_category',
