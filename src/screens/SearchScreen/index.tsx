@@ -14,12 +14,11 @@ import { getDetailTrasactionSearchAPI } from '../../services/api/transaction.api
 import { IListTransactionUserMonth } from '../../types/transaction.type';
 import { BG_PRIMARYCOLOR, EXPLAIN_ERROR_TEXT, SIZE_ICON_16, TEXT_COLOR_PRIMARY } from '../../utils/common';
 import { styles } from './SearchScreen.style';
-
+import { debounce } from 'lodash';
 type typeParamSearch = {
     searchValue: string;
     year: string | number;
 };
-
 const SearchSreen = () => {
     const navigation = useNavigation();
     const { user } = useAppSelector((state) => state.auth);
@@ -37,12 +36,15 @@ const SearchSreen = () => {
     };
 
     /*  handle onSearch Value*/
-    const hanldeOnSearchValue = (valueSearch: string) => {
+    const hanldeOnSearchValue = debounce((valueSearch: string) => {
+        if (valueSearch === ' ') {
+            setListTransaction({} as never);
+        }
         setValueOption((prev) => ({
             ...prev,
             searchValue: valueSearch,
         }));
-    };
+    }, 500);
 
     /*  handle selected filter*/
     const handleOnSelected = (selected: number | string) => {
@@ -109,7 +111,7 @@ const SearchSreen = () => {
             <View>
                 <SearchInput onSearch={hanldeOnSearchValue} onSelected={handleOnSelected} />
             </View>
-            <ScrollView style={{ marginTop: 22 }}>
+            <ScrollView style={{ marginTop: 22, maxHeight: 540 }}>
                 <View>
                     {Number(listTransaction?.data?.length) > 0 ? (
                         listTransaction?.data?.map((item, index) => {
@@ -179,8 +181,8 @@ const SearchSreen = () => {
             <View style={styles.view_btn}>
                 {Number(listTransaction?.data?.length) > 0 && (
                     <View style={{ display: 'flex', gap: 10, flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 20, color: BG_PRIMARYCOLOR }}>Expense :</Text>
-                        <Text style={{ fontSize: 20, color: EXPLAIN_ERROR_TEXT }}>-{total}$</Text>
+                        <Text style={{ fontSize: 18, color: BG_PRIMARYCOLOR }}>Expense :</Text>
+                        <Text style={{ fontSize: 1, color: EXPLAIN_ERROR_TEXT }}>-{total}$</Text>
                     </View>
                 )}
             </View>
