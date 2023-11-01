@@ -144,7 +144,7 @@ const MonthlyReportScreen = () => {
                     <View style={[styles.view_item, styles.view_item_display, styles.view_two_draw]}>
                         <Text style={{ fontSize: 14 }}>Limited:</Text>
                         <Text style={[styles.text_main, styles.text_info]}>
-                            {listDataReportMonth?.total_spent.toLocaleString()} $
+                            {listDataReportMonth?.total_limited.toLocaleString()} $
                         </Text>
                     </View>
                 </View>
