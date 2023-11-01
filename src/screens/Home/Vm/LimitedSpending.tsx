@@ -92,7 +92,6 @@ const LimitedSpending = () => {
                 for (const limitation of limitationParams) {
                     const res = await addLimitationAPI(limitation);
                 }
-                // Hiển thị thông báo khi tất cả promise đã hoàn thành
                 showToast(
                     `Add Limitation Spending ${selectedDate.getUTCMonth() + 1}/${selectedDate.getUTCFullYear()}`,
                     'success',
@@ -100,7 +99,6 @@ const LimitedSpending = () => {
                 );
             }
         } catch (error: any) {
-            // Xử lý lỗi nếu có lỗi xảy ra trong quá trình thực hiện promise
             showToast(`${error?.message}`, 'danger', 'top');
         }
     };
@@ -120,7 +118,6 @@ const LimitedSpending = () => {
                 for (const limitation of limitationParamUpdate) {
                     const res = await updateLimitation(limitation);
                 }
-                // Hiển thị thông báo khi tất cả promise đã hoàn thành
                 showToast(
                     `Update Limitation Spending ${
                         selectedDate.getUTCMonth() + 1

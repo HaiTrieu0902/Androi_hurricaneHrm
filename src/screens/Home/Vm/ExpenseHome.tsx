@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { getListCategoryUserLimitationRedux, triggerGetTransactionUserMonth } from '../../../redux/transaction.slice';
 import { getLimitationTransactionUserByMonthAPI } from '../../../services/api/limitation.api';
 import { addTransactionAPI } from '../../../services/api/transaction.api';
-import { ILimitationTransaction } from '../../../types/limitation.type';
+import { ILimitationItem, ILimitationTransaction } from '../../../types/limitation.type';
 import { ACTIVE_NAV_BOTTOM, BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './ExpenseHomeStyle';
 const ExpenseHome = () => {
@@ -36,9 +36,15 @@ const ExpenseHome = () => {
     const [listLimitationTractionMonth, setListLimitationTractionMonth] = useState<ILimitationTransaction>();
 
     /* hanlde navigation*/
-    const handleChangeNavigationLimit = async (type: string) => {
+    const handleChangeNavigationLimit = async (type: string, currentWallet: ILimitationItem) => {
         // setLimitationCategoryKey
-        navigation.navigate(SCREENS[type] as never, { test: 'test' });
+        const listSelectWallet = listLimitationTractionMonth?.data?.filter(
+            (item: ILimitationItem) => item.amount_limit > 0 && currentWallet?.category_key !== item?.category_key,
+        );
+        navigation.navigate(SCREENS[type] as never, {
+            currentWallet: currentWallet,
+            listSelectWallet: listSelectWallet,
+        });
     };
 
     /* Handle changed date*/
@@ -232,7 +238,7 @@ const ExpenseHome = () => {
                                     <TouchableOpacity
                                         key={item?.category_key}
                                         style={[styles.view_navigation_item, index !== 0 && styles.ml_10]}
-                                        onPress={() => handleChangeNavigationLimit('SWITCH_LIMITATION')}
+                                        onPress={() => handleChangeNavigationLimit('SWITCH_LIMITATION', item)}
                                     >
                                         <ContainLimited
                                             category={

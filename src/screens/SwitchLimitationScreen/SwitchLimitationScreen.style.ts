@@ -1,5 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { BG_SCREEN, BUTTON_COLOR__HOME, COLOR_BORDER_SOLID, FONT_FAMILY } from '../../utils/common';
+import {
+    BG_PRIMARYCOLOR,
+    BG_SCREEN,
+    BG_SUB_COLOR,
+    BUTTON_COLOR__HOME,
+    COLOR_BORDER_SOLID,
+    EXPLAIN_ERROR_TEXT,
+    FONT_FAMILY,
+} from '../../utils/common';
 
 export const styles = StyleSheet.create({
     bg_scrren: {
@@ -25,17 +33,22 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 8,
     },
-
+    mt_20: {
+        marginTop: 20,
+    },
+    mt_30: {
+        marginTop: 30,
+    },
     text_frame_title: {
         fontSize: 14,
         color: 'black',
     },
     text_frame_header: {
-        borderWidth: 1,
-        borderColor: COLOR_BORDER_SOLID,
+        // borderWidth: 1,
+        // borderColor: COLOR_BORDER_SOLID,
         backgroundColor: BUTTON_COLOR__HOME,
         width: '78%',
-        color: 'black',
+        color: BG_PRIMARYCOLOR,
         paddingStart: 12,
         paddingEnd: 12,
         paddingTop: 8,
@@ -46,8 +59,35 @@ export const styles = StyleSheet.create({
         fontSize: 14,
     },
 
+    text_frame_tranfer: {
+        fontWeight: '500',
+        fontSize: 15,
+        color: BG_SUB_COLOR,
+    },
+    text_frame_tranfer_title: {
+        fontSize: 15,
+        fontWeight: '500',
+        fontStyle: 'italic',
+    },
+    text_frame_input: {
+        backgroundColor: BUTTON_COLOR__HOME,
+        color: BG_PRIMARYCOLOR,
+        paddingStart: 12,
+        paddingEnd: 12,
+        paddingTop: 4,
+        flex: 1,
+        paddingBottom: 4,
+        fontFamily: FONT_FAMILY,
+        borderRadius: 6,
+        fontWeight: '600',
+        fontSize: 14,
+    },
+    text_frame_input_error: {
+        borderWidth: 1,
+        borderColor: EXPLAIN_ERROR_TEXT,
+    },
     dropdown: {
-        height: 40,
+        height: 38,
     },
 
     label: {
@@ -58,24 +98,19 @@ export const styles = StyleSheet.create({
         zIndex: 999,
         paddingHorizontal: 8,
         fontSize: 14,
-        color: 'black',
+        color: BG_PRIMARYCOLOR,
     },
     placeholderStyle: {
-        fontSize: 16,
-        color: 'black',
+        fontSize: 14,
+        color: BG_PRIMARYCOLOR,
     },
     selectedTextStyle: {
-        fontSize: 16,
-        color: 'black',
-    },
-    iconStyle: {
-        width: 20,
-        height: 20,
-        color: 'black',
+        fontSize: 14,
+        color: BG_PRIMARYCOLOR,
     },
     inputSearchStyle: {
-        height: 40,
-        fontSize: 16,
-        color: 'black',
+        height: 38,
+        fontSize: 14,
+        color: BG_PRIMARYCOLOR,
     },
 });

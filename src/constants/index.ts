@@ -48,3 +48,8 @@ export const dataInfoEmployee = [
 ];
 
 export { listDataCategory } from './listDataCategory';
+
+/* fuctiion covert To lowcase  */
+export const convertoUpperCase = (value: string) => {
+    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+};
