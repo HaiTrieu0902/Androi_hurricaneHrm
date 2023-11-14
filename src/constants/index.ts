@@ -46,7 +46,6 @@ export const dataInfoEmployee = [
     { name: 'Number Phone', key: 'mobile_no' },
     { name: 'Code', key: 'employee_code' },
 ];
-
 export { listDataCategory } from './listDataCategory';
 
 /* fuctiion covert To lowcase  */

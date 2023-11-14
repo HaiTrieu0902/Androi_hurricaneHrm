@@ -1,5 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import {
+    BG_SUB_COLOR,
+    BUTTON_COLOR__HOME,
+    FONT_FAMILY,
+    TEXT_COLOR_DARKMODE,
+    TEXT_COLOR_PRIMARY,
+} from '../../../utils/common';
 
 export const styles = StyleSheet.create({
     view_contain: {
@@ -39,6 +45,12 @@ export const styles = StyleSheet.create({
         borderColor: TEXT_COLOR_PRIMARY,
         borderRadius: 5,
     },
+    view_category_item_dark: {
+        width: '32%',
+        borderWidth: 1,
+        borderColor: '#535f6c',
+        borderRadius: 5,
+    },
     view_category_item_active: {
         borderColor: BG_SUB_COLOR,
         width: '32%',
@@ -51,9 +63,14 @@ export const styles = StyleSheet.create({
         borderColor: '#dcdbdb',
     },
 
+    view_disable_category_dark: {
+        backgroundColor: '#535f6c',
+        borderColor: '#535f6c',
+        color: '#535f6c',
+    },
     view_btn_submit: {
         marginTop: 96,
-        marginBottom: 16,
+        paddingBottom: 50,
         flex: 1,
         justifyContent: 'flex-end',
     },
@@ -87,12 +104,33 @@ export const styles = StyleSheet.create({
         color: 'black',
         fontWeight: '700',
     },
+    text_field_dark: {
+        fontSize: 16,
+        color: TEXT_COLOR_DARKMODE,
+        fontWeight: '700',
+    },
     text_area: {
         fontSize: 15,
         color: TEXT_COLOR_PRIMARY,
+
         width: 270,
         maxHeight: 60,
-        marginLeft: 24,
+        marginLeft: 25,
+        borderWidth: 1,
+        borderColor: BUTTON_COLOR__HOME,
+        fontFamily: FONT_FAMILY,
+        paddingStart: 12,
+        paddingEnd: 12,
+        paddingTop: 5,
+        paddingBottom: 5,
+        borderRadius: 6,
+    },
+    text_area_dark: {
+        fontSize: 15,
+        color: TEXT_COLOR_DARKMODE,
+        width: 270,
+        maxHeight: 60,
+        marginLeft: 25,
         borderWidth: 1,
         borderColor: BUTTON_COLOR__HOME,
         fontFamily: FONT_FAMILY,
@@ -105,6 +143,11 @@ export const styles = StyleSheet.create({
     text_category: {
         fontFamily: FONT_FAMILY,
         color: TEXT_COLOR_PRIMARY,
+        marginTop: 4,
+    },
+    text_category_dark: {
+        fontFamily: FONT_FAMILY,
+        color: TEXT_COLOR_DARKMODE,
         marginTop: 4,
     },
     text_category_active: {

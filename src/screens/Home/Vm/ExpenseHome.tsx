@@ -16,13 +16,20 @@ import { getListCategoryUserLimitationRedux, triggerGetTransactionUserMonth } fr
 import { getLimitationTransactionUserByMonthAPI } from '../../../services/api/limitation.api';
 import { addTransactionAPI } from '../../../services/api/transaction.api';
 import { ILimitationItem, ILimitationTransaction } from '../../../types/limitation.type';
-import { ACTIVE_NAV_BOTTOM, BG_SUB_COLOR, SIZE_ICON_16, SIZE_ICON_20, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import {
+    ACTIVE_NAV_BOTTOM,
+    BG_SUB_COLOR,
+    SIZE_ICON_16,
+    SIZE_ICON_20,
+    TEXT_COLOR_DARKMODE,
+    TEXT_COLOR_PRIMARY,
+} from '../../../utils/common';
 import { styles } from './ExpenseHomeStyle';
 const ExpenseHome = () => {
     const dispatch = useAppDispatch();
+    const { colorSystem } = useAppSelector((state) => state.auth);
     const navigation: any = useNavigation();
     const showToast = useToastNotifications();
-    const inputRef = useRef<TextInput | null>(null);
     const { user } = useAppSelector((state) => state.auth);
     const { listCategoryLimitation } = useAppSelector((state) => state.transaction);
     const { isLoadingLimitationTransaction } = useAppSelector((state) => state.limitation);
@@ -155,14 +162,14 @@ const ExpenseHome = () => {
         <View style={{ marginTop: 6 }}>
             {/* view date */}
             <View style={styles.view_contain}>
-                <Text style={styles.text_field}>Date</Text>
+                <Text style={colorSystem === 'dark' ? styles.text_field_dark : styles.text_field}>Date</Text>
                 <View style={styles.view_item}>
                     <View style={styles.view_date}>
                         <FontAwesome6
                             onPress={() => handleNextDateOrPrevDate('prev')}
                             style={{ marginLeft: 5 }}
                             name="angle-left"
-                            color={TEXT_COLOR_PRIMARY}
+                            color={colorSystem === 'dark' ? TEXT_COLOR_DARKMODE : TEXT_COLOR_PRIMARY}
                             size={SIZE_ICON_16}
                         />
                         <TouchableOpacity style={styles.button_bg} onPress={() => setOpen(true)}>
@@ -171,7 +178,7 @@ const ExpenseHome = () => {
                         <FontAwesome6
                             onPress={() => handleNextDateOrPrevDate('next')}
                             name="angle-right"
-                            color={TEXT_COLOR_PRIMARY}
+                            color={colorSystem === 'dark' ? TEXT_COLOR_DARKMODE : TEXT_COLOR_PRIMARY}
                             size={SIZE_ICON_16}
                         />
                     </View>
@@ -193,11 +200,11 @@ const ExpenseHome = () => {
 
             {/* view note */}
             <View style={[styles.view_contain, styles.mt_6]}>
-                <Text style={styles.text_field}>Note</Text>
+                <Text style={colorSystem === 'dark' ? styles.text_field_dark : styles.text_field}>Note</Text>
                 <View style={styles.view_item}>
                     <TextInput
                         multiline={true}
-                        style={styles.text_area}
+                        style={colorSystem === 'dark' ? styles.text_area_dark : styles.text_area}
                         placeholder="Enter note"
                         value={valueForm?.note}
                         onChange={(e) => handleChangedValueForm(e, 'note')}
@@ -207,7 +214,7 @@ const ExpenseHome = () => {
 
             {/* view expense */}
             <View style={[styles.view_contain, styles.mt_6]}>
-                <Text style={styles.text_field}>Expense</Text>
+                <Text style={colorSystem === 'dark' ? styles.text_field_dark : styles.text_field}>Expense</Text>
                 <View style={styles.view_item}>
                     <View style={styles.view_date}>
                         <TextInput
@@ -220,7 +227,7 @@ const ExpenseHome = () => {
                         <MaterialIcons
                             style={{ marginLeft: -6 }}
                             name="attach-money"
-                            color={TEXT_COLOR_PRIMARY}
+                            color={colorSystem === 'dark' ? TEXT_COLOR_DARKMODE : TEXT_COLOR_PRIMARY}
                             size={SIZE_ICON_20}
                         />
                     </View>
@@ -264,7 +271,11 @@ const ExpenseHome = () => {
 
             {/* View category */}
             <View style={[styles.mt_18]}>
-                <Text style={[styles.text_field, { marginBottom: 10 }]}>Category</Text>
+                <Text
+                    style={[colorSystem === 'dark' ? styles.text_field_dark : styles.text_field, { marginBottom: 10 }]}
+                >
+                    Category
+                </Text>
                 <View style={styles.view_contain_category}>
                     <ScrollView style={{ maxHeight: 200 }}>
                         <View style={styles.view_category_list}>
@@ -278,16 +289,29 @@ const ExpenseHome = () => {
                                     <View
                                         key={item.key}
                                         style={[
-                                            styles.view_category_item,
+                                            colorSystem === 'dark'
+                                                ? styles.view_category_item_dark
+                                                : styles.view_category_item,
                                             isDisable &&
                                                 selectCategory === item.key &&
                                                 styles.view_category_item_active,
-                                            !isDisable && styles.view_disable_category,
+                                            !isDisable &&
+                                                (colorSystem === 'dark'
+                                                    ? styles.view_disable_category_dark
+                                                    : styles.view_disable_category),
                                         ]}
                                     >
                                         <TouchableOpacity onPress={onPressHandler} style={styles.category_item_contain}>
                                             {item.icon}
-                                            <Text style={styles.text_category}>{item.name}</Text>
+                                            <Text
+                                                style={
+                                                    colorSystem === 'dark'
+                                                        ? styles.text_category_dark
+                                                        : styles.text_category
+                                                }
+                                            >
+                                                {item.name}
+                                            </Text>
                                         </TouchableOpacity>
                                     </View>
                                 );

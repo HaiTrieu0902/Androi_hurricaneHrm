@@ -1,5 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { BG_SUB_COLOR, BUTTON_COLOR__HOME, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import {
+    BG_SUB_COLOR,
+    BUTTON_COLOR__HOME,
+    FONT_FAMILY,
+    TEXT_COLOR_DARKMODE,
+    TEXT_COLOR_PRIMARY,
+} from '../../../utils/common';
 
 export const styles = StyleSheet.create({
     view_container: {
@@ -40,6 +46,19 @@ export const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 17,
     },
+    input_plan_dark: {
+        backgroundColor: BUTTON_COLOR__HOME,
+        color: TEXT_COLOR_DARKMODE,
+        width: 120,
+        paddingStart: 12,
+        paddingEnd: 12,
+        paddingTop: 4,
+        paddingBottom: 4,
+        fontFamily: FONT_FAMILY,
+        borderRadius: 6,
+        fontWeight: '600',
+        fontSize: 17,
+    },
     input_plan_category: {
         width: 260,
     },
@@ -68,9 +87,20 @@ export const styles = StyleSheet.create({
         color: 'black',
         fontWeight: '700',
     },
+    text_field_dark: {
+        fontSize: 18,
+        color: TEXT_COLOR_DARKMODE,
+        fontWeight: '700',
+    },
     text_category: {
         fontSize: 16,
         color: TEXT_COLOR_PRIMARY,
+        fontWeight: '700',
+        width: 100,
+    },
+    text_category_dark: {
+        fontSize: 16,
+        color: TEXT_COLOR_DARKMODE,
         fontWeight: '700',
         width: 100,
     },
