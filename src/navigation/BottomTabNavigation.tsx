@@ -7,22 +7,31 @@ import ReportScreen from '../screens/ReportScreen';
 import HomeScreens from '../screens/Home';
 import LimitationScreen from '../screens/LimitationScreen';
 import PersonalScreen from '../screens/PersonalScreen';
-import { BG_PRIMARYCOLOR, FONT_FAMILY, SIZE_ICON_DEFAULT } from '../utils/common';
+import {
+    BG_PRIMARYCOLOR,
+    BG_PRIMARYCOLOR_DARKMODE,
+    BG_SUB_COLOR,
+    FONT_FAMILY,
+    SIZE_ICON_DEFAULT,
+} from '../utils/common';
+import { useAppSelector } from '../redux/store';
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigation = () => {
+    const { colorSystem } = useAppSelector((state) => state.auth);
     return (
         <Tab.Navigator
             initialRouteName={SCREENS.HOME}
             screenOptions={{
                 headerShown: false,
-                tabBarActiveTintColor: BG_PRIMARYCOLOR,
+                tabBarActiveTintColor: colorSystem === 'dark' ? BG_SUB_COLOR : BG_PRIMARYCOLOR,
                 tabBarLabelStyle: {
                     fontSize: 12,
                     fontWeight: '400',
                     fontFamily: FONT_FAMILY,
                     marginBottom: 3,
                 },
+                tabBarStyle: { backgroundColor: colorSystem === 'dark' ? BG_PRIMARYCOLOR_DARKMODE : 'white' },
             }}
         >
             <Tab.Screen

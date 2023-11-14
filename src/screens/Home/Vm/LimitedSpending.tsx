@@ -9,12 +9,12 @@ import useToastNotifications from '../../../hook/useToastNotifications';
 import { getLimitationUserByMonthRedux } from '../../../redux/limitation.slice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { addLimitationAPI, updateLimitation } from '../../../services/api/limitation.api';
-import { BG_SUB_COLOR, TEXT_COLOR_PRIMARY } from '../../../utils/common';
+import { BG_SUB_COLOR, TEXT_COLOR_DARKMODE, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 import { styles } from './LimitedSpendingStyle';
 
 const LimitedSpending = () => {
     const dispatch = useAppDispatch();
-    const { user } = useAppSelector((state) => state.auth);
+    const { user, colorSystem } = useAppSelector((state) => state.auth);
     const { listLimitationListUserByMonth } = useAppSelector((state) => state.limitation);
     const showToast = useToastNotifications();
     const inputRef = useRef<TextInput | null>(null);
@@ -92,7 +92,6 @@ const LimitedSpending = () => {
                 for (const limitation of limitationParams) {
                     const res = await addLimitationAPI(limitation);
                 }
-                // Hiển thị thông báo khi tất cả promise đã hoàn thành
                 showToast(
                     `Add Limitation Spending ${selectedDate.getUTCMonth() + 1}/${selectedDate.getUTCFullYear()}`,
                     'success',
@@ -100,7 +99,6 @@ const LimitedSpending = () => {
                 );
             }
         } catch (error: any) {
-            // Xử lý lỗi nếu có lỗi xảy ra trong quá trình thực hiện promise
             showToast(`${error?.message}`, 'danger', 'top');
         }
     };
@@ -120,7 +118,6 @@ const LimitedSpending = () => {
                 for (const limitation of limitationParamUpdate) {
                     const res = await updateLimitation(limitation);
                 }
-                // Hiển thị thông báo khi tất cả promise đã hoàn thành
                 showToast(
                     `Update Limitation Spending ${
                         selectedDate.getUTCMonth() + 1
@@ -181,7 +178,12 @@ const LimitedSpending = () => {
             <View style={{ marginTop: 6 }}>
                 {/* View header*/}
                 <View>
-                    <Text style={{ textAlign: 'center', color: TEXT_COLOR_PRIMARY }}>
+                    <Text
+                        style={{
+                            textAlign: 'center',
+                            color: colorSystem === 'dark' ? TEXT_COLOR_DARKMODE : TEXT_COLOR_PRIMARY,
+                        }}
+                    >
                         Plan amount you spend every 1 month
                     </Text>
                 </View>
@@ -190,7 +192,9 @@ const LimitedSpending = () => {
                 <View style={[styles.view_container_column, { marginTop: 16 }]}>
                     <View>
                         <View style={styles.view_category}>
-                            <Text style={styles.text_field}>Category Limitation</Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_field_dark : styles.text_field}>
+                                Category Limitation
+                            </Text>
                             <TouchableOpacity
                                 style={[styles.input_plan, { alignItems: 'center' }]}
                                 onPress={() => setOpen(true)}
@@ -220,7 +224,9 @@ const LimitedSpending = () => {
                     </View>
                     <ScrollView style={{ maxHeight: 440 }}>
                         <View style={[styles.view_category_item]}>
-                            <Text style={styles.text_category}>Food: </Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                Food:{' '}
+                            </Text>
                             <TextInput
                                 placeholder="0.0"
                                 style={[styles.input_plan, styles.input_plan_category]}
@@ -230,7 +236,9 @@ const LimitedSpending = () => {
                             />
                         </View>
                         <View style={[styles.view_category_item]}>
-                            <Text style={styles.text_category}>Shopping: </Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                Shopping:{' '}
+                            </Text>
                             <TextInput
                                 placeholder="0.0"
                                 style={[styles.input_plan, styles.input_plan_category]}
@@ -240,7 +248,9 @@ const LimitedSpending = () => {
                             />
                         </View>
                         <View style={[styles.view_category_item]}>
-                            <Text style={styles.text_category}>Gift: </Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                Gift:{' '}
+                            </Text>
                             <TextInput
                                 placeholder="0.0"
                                 style={[styles.input_plan, styles.input_plan_category]}
@@ -250,7 +260,9 @@ const LimitedSpending = () => {
                             />
                         </View>
                         <View style={[styles.view_category_item]}>
-                            <Text style={styles.text_category}>Homeware: </Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                Homeware:{' '}
+                            </Text>
                             <TextInput
                                 placeholder="0.0"
                                 style={[styles.input_plan, styles.input_plan_category]}
@@ -260,7 +272,9 @@ const LimitedSpending = () => {
                             />
                         </View>
                         <View style={[styles.view_category_item]}>
-                            <Text style={styles.text_category}>Medical: </Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                Medical:{' '}
+                            </Text>
                             <TextInput
                                 placeholder="0.0"
                                 style={[styles.input_plan, styles.input_plan_category]}
@@ -270,7 +284,9 @@ const LimitedSpending = () => {
                             />
                         </View>
                         <View style={[styles.view_category_item]}>
-                            <Text style={styles.text_category}>Education: </Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                Education:{' '}
+                            </Text>
                             <TextInput
                                 placeholder="0.0"
                                 style={[styles.input_plan, styles.input_plan_category]}
@@ -280,7 +296,9 @@ const LimitedSpending = () => {
                             />
                         </View>
                         <View style={[styles.view_category_item]}>
-                            <Text style={styles.text_category}>Exchange: </Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                Exchange:{' '}
+                            </Text>
                             <TextInput
                                 placeholder="0.0"
                                 style={[styles.input_plan, styles.input_plan_category]}
@@ -290,7 +308,9 @@ const LimitedSpending = () => {
                             />
                         </View>
                         <View style={[styles.view_category_item]}>
-                            <Text style={styles.text_category}>Invest: </Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                Invest:{' '}
+                            </Text>
                             <TextInput
                                 placeholder="0.0"
                                 style={[styles.input_plan, styles.input_plan_category]}
@@ -300,7 +320,9 @@ const LimitedSpending = () => {
                             />
                         </View>
                         <View style={[styles.view_category_item]}>
-                            <Text style={styles.text_category}>Phone: </Text>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                Phone:{' '}
+                            </Text>
                             <TextInput
                                 placeholder="0.0"
                                 style={[styles.input_plan, styles.input_plan_category]}
@@ -315,7 +337,7 @@ const LimitedSpending = () => {
                 {/* View total spending limit*/}
                 <View style={[styles.view_container, { marginTop: 22 }]}>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={styles.text_field}>Total:</Text>
+                        <Text style={colorSystem === 'dark' ? styles?.text_field_dark : styles.text_field}>Total:</Text>
                         <Text style={[styles.text_total, { marginLeft: 8 }]}>{valueTotal.toLocaleString()}</Text>
                         <MaterialIcons name="attach-money" color={BG_SUB_COLOR} size={18} />
                     </View>

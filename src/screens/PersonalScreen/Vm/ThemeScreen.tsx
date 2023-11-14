@@ -6,33 +6,24 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import Container from '../../../components/Container';
 import NavigationGoBack from '../../../components/NavigationGoBack';
+import { setThemeColor } from '../../../redux/auth.slice';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { ACTIVE_NAV_BOTTOM, BG_SCREEN, FONT_FAMILY, TEXT_COLOR_PRIMARY } from '../../../utils/common';
 const ThemeScreen = () => {
-    const navigation = useNavigation();
-    const [activeTheme, setActiveTheme] = useState<string | null>('dark');
-
+    const dispatch = useAppDispatch();
+    const { colorSystem } = useAppSelector((state) => state.auth);
+    const [activeTheme, setActiveTheme] = useState<string | null>(colorSystem);
     const handleChangedTheme = (theme: string) => {
         setActiveTheme(theme);
+        dispatch(setThemeColor(theme));
     };
-
     return (
         <SafeAreaView style={styles.bg_scrren}>
             <View style={styles.bg_container}>
-                <NavigationGoBack paddingBottom={12} paddingTop={12} title="Theme settings" />
+                <NavigationGoBack paddingBottom={12} paddingTop={12} title="Theme Settings" />
                 <View>
                     <Container>
-                        <View style={styles.view_list}>
-                            <TouchableOpacity
-                                style={[styles.view_item_border, styles.view_item]}
-                                onPress={() => handleChangedTheme('dark')}
-                            >
-                                <View style={styles.view_padding}>
-                                    <Text style={styles.text}>Dark</Text>
-                                    {activeTheme === 'dark' && (
-                                        <Icon name="circle-check" color={ACTIVE_NAV_BOTTOM} size={10} />
-                                    )}
-                                </View>
-                            </TouchableOpacity>
+                        <View>
                             <TouchableOpacity
                                 style={[styles.view_item_border, styles.view_item]}
                                 onPress={() => handleChangedTheme('light')}
@@ -44,6 +35,18 @@ const ThemeScreen = () => {
                                     )}
                                 </View>
                             </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.view_item_border, styles.view_item]}
+                                onPress={() => handleChangedTheme('dark')}
+                            >
+                                <View style={styles.view_padding}>
+                                    <Text style={styles.text}>Dark</Text>
+                                    {activeTheme === 'dark' && (
+                                        <Icon name="circle-check" color={ACTIVE_NAV_BOTTOM} size={10} />
+                                    )}
+                                </View>
+                            </TouchableOpacity>
+
                             <TouchableOpacity style={styles.view_item} onPress={() => handleChangedTheme('system')}>
                                 <View style={styles.view_padding}>
                                     <Text style={styles.text}>System</Text>
@@ -69,7 +72,6 @@ const styles = StyleSheet.create({
         paddingStart: 16,
         paddingEnd: 16,
     },
-    view_list: {},
     view_item_border: {
         borderBottomWidth: 0.5,
         borderBottomColor: TEXT_COLOR_PRIMARY,

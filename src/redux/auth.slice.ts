@@ -1,16 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IUser } from '../types/auth';
 
 interface Auth {
     token: string | null;
     user: IUser;
     screenNameEditTransaction: string | null;
+    colorSystem: string;
 }
 
 const initialState: Auth = {
     token: null,
     user: {} as IUser,
     screenNameEditTransaction: null,
+    colorSystem: 'light',
 };
 
 const authSlice = createSlice({
@@ -19,6 +21,9 @@ const authSlice = createSlice({
     reducers: {
         setInitialScreenNameEditTransaction: (state, ation) => {
             state.screenNameEditTransaction = ation.payload;
+        },
+        setThemeColor: (state, action: PayloadAction<string>) => {
+            state.colorSystem = action.payload;
         },
         setAuthToken: (state, action) => {
             state.token = action.payload;
@@ -41,7 +46,13 @@ const authSlice = createSlice({
     // },
 });
 
-export const { setAuthToken, setAuthUser, remoteAuthToken, remoteAuthUser, setInitialScreenNameEditTransaction } =
-    authSlice.actions;
+export const {
+    setAuthToken,
+    setAuthUser,
+    remoteAuthToken,
+    remoteAuthUser,
+    setInitialScreenNameEditTransaction,
+    setThemeColor,
+} = authSlice.actions;
 
 export default authSlice.reducer;

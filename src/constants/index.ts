@@ -27,6 +27,7 @@ export const SCREENS: { [key: string]: string } = {
 
     /* Limitation Screen sub */
     DETAIL_LIMITATION: 'detail_limitation',
+    SWITCH_LIMITATION: 'switch_limitation',
 
     /* Edit Detail category Screen */
     EDIT_DETAIL_CATEGORY: 'edit_detail_category',
@@ -45,5 +46,9 @@ export const dataInfoEmployee = [
     { name: 'Number Phone', key: 'mobile_no' },
     { name: 'Code', key: 'employee_code' },
 ];
-
 export { listDataCategory } from './listDataCategory';
+
+/* fuctiion covert To lowcase  */
+export const convertoUpperCase = (value: string) => {
+    return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+};

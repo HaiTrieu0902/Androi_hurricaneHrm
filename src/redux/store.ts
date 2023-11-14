@@ -9,7 +9,7 @@ import transactionSlice from './transaction.slice';
 const authPersistConfig = {
     key: 'auth',
     storage: AsyncStorage,
-    whitelist: ['token', 'user'],
+    whitelist: ['token', 'user', 'colorSystem'],
 };
 const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
 const store = configureStore({

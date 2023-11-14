@@ -3,14 +3,16 @@ import { Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderText from '../../components/HeaderText';
-import { useAppDispatch } from '../../redux/store';
+import { useAppSelector } from '../../redux/store';
 import { styles } from './HomeStyle';
 import { ExpenseHome, LimitedSpending } from './Vm';
+import { BG_PRIMARYCOLOR_DARKMODE, BG_SCREEN } from '../../utils/common';
 
 interface HomeScreensProps {}
 const HomeScreens = () => {
-    const dispatch = useAppDispatch();
+    const { colorSystem } = useAppSelector((state) => state.auth);
     const [isActiveButton, setIsActiveButton] = useState<boolean>(false);
+
     /* handle changed screen sub */
     const handleChangedScreenSubHome = (type: string) => {
         if (type === 'expense') {
@@ -19,8 +21,9 @@ const HomeScreens = () => {
             setIsActiveButton(true);
         }
     };
+
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{ backgroundColor: colorSystem === 'dark' ? BG_PRIMARYCOLOR_DARKMODE : BG_SCREEN }}>
             <View>
                 <HeaderText title={`Home`} />
             </View>
