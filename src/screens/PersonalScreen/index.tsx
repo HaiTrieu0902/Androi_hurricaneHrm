@@ -28,14 +28,23 @@ const PersonalScreen = () => {
     const navigation = useNavigation();
     const { user } = useAppSelector((state) => state.auth);
 
+    /* handle logout */
     const handleLogout = async () => {
         await dispatch(remoteAuthToken());
         await dispatch(remoteAuthUser());
         navigation.navigate(SCREENS.LOGIN as never);
     };
 
+    /* handle navigation  */
     const handleChangeNavigationPersonal = async (type: string) => {
         navigation.navigate(SCREENS[type] as never);
+    };
+
+    /* handle delete user */
+    const handleDeleteUser = async () => {
+        await dispatch(remoteAuthToken());
+        await dispatch(remoteAuthUser());
+        navigation.navigate(SCREENS.LOGIN as never);
     };
 
     return (
@@ -60,7 +69,7 @@ const PersonalScreen = () => {
                     <Text style={styles.text_title}>Manager</Text>
                     <Container padding={true}>
                         <View style={styles.view_manage_list}>
-                            <TouchableOpacity onPress={() => handleChangeNavigationPersonal('USER')}>
+                            <TouchableOpacity>
                                 <View style={styles.view_manage_item}>
                                     <Icon name="chart-simple" color={ACTIVE_NAV_BOTTOM} size={SIZE_ICON_DEFAULT} />
                                     <Text style={styles.text_manage_item}>All time report</Text>
