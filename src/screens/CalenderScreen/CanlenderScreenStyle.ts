@@ -7,6 +7,16 @@ export const styles = StyleSheet.create({
         paddingStart: 16,
         paddingEnd: 16,
     },
+    view_icon: {
+        padding: 16,
+        paddingHorizontal: 16,
+        paddingBottom: 12,
+    },
+    view_header: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
     view_contain: {
         display: 'flex',
         flexDirection: 'row',

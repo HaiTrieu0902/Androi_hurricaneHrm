@@ -32,6 +32,7 @@ const LimitedSpending = () => {
         exchange: 0,
         invest: 0,
         phone: 0,
+        thaytuan: 0,
     });
 
     /* Handle changed Value Input*/
@@ -167,6 +168,7 @@ const LimitedSpending = () => {
                 exchange: 0,
                 invest: 0,
                 phone: 0,
+                thaytuan: 0,
             };
             setCategoryLimits(initialCategoryLimits);
             setValueTotal(0);
@@ -331,6 +333,20 @@ const LimitedSpending = () => {
                                 value={categoryLimits.phone.toString()}
                             />
                         </View>
+
+                        {/* new category */}
+                        {/* <View style={[styles.view_category_item]}>
+                            <Text style={colorSystem === 'dark' ? styles.text_category_dark : styles.text_category}>
+                                ThayTuan:{' '}
+                            </Text>
+                            <TextInput
+                                placeholder="0.0"
+                                style={[styles.input_plan, styles.input_plan_category]}
+                                keyboardType="numeric"
+                                onChangeText={(text) => handleInputChange('thaytuan', text)}
+                                value={categoryLimits.thaytuan.toString()}
+                            />
+                        </View> */}
                     </ScrollView>
                 </View>
 

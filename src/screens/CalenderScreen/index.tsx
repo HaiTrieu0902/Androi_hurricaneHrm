@@ -24,11 +24,14 @@ import {
     ACTIVE_NAV_BOTTOM,
     BG_EXPLAIN_ERROR,
     BG_PRIMARYCOLOR,
+    BG_SUB_COLOR,
     EXPLAIN_ERROR_TEXT,
     SIZE_ICON_16,
+    SIZE_ICON_20,
     TEXT_COLOR_PRIMARY,
 } from '../../utils/common';
 import { styles } from './CanlenderScreenStyle';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 type CalendarTheme = Theme & {
     'stylesheet.calendar.header': {
         header: {
@@ -152,10 +155,30 @@ const CalenderScreen = () => {
         };
     }, [selectedDate, isLoadingTransactionUserMonth, dispatch]);
 
+    /* Handle changed screen sub name  */
+    const handleNavigationSearchScreen = () => {
+        navigation.navigate(SCREENS.SEARCH_SCREEN as never);
+    };
+
+    /* Sort list history transactions */
+    const sortedTransactions = [...(listTransactionUserMonth?.data ? listTransactionUserMonth?.data : [])];
+    sortedTransactions?.sort((a, b) => {
+        const dateA: any = new Date(a.date);
+        const dateB: any = new Date(b.date);
+        return dateB - dateA;
+    });
+
     return (
         <SafeAreaView style={styles.bg_scrren}>
-            <View>
+            <View style={styles.view_header}>
                 <HeaderText title={`Calendar`} />
+                <AntDesign
+                    onPress={handleNavigationSearchScreen}
+                    name="search1"
+                    style={styles.view_icon}
+                    color={BG_SUB_COLOR}
+                    size={SIZE_ICON_20}
+                />
             </View>
 
             {/* view container */}
@@ -272,7 +295,7 @@ const CalenderScreen = () => {
                     <ScrollView style={{ maxHeight: 230 }}>
                         <View>
                             {listTransactionUserMonth?.data?.length > 0 ? (
-                                listTransactionUserMonth?.data?.map((item, index) => {
+                                listTransactionUserMonth?.data?.map((item, index: number) => {
                                     return (
                                         <React.Fragment key={index}>
                                             <View style={styles.view_header_expense_title}>

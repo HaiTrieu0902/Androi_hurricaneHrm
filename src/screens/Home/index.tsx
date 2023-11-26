@@ -8,11 +8,9 @@ import { styles } from './HomeStyle';
 import { ExpenseHome, LimitedSpending } from './Vm';
 import { BG_PRIMARYCOLOR_DARKMODE, BG_SCREEN } from '../../utils/common';
 
-interface HomeScreensProps {}
 const HomeScreens = () => {
     const { colorSystem } = useAppSelector((state) => state.auth);
     const [isActiveButton, setIsActiveButton] = useState<boolean>(false);
-
     /* handle changed screen sub */
     const handleChangedScreenSubHome = (type: string) => {
         if (type === 'expense') {

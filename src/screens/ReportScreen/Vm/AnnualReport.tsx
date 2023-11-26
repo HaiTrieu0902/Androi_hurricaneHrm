@@ -89,6 +89,20 @@ const AnnualReportScreen = () => {
     });
     const filteredData = convertFieChartData.filter((item) => item.total > 0);
 
+    const sortedTransactions = [...(listDataReportYear?.data ? listDataReportYear?.data : [])];
+    sortedTransactions?.sort();
+
+    /* sort report */
+    sortedTransactions.sort(function (a, b) {
+        if (a.category_key < b.category_key) {
+            return 1;
+        }
+        if (a.category_key > b.category_key) {
+            return -1;
+        }
+        return 0;
+    });
+
     return (
         <View>
             {/* view date */}
