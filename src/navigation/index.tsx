@@ -8,7 +8,6 @@ import LoginPage from '../screens/LoginPage';
 import RegisterScreen from '../screens/RegisterScreen';
 import BottomTabNavigation from './BottomTabNavigation';
 import { PersonalNavigation } from './PersonalNavigation';
-import { UserNavigation } from './UserNavigation';
 import { LimitationNavigation } from './LimitationNavigation';
 import EditDetailCategoryScreen from '../screens/EditDetailCategoryScreen';
 import SearchSreen from '../screens/SearchScreen';
@@ -35,10 +34,6 @@ const NavigationMain = () => {
                             <Stack.Screen name={SCREENS.BOTTOM} component={BottomTabNavigation} />
                             {/* personal */}
                             {PersonalNavigation.map((screen) => (
-                                <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
-                            ))}
-                            {/* User */}
-                            {UserNavigation.map((screen) => (
                                 <Stack.Screen key={screen.name} name={screen.name} component={screen.component} />
                             ))}
                             {/* Limit */}
