@@ -57,4 +57,10 @@ export const listDataCategory = [
         color: TEXT_COLOR_PRIMARY,
         icon: <AntDesign name="mobile1" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
     },
+    // {
+    //     key: 'thaytuan',
+    //     name: 'ThayTuan',
+    //     color: TEXT_COLOR_PRIMARY,
+    //     icon: <AntDesign name="mobile1" color={TEXT_COLOR_PRIMARY} size={SIZE_ICON_16} />,
+    // },
 ];

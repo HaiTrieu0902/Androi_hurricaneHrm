@@ -182,7 +182,8 @@ const SearchSreen = () => {
                 {Number(listTransaction?.data?.length) > 0 && (
                     <View style={{ display: 'flex', gap: 10, flexDirection: 'row' }}>
                         <Text style={{ fontSize: 18, color: BG_PRIMARYCOLOR }}>Expense :</Text>
-                        <Text style={{ fontSize: 1, color: EXPLAIN_ERROR_TEXT }}>-{total}$</Text>
+
+                        <Text style={{ fontSize: 18, color: 'red' }}>-{total}$</Text>
                     </View>
                 )}
             </View>
