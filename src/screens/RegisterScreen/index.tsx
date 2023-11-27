@@ -134,7 +134,15 @@ const RegisterScreen = () => {
                     navigation.navigate(SCREENS.LOGIN as never);
                 }
             } catch (error: any) {
-                showToast(`${error?.error}`, 'danger', 'top');
+                showToast(
+                    `${
+                        error
+                            ? `User or Email ${error?.message?.username || error?.message?.email} has exits`
+                            : 'Please check it again!'
+                    }`,
+                    'danger',
+                    'top',
+                );
             }
         }
     };

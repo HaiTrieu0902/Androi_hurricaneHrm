@@ -171,7 +171,7 @@ const SearchSreen = () => {
                                     color: TEXT_COLOR_PRIMARY,
                                 }}
                             >
-                                you should search value or choose filter year
+                                {/* you should search value or choose filter year */}
                             </Text>
                         </View>
                     )}

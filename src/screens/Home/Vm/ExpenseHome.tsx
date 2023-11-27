@@ -44,7 +44,6 @@ const ExpenseHome = () => {
 
     /* hanlde navigation*/
     const handleChangeNavigationLimit = async (type: string, currentWallet: ILimitationItem) => {
-        // setLimitationCategoryKey
         const listSelectWallet = listLimitationTractionMonth?.data?.filter(
             (item: ILimitationItem) => item.amount_limit > 0 && currentWallet?.category_key !== item?.category_key,
         );
@@ -138,10 +137,11 @@ const ExpenseHome = () => {
             }
         } catch (error) {}
     };
+
     /* Useffect call API limitation transaction by month  */
     useEffect(() => {
         getLimitationTransactionUserByMonth();
-    }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear(), dispatch, isLoadingLimitationTransaction]);
+    }, [selectedDate, dispatch, isLoadingLimitationTransaction]);
 
     /* UseEffect call API category  */
     useEffect(() => {
@@ -157,6 +157,22 @@ const ExpenseHome = () => {
             getListCategory.abort();
         };
     }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear(), dispatch]);
+
+    /* state update */
+    const [arrange, setArrange] = useState(false);
+    const restlistDataCategory = [...(listDataCategory ? listDataCategory : [])];
+    restlistDataCategory.sort(function (a, b) {
+        if (a.name > b.name) {
+            return 1;
+        }
+        if (a.name < b.name) {
+            return -1;
+        }
+        return 0;
+    });
+    const convertArrangeCategory = arrange ? restlistDataCategory : listDataCategory;
+
+    console.log('listLimitationTractionMonth', listLimitationTractionMonth?.data);
 
     return (
         <View style={{ marginTop: 6 }}>
@@ -279,7 +295,7 @@ const ExpenseHome = () => {
                 <View style={styles.view_contain_category}>
                     <ScrollView style={{ maxHeight: 200 }}>
                         <View style={styles.view_category_list}>
-                            {listDataCategory.map((item) => {
+                            {listDataCategory?.map((item) => {
                                 const categoryLimitation = listCategoryLimitation?.data?.find(
                                     (limitation) => limitation.category_key === item.key,
                                 );
@@ -322,6 +338,14 @@ const ExpenseHome = () => {
             </View>
 
             <View style={styles.view_btn_submit}>
+                {/* <ButtonUI
+                    bgColor={'red'}
+                    text="Arrange"
+                    onPress={() => {
+                        setArrange(!arrange);
+                    }}
+                /> */}
+
                 <ButtonUI bgColor={BG_SUB_COLOR} text="Submit" onPress={handleCreateNewTransaction} />
             </View>
         </View>

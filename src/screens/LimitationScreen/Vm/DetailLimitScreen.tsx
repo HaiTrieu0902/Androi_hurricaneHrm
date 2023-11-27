@@ -33,6 +33,8 @@ const DetailLimitScreen = () => {
         useState<ILimitationTransactionCategory>();
     const [isloading, setIsLoading] = useState(false);
 
+    console.log(' limitation_categorykey', limitation_categorykey);
+
     /* Function custom date*/
     const formatDateCustom = (date: Date) => {
         const month = format(date, 'MMM');
@@ -139,6 +141,29 @@ const DetailLimitScreen = () => {
         const category = listDataCategory.find((item) => item.key === category_key);
         return category ? category.icon : null;
     };
+
+    /* Sort limitation date */
+    //   const sortedTransactions = [...( listLimitationTransactionCategory?.data ? listLimitationTransactionCategory?.data : [])];
+    //   sortedTransactions?.sort((a, b) => {
+    //       const dateA: any = new Date(a.date);
+    //       const dateB: any = new Date(b.date);
+    //       return dateB - dateA;
+    //   });
+
+    /* Sort limitation money */
+    // const sortedTransactions = [
+    //     ...(listLimitationTransactionCategory?.data ? listLimitationTransactionCategory?.data : []),
+    // ];
+    // /* sort report */
+    // sortedTransactions.sort(function (a, b) {
+    //     if (a.amount < b.amount) {
+    //         return 1;
+    //     }
+    //     if (a.amount > b.amount) {
+    //         return -1;
+    //     }
+    //     return 0;
+    // });
 
     return (
         <SafeAreaView style={styles.bg_scrren}>
@@ -255,7 +280,7 @@ const DetailLimitScreen = () => {
                                                 <View style={styles.content_right}>
                                                     <View style={{ justifyContent: 'center', paddingEnd: 14 }}>
                                                         <Text style={{ textAlign: 'right', color: EXPLAIN_ERROR_TEXT }}>
-                                                            -{item.amount.toLocaleString()}
+                                                            -{item.amount.toLocaleString()} $
                                                         </Text>
                                                         <Text
                                                             style={{
