@@ -142,29 +142,6 @@ const DetailLimitScreen = () => {
         return category ? category.icon : null;
     };
 
-    /* Sort limitation date */
-    //   const sortedTransactions = [...( listLimitationTransactionCategory?.data ? listLimitationTransactionCategory?.data : [])];
-    //   sortedTransactions?.sort((a, b) => {
-    //       const dateA: any = new Date(a.date);
-    //       const dateB: any = new Date(b.date);
-    //       return dateB - dateA;
-    //   });
-
-    /* Sort limitation money */
-    // const sortedTransactions = [
-    //     ...(listLimitationTransactionCategory?.data ? listLimitationTransactionCategory?.data : []),
-    // ];
-    // /* sort report */
-    // sortedTransactions.sort(function (a, b) {
-    //     if (a.amount < b.amount) {
-    //         return 1;
-    //     }
-    //     if (a.amount > b.amount) {
-    //         return -1;
-    //     }
-    //     return 0;
-    // });
-
     return (
         <SafeAreaView style={styles.bg_scrren}>
             <View>
