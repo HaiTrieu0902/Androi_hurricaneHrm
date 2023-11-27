@@ -6,6 +6,10 @@ interface Auth {
     user: IUser;
     screenNameEditTransaction: string | null;
     colorSystem: string;
+    dataSaveUser: {
+        username: String;
+        password: string;
+    };
 }
 
 const initialState: Auth = {
@@ -13,6 +17,10 @@ const initialState: Auth = {
     user: {} as IUser,
     screenNameEditTransaction: null,
     colorSystem: 'light',
+    dataSaveUser: {
+        username: '',
+        password: '',
+    },
 };
 
 const authSlice = createSlice({
@@ -30,6 +38,9 @@ const authSlice = createSlice({
         },
         setAuthUser: (state, action) => {
             state.user = action.payload;
+        },
+        setDataSaveUser: (state, action) => {
+            state.dataSaveUser = action.payload;
         },
         remoteAuthToken: (state) => {
             state.token = initialState.token;
@@ -53,6 +64,7 @@ export const {
     remoteAuthUser,
     setInitialScreenNameEditTransaction,
     setThemeColor,
+    setDataSaveUser,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -26,6 +26,8 @@ export const isValidFullname = (fullname: string) => {
 export const isValidPassword = (password: string) => {
     if (password.length === 0) {
         return 'Please enter password';
+    } else if (containsSpecialCharacters(password)) {
+        return 'khong can co ky tu dac biet';
     } else if (password.length <= 5) {
         return 'Password must have at least 6 characters';
     }
@@ -43,7 +45,7 @@ export const isValidConfirmPassword = (password: string, confirmPassword: string
     return '';
 };
 
-function containsSpecialCharacters(str: string) {
-    const specialChars = /[!@#$%^&*()_+{}\[\]:;<>,.?~]/; // Thêm các ký tự đặc biệt khác vào trong ngoặc vuông
+export function containsSpecialCharacters(str: string) {
+    const specialChars = /[!@#$%^&*()_+{}\[\]:;<>,.?~]/;
     return specialChars.test(str);
 }

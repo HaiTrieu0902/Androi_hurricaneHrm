@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Image,
     NativeSyntheticEvent,
@@ -13,8 +13,8 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import ButtonUI from '../../components/Button';
 import { SCREENS } from '../../constants';
 import useToastNotifications from '../../hook/useToastNotifications';
-import { setAuthToken, setAuthUser } from '../../redux/auth.slice';
-import { useAppDispatch } from '../../redux/store';
+import { setAuthToken, setAuthUser, setDataSaveUser } from '../../redux/auth.slice';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { loginAPI } from '../../services/api/auth.api';
 import { IParamsAuth } from '../../types/auth';
 import { isValidPassword, isValidUsername } from '../../utils/validation';
@@ -24,6 +24,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { asyncStorageService } from '../../utils/storage';
 
 const LoginPage = () => {
+    const { dataSaveUser } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
     const showToast = useToastNotifications();
@@ -87,11 +88,12 @@ const LoginPage = () => {
                     await dispatch(setAuthToken(res?.data?.token));
                     asyncStorageService.setValue('access_token', res?.data?.token);
                     await dispatch(setAuthUser(res?.data));
+                    dispatch(setDataSaveUser(param));
                     showToast(`${res?.message}`, 'success', 'top');
                     navigation.navigate(SCREENS.BOTTOM as never);
                 }
-            } catch (error) {
-                showToast(`${error ? error : 'Please check it again!'}`, 'danger', 'top');
+            } catch (error: any) {
+                showToast(`${error ? `${error}` : 'Please check it again!'}`, 'danger', 'top');
             }
         }
     };
@@ -100,6 +102,16 @@ const LoginPage = () => {
     const handleShowOrHidePassword = () => {
         setIsShowIcon((prev) => !prev);
     };
+
+    /* set value when logout  */
+    useEffect(() => {
+        if (dataSaveUser?.password && dataSaveUser?.password) {
+            setValueForm({
+                password: dataSaveUser?.password,
+                username: String(dataSaveUser?.username),
+            });
+        }
+    }, [dataSaveUser]);
 
     return (
         <SafeAreaView style={styles.bg_scrren}>
@@ -117,6 +129,7 @@ const LoginPage = () => {
                     <View style={styles.view_form}>
                         <Text style={styles.text_form}>Username:</Text>
                         <TextInput
+                            defaultValue={String(dataSaveUser?.username)}
                             onChange={(e) => handleOnChangeValue(e, 'username')}
                             style={validationErrors.username !== '' ? styles.TextInputError : styles.TextInput}
                             placeholder="Enter your username"
@@ -128,6 +141,7 @@ const LoginPage = () => {
                     <View style={styles.view_form}>
                         <Text style={styles.text_form}>Password: </Text>
                         <TextInput
+                            defaultValue={String(dataSaveUser?.password)}
                             onChange={(e) => handleOnChangeValue(e, 'password')}
                             style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
                             placeholder="Enter your password"

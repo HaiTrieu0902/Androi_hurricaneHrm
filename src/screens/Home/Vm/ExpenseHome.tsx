@@ -137,10 +137,11 @@ const ExpenseHome = () => {
             }
         } catch (error) {}
     };
+
     /* Useffect call API limitation transaction by month  */
     useEffect(() => {
         getLimitationTransactionUserByMonth();
-    }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear(), dispatch, isLoadingLimitationTransaction]);
+    }, [selectedDate, dispatch, isLoadingLimitationTransaction]);
 
     /* UseEffect call API category  */
     useEffect(() => {
@@ -171,7 +172,8 @@ const ExpenseHome = () => {
     });
     const convertArrangeCategory = arrange ? restlistDataCategory : listDataCategory;
 
-    console.log(' setSelectedDate', selectedDate);
+    console.log('listLimitationTractionMonth', listLimitationTractionMonth?.data);
+
     return (
         <View style={{ marginTop: 6 }}>
             {/* view date */}
