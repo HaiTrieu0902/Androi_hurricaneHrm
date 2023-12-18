@@ -10,7 +10,7 @@ export const SCREENS: { [key: string]: string } = {
     BOTTOM: 'Bottom',
     PERSONAL: 'Personal',
     LIMITATION: 'Limitation',
-    USER: 'User',
+
     REPORT: 'Report',
     CALENDER: 'calender',
     SEARCH_SCREEN: 'Search_screen',
@@ -31,6 +31,7 @@ export const SCREENS: { [key: string]: string } = {
 
     /* Edit Detail category Screen */
     EDIT_DETAIL_CATEGORY: 'edit_detail_category',
+    USER: 'User_list',
 };
 
 /* USer Infomation list  */
