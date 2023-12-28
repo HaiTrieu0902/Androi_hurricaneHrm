@@ -158,22 +158,6 @@ const ExpenseHome = () => {
         };
     }, [selectedDate.getUTCMonth() + 1, selectedDate.getFullYear(), dispatch]);
 
-    /* state update */
-    const [arrange, setArrange] = useState(false);
-    const restlistDataCategory = [...(listDataCategory ? listDataCategory : [])];
-    restlistDataCategory.sort(function (a, b) {
-        if (a.name > b.name) {
-            return 1;
-        }
-        if (a.name < b.name) {
-            return -1;
-        }
-        return 0;
-    });
-    const convertArrangeCategory = arrange ? restlistDataCategory : listDataCategory;
-
-    console.log('listLimitationTractionMonth', listLimitationTractionMonth?.data);
-
     return (
         <View style={{ marginTop: 6 }}>
             {/* view date */}

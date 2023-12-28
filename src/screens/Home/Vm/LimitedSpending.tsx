@@ -32,7 +32,6 @@ const LimitedSpending = () => {
         exchange: 0,
         invest: 0,
         phone: 0,
-        thaytuan: 0,
     });
 
     /* Handle changed Value Input*/
@@ -168,7 +167,6 @@ const LimitedSpending = () => {
                 exchange: 0,
                 invest: 0,
                 phone: 0,
-                thaytuan: 0,
             };
             setCategoryLimits(initialCategoryLimits);
             setValueTotal(0);

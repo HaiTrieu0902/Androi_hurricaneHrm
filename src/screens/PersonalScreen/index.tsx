@@ -69,10 +69,10 @@ const PersonalScreen = () => {
                     <Text style={styles.text_title}>Manager</Text>
                     <Container padding={true}>
                         <View style={styles.view_manage_list}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleChangeNavigationPersonal('USER')}>
                                 <View style={styles.view_manage_item}>
                                     <Icon name="chart-simple" color={ACTIVE_NAV_BOTTOM} size={SIZE_ICON_DEFAULT} />
-                                    <Text style={styles.text_manage_item}>All time report</Text>
+                                    <Text style={styles.text_manage_item}>User List</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity>
