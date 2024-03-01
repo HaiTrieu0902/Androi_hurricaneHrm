@@ -22,7 +22,7 @@ import { BG_SUB_COLOR, COLOR_BORDER_SOLID, TEXT_COLOR_PRIMARY } from './../../ut
 import { styles } from './LoginStyle';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { asyncStorageService } from '../../utils/storage';
-
+import { HOST_API_APP } from '@env';
 const LoginPage = () => {
     const { dataSaveUser } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
@@ -83,6 +83,7 @@ const LoginPage = () => {
                 password: password,
             };
             try {
+                console.log(' HOST_API_APP', HOST_API_APP);
                 const res = await loginAPI(param);
                 if (res) {
                     await dispatch(setAuthToken(res?.data?.token));

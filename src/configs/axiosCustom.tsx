@@ -2,7 +2,7 @@ import { HOST_API_APP } from '@env';
 import axios from 'axios';
 import { asyncStorageService } from '../utils/storage';
 const axiosCustomer = axios.create({
-    baseURL: String(HOST_API_APP),
+    baseURL: String('http://10.0.2.2:9090'),
     timeout: 100000,
 });
 axiosCustomer.interceptors.request.use(
