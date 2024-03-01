@@ -5,10 +5,6 @@ export const loginAPI = async (data: IParamsAuth) => {
     return axiosCustom.post('/api/v1/auth/login', data).then((res) => res.data);
 };
 
-export const registerAPI = async (data: IParamsAuth) => {
-    return axiosCustom.post('/api/v1/auth/register', data).then((res) => res.data);
-};
-
 export const forgotPasswordAPI = async (data: IParamsAuth) => {
     return axiosCustom.post('/api/v1/auth/forgot-password', data).then((res) => res.data);
 };
@@ -19,4 +15,13 @@ export const changePasswordAPI = async (data: IChangeAuth) => {
 
 export const deleteUserAPI = async (codeUser: string) => {
     return axiosCustom.delete(`/api/v1/user/detele-user?user_code=${codeUser}`).then((res) => res.data);
+};
+
+/* lam bai thi */
+export const registerAPI = async (data: IParamsAuth) => {
+    return axiosCustom.post('/api/v1/auth/register', data).then((res) => res.data);
+};
+
+export const getAllUSerAPI = async () => {
+    return axiosCustom.get(`/api/v1/user/get-list-user`).then((res) => res.data);
 };

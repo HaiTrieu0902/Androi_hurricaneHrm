@@ -160,14 +160,6 @@ const CalenderScreen = () => {
         navigation.navigate(SCREENS.SEARCH_SCREEN as never);
     };
 
-    /* Sort list history transactions */
-    const sortedTransactions = [...(listTransactionUserMonth?.data ? listTransactionUserMonth?.data : [])];
-    sortedTransactions?.sort((a, b) => {
-        const dateA: any = new Date(a.date);
-        const dateB: any = new Date(b.date);
-        return dateB - dateA;
-    });
-
     return (
         <SafeAreaView style={styles.bg_scrren}>
             <View style={styles.view_header}>

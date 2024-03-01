@@ -24,7 +24,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { asyncStorageService } from '../../utils/storage';
 import { HOST_API_APP } from '@env';
 const LoginPage = () => {
-    const { dataSaveUser } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
     const navigation = useNavigation();
     const showToast = useToastNotifications();
@@ -104,16 +103,6 @@ const LoginPage = () => {
         setIsShowIcon((prev) => !prev);
     };
 
-    /* set value when logout  */
-    useEffect(() => {
-        if (dataSaveUser?.password && dataSaveUser?.password) {
-            setValueForm({
-                password: dataSaveUser?.password,
-                username: String(dataSaveUser?.username),
-            });
-        }
-    }, [dataSaveUser]);
-
     return (
         <SafeAreaView style={styles.bg_scrren}>
             <View style={styles.view}>
@@ -130,7 +119,6 @@ const LoginPage = () => {
                     <View style={styles.view_form}>
                         <Text style={styles.text_form}>Username:</Text>
                         <TextInput
-                            defaultValue={String(dataSaveUser?.username)}
                             onChange={(e) => handleOnChangeValue(e, 'username')}
                             style={validationErrors.username !== '' ? styles.TextInputError : styles.TextInput}
                             placeholder="Enter your username"
@@ -142,7 +130,6 @@ const LoginPage = () => {
                     <View style={styles.view_form}>
                         <Text style={styles.text_form}>Password: </Text>
                         <TextInput
-                            defaultValue={String(dataSaveUser?.password)}
                             onChange={(e) => handleOnChangeValue(e, 'password')}
                             style={validationErrors.password !== '' ? styles.TextInputError : styles.TextInput}
                             placeholder="Enter your password"
